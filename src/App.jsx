@@ -1,4 +1,5 @@
 import './App.css'
+import AdminDashboard from './AdminDashboard'
 
 const services = [
   {
@@ -28,6 +29,9 @@ const services = [
 ]
 
 function App() {
+    if (window.location.pathname === '/admin') {
+    return <AdminDashboard />
+  }
   const whatsappLink =
     'https://wa.me/254700806728?text=' +
     encodeURIComponent('Hello Masters Tech, I would like to know more about your services.')
