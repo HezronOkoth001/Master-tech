@@ -805,3 +805,259 @@ a {
     margin: 0;
   }
 }
+
+
+
+
+/* Portfolio section */
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.portfolio-card {
+  overflow: hidden;
+  border: 1px solid #252a36;
+  background: #101520;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.portfolio-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(212, 175, 55, 0.55);
+}
+
+.portfolio-preview {
+  position: relative;
+  min-height: 215px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #151b28;
+}
+
+.preview-label {
+  position: absolute;
+  top: 13px;
+  left: 13px;
+  z-index: 2;
+  padding: 7px 9px;
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  background: rgba(8, 11, 18, 0.85);
+  color: var(--gold);
+  font-size: 8px;
+  letter-spacing: 1px;
+}
+
+.preview-business {
+  background: radial-gradient(circle at 70% 25%, #30364a, #111520 65%);
+}
+
+.preview-window {
+  width: 75%;
+  min-height: 125px;
+  padding: 17px;
+  border: 1px solid #454b59;
+  background: #0b0f18;
+  box-shadow: 0 15px 35px #0005;
+}
+
+.preview-brand {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.preview-brand > span {
+  color: var(--gold);
+}
+
+.preview-lines {
+  display: flex;
+  gap: 5px;
+  margin-top: 20px;
+}
+
+.preview-lines i {
+  width: 26%;
+  height: 4px;
+  background: #3a4150;
+}
+
+.preview-lines i:first-child {
+  background: var(--gold);
+}
+
+.preview-button {
+  width: fit-content;
+  margin-top: 17px;
+  padding: 7px 10px;
+  background: var(--gold);
+  color: #101010;
+  font-size: 8px;
+}
+
+.preview-security {
+  background: radial-gradient(circle at center, #23303c, #0d121a 70%);
+}
+
+.security-panel {
+  width: 77%;
+  padding: 17px;
+  border: 1px solid #46505c;
+  background: rgba(10, 15, 23, 0.85);
+}
+
+.security-symbol {
+  margin-bottom: 10px;
+  color: var(--gold);
+  font-size: 28px;
+}
+
+.security-panel > span {
+  display: block;
+  color: #9ba4b3;
+  font-size: 8px;
+  letter-spacing: 1.5px;
+}
+
+.security-panel strong {
+  display: block;
+  margin-top: 8px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+}
+
+.security-line {
+  width: 80%;
+  height: 4px;
+  margin-top: 12px;
+  background: #333d4b;
+}
+
+.security-line.short {
+  width: 50%;
+  margin-top: 6px;
+  background: #29313d;
+}
+
+.preview-education {
+  background: radial-gradient(circle at 80% 15%, #32434a, #121b21 65%);
+}
+
+.education-panel {
+  width: 78%;
+  padding: 17px;
+  border: 1px solid #52615e;
+  background: rgba(10, 19, 23, 0.88);
+}
+
+.education-kicker {
+  color: #b9caad;
+  font-size: 7px;
+  letter-spacing: 1px;
+}
+
+.education-panel strong {
+  display: block;
+  margin-top: 12px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 17px;
+}
+
+.education-caption {
+  display: block;
+  margin-top: 8px;
+  color: #aab5ba;
+  font-size: 9px;
+}
+
+.education-blocks {
+  display: flex;
+  gap: 7px;
+  margin-top: 15px;
+}
+
+.education-blocks i {
+  flex: 1;
+  height: 19px;
+  border: 1px solid #53655f;
+  background: #25372f;
+}
+
+.education-blocks i:nth-child(2) {
+  background: #33434c;
+}
+
+.portfolio-info {
+  padding: 21px;
+}
+
+.project-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--gold);
+  font-size: 9px;
+}
+
+.project-meta span:last-child {
+  color: #727988;
+}
+
+.portfolio-info h3 {
+  margin: 17px 0 10px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 17px;
+}
+
+.portfolio-info > p {
+  min-height: 78px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 18px;
+}
+
+.project-tags span {
+  padding: 6px 8px;
+  border: 1px solid #303644;
+  color: #b9bfca;
+  font-size: 9px;
+}
+
+.project-action {
+  margin-top: 20px;
+}
+
+.portfolio-disclaimer {
+  margin-top: 23px;
+  color: #858b99;
+  font-size: 10px;
+  line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+  .portfolio-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-info > p {
+    min-height: auto;
+  }
+}

@@ -47,6 +47,7 @@ function App() {
           <a href="#home">Home</a>
           <a href="#about">About</a>
           <a href="#services">Services</a>
+            <a href="#portfolio">Portfolio</a>
           <a href="#contact">Contact</a>
         </nav>
 
@@ -176,6 +177,105 @@ function App() {
               Let's discuss your goals <span>↗</span>
             </a>
           </div>
+        </section>
+                <section className="portfolio-section section-padding" id="portfolio">
+          <div className="section-heading">
+            <div>
+              <span className="section-label">OUR PORTFOLIO</span>
+              <h2>Projects built with <span>purpose.</span></h2>
+            </div>
+            <p>
+              Explore our demonstrations and completed work. Each project
+              shows the kind of digital solutions we can create.
+            </p>
+          </div>
+
+          <div className="portfolio-grid">
+            <article className="portfolio-card">
+              <div className="portfolio-preview preview-business">
+                <span className="preview-label">DEMO PROJECT</span>
+                <div className="preview-window">
+                  <span className="preview-brand">BUSINESS<span>.</span></span>
+                  <div className="preview-lines">
+                    <i />
+                    <i />
+                    <i />
+                  </div>
+                  <div className="preview-button">Explore services</div>
+                </div>
+              </div>
+              <div className="portfolio-info">
+                <div className="project-meta">
+                  <span>Sample project</span>
+                  <span>01</span>
+                </div>
+                <h3>Business Website Concept</h3>
+                <p>A modern business website concept focused on clear services, professional branding, and customer inquiries.</p>
+                <div className="project-tags">
+                  <span>React</span><span>CSS</span><span>Responsive design</span>
+                </div>
+              </div>
+            </article>
+
+            <article className="portfolio-card">
+              <div className="portfolio-preview preview-security">
+                <span className="preview-label">DEMO PROJECT</span>
+                <div className="security-panel">
+                  <div className="security-symbol">◇</div>
+                  <span>WEBSITE SECURITY</span>
+                  <strong>Protection starts here.</strong>
+                  <div className="security-line" />
+                  <div className="security-line short" />
+                </div>
+              </div>
+              <div className="portfolio-info">
+                <div className="project-meta">
+                  <span>Sample project</span>
+                  <span>02</span>
+                </div>
+                <h3>Website Security Concept</h3>
+                <p>A demonstration of how website security services can be presented to businesses in a simple, accessible way.</p>
+                <div className="project-tags">
+                  <span>Security</span><span>UI/UX</span><span>Web design</span>
+                </div>
+              </div>
+            </article>
+
+            <article className="portfolio-card">
+              <div className="portfolio-preview preview-education">
+                <span className="preview-label">COMPLETED PROJECT</span>
+                <div className="education-panel">
+                  <span className="education-kicker">LEARN • CONNECT • GROW</span>
+                  <strong>Kenyan Sign Language</strong>
+                  <span className="education-caption">Learning platform concept preview</span>
+                  <div className="education-blocks"><i /><i /><i /></div>
+                </div>
+              </div>
+              <div className="portfolio-info">
+                <div className="project-meta">
+                  <span>Completed project</span>
+                  <span>03</span>
+                </div>
+                <h3>Master Kenyan Sign Language</h3>
+                <p>A learning platform project built to help people discover Kenyan Sign Language learning resources.</p>
+                <div className="project-tags">
+                  <span>React</span><span>Web development</span>
+                </div>
+                <a
+                  className="service-link project-action"
+                  href="https://master-kenyan-sign-language-x4v8y7m-netwe.vercel.app/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  View live project <span>↗</span>
+                </a>
+              </div>
+            </article>
+          </div>
+          <p className="portfolio-disclaimer">
+            Demo projects are design examples, not client work. Completed projects
+            are identified separately.
+          </p>
         </section>
 
         <section className="contact-section section-padding" id="contact">
