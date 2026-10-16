@@ -1,23 +1,16 @@
-# Masters Tech
+# React + Vite
 
-A business platform for website development, website security, and online visibility.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Services
-- Website design and development
-- Website security and maintenance
-- Search engine optimization (SEO)
-- Google Maps visibility
+Currently, two official plugins are available:
 
-## Technology
-- React
-- Vite
-- CSS
-- Backend and database to be added in later stages
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## Development Plan
-Build the public business website first, followed by the admin dashboard, backend, and database.
+## React Compiler
 
-**Design:** Dark navy, black, and gold.
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-**Primary contact channel:** WhatsApp.# Master-tech
-online business management system
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
