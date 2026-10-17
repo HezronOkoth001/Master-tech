@@ -1,0 +1,28 @@
+.workspace-manager { display: grid; gap: 20px; min-width: 0; }
+.workspace-toolbar { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
+.workspace-toolbar h2 { margin: 0; color: #fff; font-size: 18px; }
+.workspace-toolbar p { margin: 8px 0 0; color: #999ca8; font-size: 12px; line-height: 1.7; }
+.workspace-form h3 { margin: 0 0 20px; color: #fff; font-size: 16px; }
+.workspace-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 17px; }
+.workspace-field { display: grid; gap: 8px; color: #c8cad2; font-size: 12px; }
+.workspace-field-wide { grid-column: 1 / -1; }
+.workspace-field input, .workspace-field select, .workspace-field textarea, .workspace-search { width: 100%; min-width: 0; padding: 11px 12px; border: 1px solid #343642; border-radius: 7px; outline: none; background: #0d0f15; color: #f3f4f6; font: inherit; font-size: 12px; }
+.workspace-field input:focus, .workspace-field select:focus, .workspace-field textarea:focus, .workspace-search:focus { border-color: #d4af37; }
+.workspace-field textarea { resize: vertical; }
+.workspace-list-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; color: #aeb1bd; font-size: 12px; }
+.workspace-list-heading strong { color: #e5c653; font-size: 18px; }
+.workspace-search { max-width: 280px; }
+.workspace-empty { text-align: center; padding: 48px 24px; }
+.workspace-empty > span { color: #d4af37; font-size: 28px; }
+.workspace-empty h3 { margin: 12px 0 8px; color: #fff; }
+.workspace-empty p { color: #a0a3af; font-size: 12px; margin: 0 0 18px; }
+.workspace-table-wrap { padding: 0; overflow: hidden; }
+.workspace-table-scroll { overflow-x: auto; }
+.workspace-table { width: 100%; border-collapse: collapse; min-width: 680px; text-align: left; }
+.workspace-table th { padding: 15px 14px; color: #d8bd55; background: #191a21; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.workspace-table td { padding: 14px; border-top: 1px solid #2a2b34; color: #c9cbd3; font-size: 11px; max-width: 260px; overflow-wrap: anywhere; }
+.workspace-table tbody tr:hover { background: #191a21; }
+.workspace-row-actions { white-space: nowrap; }
+.workspace-row-actions button { padding: 6px 8px; margin-right: 5px; border: 1px solid #3b3d47; border-radius: 5px; background: #20212a; color: #e5c653; font-size: 10px; }
+.workspace-row-actions .managed-delete-button { color: #fca5a5; }
+@media (max-width: 650px) { .workspace-toolbar { flex-direction: column; } .workspace-form-grid { grid-template-columns: 1fr; } .workspace-field-wide { grid-column: auto; } .workspace-list-heading { align-items: stretch; flex-direction: column; } .workspace-search { max-width: none; } }
