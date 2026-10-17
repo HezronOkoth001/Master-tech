@@ -1,8 +1,39 @@
 import { useEffect, useState } from 'react'
 import './AdminDashboard.css'
 import AdminProjects from './AdminProjects'
+import AdminWorkspaceSections from './AdminWorkspaceSections'
 
 const PROJECTS_STORAGE_KEY = 'masters-tech-projects'
+const WORKSPACE_STORAGE_KEY = 'masters-tech-workspace'
+
+const emptyWorkspaceData = {
+  Clients: [],
+  Leads: [],
+  Tasks: [],
+  Invoices: [],
+  Payments: [],
+  Messages: [],
+  Reviews: [],
+  Settings: [{
+    id: 'workspace-settings',
+    businessName: 'Masters Tech',
+    adminName: 'Administrator',
+    email: '',
+    phone: '+254700806728',
+    currency: 'KES',
+  }],
+}
+
+function loadWorkspaceData() {
+  try {
+    const saved = localStorage.getItem(WORKSPACE_STORAGE_KEY)
+    if (!saved) return emptyWorkspaceData
+    const parsed = JSON.parse(saved)
+    return { ...emptyWorkspaceData, ...parsed }
+  } catch {
+    return emptyWorkspaceData
+  }
+}
 
 const navigation = [
   { name: 'Dashboard', icon: '▦' },
@@ -59,10 +90,23 @@ function loadProjects() {
 function AdminDashboard() {
   const [activePage, setActivePage] = useState('Dashboard')
   const [projects, setProjects] = useState(loadProjects)
+  const [workspaceData, setWorkspaceData] = useState(loadWorkspaceData)
 
   useEffect(() => {
     localStorage.setItem(PROJECTS_STORAGE_KEY, JSON.stringify(projects))
   }, [projects])
+
+  useEffect(() => {
+    localStorage.setItem(WORKSPACE_STORAGE_KEY, JSON.stringify(workspaceData))
+  }, [workspaceData])
+
+  function updateWorkspaceSection(section, records) {
+    setWorkspaceData((previous) => ({ ...previous, [section]: records }))
+  }
+
+  const activeClients = workspaceData.Clients.filter((client) => client.status === 'Active').length
+  const openLeads = workspaceData.Leads.filter((lead) => !['Won', 'Lost'].includes(lead.status)).length
+  const pendingTasks = workspaceData.Tasks.filter((task) => task.status !== 'Done').length
 
   return (
     <div className="admin-layout">
@@ -170,8 +214,8 @@ function AdminDashboard() {
                     <span>Active clients</span>
                     <span className="admin-stat-icon">♙</span>
                   </div>
-                  <strong>00</strong>
-                  <small>Client records</small>
+                  <strong>{String(activeClients).padStart(2, '0')}</strong>
+                  <small>Active client records</small>
                 </article>
 
                 <article className="admin-stat-card">
@@ -179,8 +223,8 @@ function AdminDashboard() {
                     <span>Open leads</span>
                     <span className="admin-stat-icon">◎</span>
                   </div>
-                  <strong>00</strong>
-                  <small>Potential customers</small>
+                  <strong>{String(openLeads).padStart(2, '0')}</strong>
+                  <small>Leads still being followed up</small>
                 </article>
 
                 <article className="admin-stat-card">
@@ -188,8 +232,8 @@ function AdminDashboard() {
                     <span>Pending tasks</span>
                     <span className="admin-stat-icon">✓</span>
                   </div>
-                  <strong>00</strong>
-                  <small>Tasks to complete</small>
+                  <strong>{String(pendingTasks).padStart(2, '0')}</strong>
+                  <small>Tasks not yet completed</small>
                 </article>
               </div>
 
@@ -296,21 +340,11 @@ function AdminDashboard() {
           ) : activePage === 'Projects' ? (
             <AdminProjects projects={projects} setProjects={setProjects} />
           ) : (
-            <section className="admin-panel admin-placeholder">
-              <span className="placeholder-icon">✳</span>
-              <h2>{activePage} management</h2>
-              <p>
-                This section is ready for its next development stage.
-                We'll add its forms, tables, and actions step by step.
-              </p>
-
-              <button
-                className="admin-view-site"
-                onClick={() => setActivePage('Dashboard')}
-              >
-                Return to dashboard
-              </button>
-            </section>
+            <AdminWorkspaceSections
+              section={activePage}
+              records={workspaceData[activePage] || []}
+              onChange={(records) => updateWorkspaceSection(activePage, records)}
+            />
           )}
         </section>
       </main>
