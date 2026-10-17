@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'
+
 import './AdminDashboard.css'
 import AdminProjects from './AdminProjects'
 import AdminWorkspaceSections from './AdminWorkspaceSections'
+import { useEffect, useState } from 'react'
 
-const PROJECTS_STORAGE_KEY = 'masters-tech-projects'
 const WORKSPACE_STORAGE_KEY = 'masters-tech-workspace'
+const API_URL = 'http://127.0.0.1:8000/api/projects'
 
 const emptyWorkspaceData = {
   Clients: [],
@@ -29,7 +30,20 @@ function loadWorkspaceData() {
     const saved = localStorage.getItem(WORKSPACE_STORAGE_KEY)
     if (!saved) return emptyWorkspaceData
     const parsed = JSON.parse(saved)
-    return { ...emptyWorkspaceData, ...parsed }
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+      return emptyWorkspaceData
+    }
+
+    return Object.fromEntries(
+      Object.entries(emptyWorkspaceData).map(([section, defaults]) => [
+        section,
+        Array.isArray(parsed[section])
+          ? parsed[section].filter(
+              (record) => record && typeof record === 'object' && !Array.isArray(record)
+            )
+          : defaults,
+      ])
+    )
   } catch {
     return emptyWorkspaceData
   }
@@ -48,53 +62,51 @@ const navigation = [
   { name: 'Settings', icon: '⚙' },
 ]
 
-const starterProjects = [
-  {
-    id: 'business-website-concept',
-    name: 'Business Website Concept',
-    category: 'Website Development',
-    description: 'A demonstration business website project.',
-    website: '',
-    status: 'Demo',
-  },
-  {
-    id: 'website-security-concept',
-    name: 'Website Security Concept',
-    category: 'Website Security',
-    description: 'A demonstration website security project.',
-    website: '',
-    status: 'Demo',
-  },
-  {
-    id: 'master-kenyan-sign-language',
-    name: 'Master Kenyan Sign Language',
-    category: 'Web Application',
-    description: 'A learning platform for Kenyan Sign Language resources.',
-    website: 'https://master-kenyan-sign-language-x4v8y7m-netwe.vercel.app/',
-    status: 'Completed',
-  },
-]
-
-function loadProjects() {
-  try {
-    const savedProjects = localStorage.getItem(PROJECTS_STORAGE_KEY)
-    if (savedProjects === null) return starterProjects
-
-    const parsedProjects = JSON.parse(savedProjects)
-    return Array.isArray(parsedProjects) ? parsedProjects : starterProjects
-  } catch {
-    return starterProjects
+function mapProject(project) {
+  return {
+    id: project.id,
+    name: project.title,
+    category: project.category,
+    description: project.description,
+    website: project.project_url || '',
+    status: project.status,
   }
 }
 
 function AdminDashboard() {
   const [activePage, setActivePage] = useState('Dashboard')
-  const [projects, setProjects] = useState(loadProjects)
+  const [projects, setProjects] = useState([])
+  const [projectsLoading, setProjectsLoading] = useState(true)
+  const [projectsError, setProjectsError] = useState('')
   const [workspaceData, setWorkspaceData] = useState(loadWorkspaceData)
 
   useEffect(() => {
-    localStorage.setItem(PROJECTS_STORAGE_KEY, JSON.stringify(projects))
-  }, [projects])
+    let isActive = true
+
+    async function fetchProjects() {
+      try {
+        const response = await fetch(API_URL)
+        if (!response.ok) throw new Error('Could not load projects.')
+
+        const data = await response.json()
+        if (!Array.isArray(data)) throw new Error('Invalid projects response.')
+
+        if (isActive) setProjects(data.map(mapProject))
+      } catch {
+        if (isActive) {
+          setProjectsError('Projects could not be loaded from the database.')
+        }
+      } finally {
+        if (isActive) setProjectsLoading(false)
+      }
+    }
+
+    fetchProjects()
+
+    return () => {
+      isActive = false
+    }
+  }, [])
 
   useEffect(() => {
     localStorage.setItem(WORKSPACE_STORAGE_KEY, JSON.stringify(workspaceData))
@@ -253,7 +265,11 @@ function AdminDashboard() {
                     </button>
                   </div>
 
-                  {projects.length > 0 ? projects.slice(0, 3).map((project) => (
+                  {projectsLoading ? (
+                    <p>Loading projects...</p>
+                  ) : projectsError ? (
+                    <p role="status">{projectsError}</p>
+                  ) : projects.length > 0 ? projects.slice(0, 3).map((project) => (
                     <div className="admin-project-row" key={project.id}>
                       <span className="admin-project-symbol">
                         {project.name.charAt(0).toUpperCase()}
@@ -331,8 +347,8 @@ function AdminDashboard() {
                 <div>
                   <strong>Dashboard preview</strong>
                   <p>
-                    Project records are saved in this browser.
-                    Other workspace records use demonstration data.
+                    Project records are saved in the database. Other workspace
+                    records are saved in this browser.
                   </p>
                 </div>
               </div>

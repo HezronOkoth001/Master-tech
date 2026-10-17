@@ -1,5 +1,8 @@
 import './App.css'
 import AdminDashboard from './AdminDashboard'
+import { useEffect, useState } from 'react'
+
+const API_URL = 'http://127.0.0.1:8000/api/projects'
 
 const services = [
   {
@@ -29,7 +32,57 @@ const services = [
 ]
 
 function App() {
-    if (window.location.pathname === '/admin') {
+  const [projects, setProjects] = useState([])
+  const [projectsLoading, setProjectsLoading] = useState(true)
+  const [projectsError, setProjectsError] = useState('')
+
+  useEffect(() => {
+    let isActive = true
+
+    async function fetchProjects() {
+      try {
+        const response = await fetch(API_URL)
+
+        if (!response.ok) {
+          throw new Error('Unable to load portfolio projects.')
+        }
+
+        const data = await response.json()
+        if (!Array.isArray(data)) {
+          throw new Error('The projects response is invalid.')
+        }
+
+        if (isActive) {
+          setProjects(
+            data.map((project) => ({
+              id: project.id,
+              name: project.title,
+              category: project.category,
+              description: project.description,
+              website: project.project_url || '',
+              status: project.status,
+            }))
+          )
+        }
+      } catch {
+        if (isActive) {
+          setProjectsError(
+            'Projects could not be loaded. Please make sure the backend is running.'
+          )
+        }
+      } finally {
+        if (isActive) setProjectsLoading(false)
+      }
+    }
+
+    fetchProjects()
+
+    return () => {
+      isActive = false
+    }
+  }, [])
+
+  if (window.location.pathname === '/admin') {
     return <AdminDashboard />
   }
   const whatsappLink =
@@ -182,7 +235,7 @@ function App() {
             </a>
           </div>
         </section>
-                <section className="portfolio-section section-padding" id="portfolio">
+              <section className="portfolio-section section-padding" id="portfolio">
           <div className="section-heading">
             <div>
               <span className="section-label">OUR PORTFOLIO</span>
@@ -194,92 +247,81 @@ function App() {
             </p>
           </div>
 
-          <div className="portfolio-grid">
-            <article className="portfolio-card">
-              <div className="portfolio-preview preview-business">
-                <span className="preview-label">DEMO PROJECT</span>
-                <div className="preview-window">
-                  <span className="preview-brand">BUSINESS<span>.</span></span>
-                  <div className="preview-lines">
-                    <i />
-                    <i />
-                    <i />
-                  </div>
-                  <div className="preview-button">Explore services</div>
-                </div>
-              </div>
-              <div className="portfolio-info">
-                <div className="project-meta">
-                  <span>Sample project</span>
-                  <span>01</span>
-                </div>
-                <h3>Business Website Concept</h3>
-                <p>A modern business website concept focused on clear services, professional branding, and customer inquiries.</p>
-                <div className="project-tags">
-                  <span>React</span><span>CSS</span><span>Responsive design</span>
-                </div>
-              </div>
-            </article>
+    <div className="portfolio-grid">
+      {projectsLoading && <p>Loading portfolio projects...</p>}
 
-            <article className="portfolio-card">
-              <div className="portfolio-preview preview-security">
-                <span className="preview-label">DEMO PROJECT</span>
-                <div className="security-panel">
-                  <div className="security-symbol">◇</div>
-                  <span>WEBSITE SECURITY</span>
-                  <strong>Protection starts here.</strong>
-                  <div className="security-line" />
-                  <div className="security-line short" />
-                </div>
-              </div>
-              <div className="portfolio-info">
-                <div className="project-meta">
-                  <span>Sample project</span>
-                  <span>02</span>
-                </div>
-                <h3>Website Security Concept</h3>
-                <p>A demonstration of how website security services can be presented to businesses in a simple, accessible way.</p>
-                <div className="project-tags">
-                  <span>Security</span><span>UI/UX</span><span>Web design</span>
-                </div>
-              </div>
-            </article>
+      {projectsError && <p role="status">{projectsError}</p>}
+      {projects.map((project, index) => (
+        <article className="portfolio-card" key={project.id}>
+          <div
+            className={`portfolio-preview ${
+              index % 3 === 0
+                ? 'preview-business'
+                : index % 3 === 1
+                  ? 'preview-security'
+                  : 'preview-education'
+            }`}
+          >
+            <span className="preview-label">
+              {project.status === 'Demo'
+                ? 'DEMO PROJECT'
+                : project.status === 'Completed'
+                  ? 'COMPLETED PROJECT'
+                  : 'IN PROGRESS'}
+            </span>
 
-            <article className="portfolio-card">
-              <div className="portfolio-preview preview-education">
-                <span className="preview-label">COMPLETED PROJECT</span>
-                <div className="education-panel">
-                  <span className="education-kicker">LEARN • CONNECT • GROW</span>
-                  <strong>Kenyan Sign Language</strong>
-                  <span className="education-caption">Learning platform concept preview</span>
-                  <div className="education-blocks"><i /><i /><i /></div>
-                </div>
+            <div className="preview-window">
+              <span className="preview-brand">{project.name}</span>
+              <div className="preview-lines">
+                <i />
+                <i />
+                <i />
               </div>
-              <div className="portfolio-info">
-                <div className="project-meta">
-                  <span>Completed project</span>
-                  <span>03</span>
-                </div>
-                <h3>Master Kenyan Sign Language</h3>
-                <p>A learning platform project built to help people discover Kenyan Sign Language learning resources.</p>
-                <div className="project-tags">
-                  <span>React</span><span>Web development</span>
-                </div>
-                <a
-                  className="service-link project-action"
-                  href="https://master-kenyan-sign-language-x4v8y7m-netwe.vercel.app/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  View live project <span>↗</span>
-                </a>
-              </div>
-            </article>
+              <div className="preview-button">{project.category}</div>
+            </div>
           </div>
-          <p className="portfolio-disclaimer">
-            Demo projects are design examples, not client work. Completed projects
-            are identified separately.
-          </p>
+
+          <div className="portfolio-info">
+            <div className="project-meta">
+              <span>
+                {project.status === 'Demo'
+                  ? 'Sample project'
+                  : project.status === 'Completed'
+                    ? 'Completed project'
+                    : 'In progress'}
+              </span>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+            </div>
+
+            <h3>{project.name}</h3>
+            <p>
+              {project.description ||
+                'Explore this project to learn more about the services and features.'}
+            </p>
+
+            <div className="project-tags">
+              <span>{project.category}</span>
+              <span>{project.status}</span>
+            </div>
+
+            {project.website && (
+              <a
+                className="service-link project-action"
+                href={project.website}
+                target="_blank"
+                rel="noreferrer"
+              >
+                View project <span>↗</span>
+              </a>
+            )}
+          </div>
+        </article>
+      ))}
+
+      {!projectsLoading && !projectsError && projects.length === 0 && (
+        <p>No projects have been added to the portfolio yet.</p>
+      )}
+    </div>
         </section>
 
         <section className="contact-section section-padding" id="contact">

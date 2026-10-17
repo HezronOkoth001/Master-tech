@@ -1,6 +1,8 @@
 
 import { useState } from 'react'
 
+const API_URL = 'http://127.0.0.1:8000/api/projects'
+
 const emptyProject = {
   name: '',
   category: 'Website Development',
@@ -13,31 +15,78 @@ function AdminProjects({ projects, setProjects }) {
   const [form, setForm] = useState(emptyProject)
   const [editingId, setEditingId] = useState(null)
   const [formOpen, setFormOpen] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [message, setMessage] = useState('')
 
   function updateField(event) {
     const { name, value } = event.target
     setForm((previous) => ({ ...previous, [name]: value }))
   }
 
-  function saveProject(event) {
+  async function saveProject(event) {
     event.preventDefault()
+    setSaving(true)
+    setMessage('')
 
-    const project = {
-      ...form,
-      id: editingId ?? Date.now(),
+    const payload = {
+      title: form.name.trim(),
+      description: form.description.trim(),
+      category: form.category,
+      status: form.status,
+      project_url: form.website.trim() || null,
+      image_url: null,
     }
 
-    if (editingId !== null) {
-      setProjects((previous) =>
-        previous.map((item) =>
-          item.id === editingId ? project : item
-        )
+    try {
+      const response = await fetch(
+        editingId !== null ? `${API_URL}/${editingId}` : API_URL,
+        {
+          method: editingId !== null ? 'PUT' : 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        }
       )
-    } else {
-      setProjects((previous) => [project, ...previous])
+
+      if (!response.ok) {
+        const error = await response.json().catch(() => null)
+        throw new Error(error?.detail || 'Could not save the project.')
+      }
+
+      await refreshProjects()
+      setMessage(
+        editingId !== null
+          ? 'Project updated successfully.'
+          : 'Project saved successfully.'
+      )
+      resetForm()
+    } catch (error) {
+      setMessage(
+        `${error.message} Make sure the backend is running at http://127.0.0.1:8000.`
+      )
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  async function refreshProjects() {
+    const response = await fetch(API_URL)
+
+    if (!response.ok) {
+      throw new Error('Could not load projects from the database.')
     }
 
-    resetForm()
+    const data = await response.json()
+
+    setProjects(
+      data.map((project) => ({
+        id: project.id,
+        name: project.title,
+        category: project.category,
+        description: project.description,
+        website: project.project_url || '',
+        status: project.status,
+      }))
+    )
   }
 
   function editProject(project) {
@@ -45,24 +94,41 @@ function AdminProjects({ projects, setProjects }) {
       name: project.name,
       category: project.category,
       description: project.description,
-      website: project.website,
+      website: project.website || '',
       status: project.status,
     })
 
     setEditingId(project.id)
     setFormOpen(true)
+    setMessage('')
   }
 
-  function deleteProject(id) {
+  async function deleteProject(id) {
     const confirmed = window.confirm(
       'Are you sure you want to delete this project?'
     )
 
     if (!confirmed) return
 
-    setProjects((previous) =>
-      previous.filter((project) => project.id !== id)
-    )
+    setMessage('')
+
+    try {
+      const response = await fetch(`${API_URL}/${id}`, {
+        method: 'DELETE',
+      })
+
+      if (!response.ok) {
+        const error = await response.json().catch(() => null)
+        throw new Error(error?.detail || 'Could not delete the project.')
+      }
+
+      await refreshProjects()
+      setMessage('Project deleted successfully.')
+    } catch (error) {
+      setMessage(
+        `${error.message} Make sure the backend is running at http://127.0.0.1:8000.`
+      )
+    }
   }
 
   function resetForm() {
@@ -88,12 +154,19 @@ function AdminProjects({ projects, setProjects }) {
               setForm(emptyProject)
               setEditingId(null)
               setFormOpen(true)
+              setMessage('')
             }
           }}
         >
           {formOpen ? 'Cancel' : '+ Add project'}
         </button>
       </div>
+
+      {message && (
+        <p role="status" aria-live="polite">
+          {message}
+        </p>
+      )}
 
       {formOpen && (
         <form className="project-form admin-panel" onSubmit={saveProject}>
@@ -164,14 +237,23 @@ function AdminProjects({ projects, setProjects }) {
           </label>
 
           <div className="project-form-actions">
-            <button className="admin-view-site" type="submit">
-              {editingId !== null ? 'Save changes' : 'Save project'}
+            <button
+              className="admin-view-site"
+              type="submit"
+              disabled={saving}
+            >
+              {saving
+                ? 'Saving...'
+                : editingId !== null
+                  ? 'Save changes'
+                  : 'Save project'}
             </button>
 
             <button
               className="project-cancel-button"
               type="button"
               onClick={resetForm}
+              disabled={saving}
             >
               Cancel
             </button>
@@ -181,7 +263,9 @@ function AdminProjects({ projects, setProjects }) {
 
       <div className="projects-count">
         <strong>{projects.length}</strong>
-        <span>{projects.length === 1 ? 'project saved' : 'projects saved'}</span>
+        <span>
+          {projects.length === 1 ? 'project saved' : 'projects saved'}
+        </span>
       </div>
 
       {projects.length === 0 ? (
@@ -201,7 +285,10 @@ function AdminProjects({ projects, setProjects }) {
       ) : (
         <div className="managed-projects-grid">
           {projects.map((project) => (
-            <article className="admin-panel managed-project-card" key={project.id}>
+            <article
+              className="admin-panel managed-project-card"
+              key={project.id}
+            >
               <div className="managed-project-top">
                 <span className="admin-project-symbol">
                   {project.name.charAt(0).toUpperCase()}
