@@ -2665,3 +2665,28 @@ body { color: #f5f8fc; background: var(--mt-black); }
   .contact-other-methods { padding: 23px 19px; }
   .contact-method-link { padding: 12px; }
 }
+
+
+/* Brand artwork for the email and social contact links */
+.contact-method-icon.brand-icon {
+  border-color: rgba(148,163,184,.18);
+  background: rgba(255,255,255,.96);
+}
+.contact-method-icon.brand-icon svg {
+  display: block;
+  width: 23px;
+  height: 23px;
+}
+.contact-method-icon.gmail-icon svg {
+  width: 25px;
+  height: 21px;
+}
+.contact-method-icon.facebook-icon {
+  color: #1877F2;
+}
+.contact-method-icon.instagram-icon {
+  background: #fff;
+}
+.contact-method-icon.reddit-icon {
+  color: #FF4500;
+}
