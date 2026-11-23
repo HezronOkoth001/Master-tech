@@ -150,7 +150,7 @@ function PageIntro({ label, title, description }) {
 const uiInspiration = [
   { title: 'Modern business website', type: 'Business website', image: 'https://1design.fr/media/generated/portfolio-hero-case-wall-v2.jpg', source: 'https://1design.fr/portfolio', credit: '1Design' },
   { title: 'Creative website layouts', type: 'Landing pages', image: 'https://assets-global.website-files.com/63a9fb94e473f36dbe99c1b1/651bc93137c3b28745d3c59a_xDLVzpjYRLmCOZs6M1u7.png', source: 'https://www.manypixels.co/blog/web-design/web-design-inspiration', credit: 'ManyPixels' },
-  { title: 'E-commerce admin dashboard', type: 'Admin dashboard', image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs/834404108113299.5fb6bb0a6877a.png', source: 'https://www.behance.net/gallery/108113299/E-Commerce-Admin-Dashboard-UI', credit: 'Behance · E-Commerce Admin UI' },
+  { title: 'E-commerce management interface', type: 'Business management UI', image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs/834404108113299.5fb6bb0a6877a.png', source: 'https://www.behance.net/gallery/108113299/E-Commerce-Admin-Dashboard-UI', credit: 'Behance · E-Commerce Admin UI' },
   { title: 'Restaurant booking experience', type: 'Restaurant & booking', image: 'https://cdn.dribbble.com/userupload/45452362/file/4214527580621af952e5c27ea7ea8323.png?resize=2048x1536&vertical=center', source: 'https://dribbble.com/tags/restaurant-booking', credit: 'Dribbble' },
   { title: 'Online store dashboard', type: 'E-commerce', image: 'https://mir-s3-cdn-cf.behance.net/project_modules/fs/a0b047185096789.655dcf28b90d0.jpg', source: 'https://www.behance.net/gallery/185096789/E-commerce-Online-Shop-Dashboard-UI-Design', credit: 'Behance · Online Shop UI' },
   { title: 'Fashion store website', type: 'E-commerce website', image: 'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/4dc26c107646469.604471a0ef54a.jpg', source: 'https://www.behance.net/gallery/107646469/E-commerce-website-landing-page-design-UI-UX-Design', credit: 'Behance · E-commerce Landing' },
@@ -158,7 +158,7 @@ const uiInspiration = [
   { title: 'Restaurant management system', type: 'Restaurant dashboard', image: 'https://unicornconnectedappsblob.blob.core.windows.net/poddle-capps/permanent/general/product-a1c08b51-5feb-4c6f-9cf7-9fc361526bde.png', source: 'https://kornex.ai/', credit: 'Kornex' },
   { title: 'Digital restaurant menu', type: 'Restaurant & ordering', image: 'https://www.qrea.pro/qrea-cover.png', source: 'https://www.qrea.pro/', credit: 'Qrea' },
   { title: 'Shopping and checkout flow', type: 'E-commerce platform', image: 'https://cdn.ostad.app/public/upload/2026-04-15T08-53-30.173Z-11.png', source: 'https://ostad.app/course/mern/projects/3', credit: 'Ostad' },
-  { title: 'Business analytics dashboard', type: 'Admin dashboard', image: 'https://nextjs.spruko.com/ynex/demo/img/ltr-main/screen2.png', source: 'https://nextjs.spruko.com/ynex/', credit: 'Ynex dashboard' },
+  { title: 'Business analytics interface', type: 'Business management UI', image: 'https://nextjs.spruko.com/ynex/demo/img/ltr-main/screen2.png', source: 'https://nextjs.spruko.com/ynex/', credit: 'Ynex dashboard' },
   { title: 'UI inspiration collection', type: 'Mixed website UI', image: 'https://cdn.prod.website-files.com/613f261bb8fac770ce93134d/65d7928ddd80fa417b1d7b66_sitesweb.webp', source: 'https://www.slidor.agency/', credit: 'Slidor' },
   { title: 'Modern interface moodboard', type: 'Mixed UI concepts', image: 'https://legiit-service.s3.amazonaws.com/0c51a37492e70b72b9c73aed0be65260/344bf1245b40ea1af2d86143ef13ae86.jpg', source: 'https://legiit.com/shnabil/design-modern-professional-ui-ux', credit: 'Legiit · UI/UX Showcase' },
   { title: 'Dark and bold web layouts', type: 'Creative websites', image: 'https://uithings.com/media/uithings/what-is-framer-1.jpg', source: 'https://uithings.com/what-is-framer', credit: 'UI Things' },
@@ -173,7 +173,7 @@ const sampleSites = [
   { id: 'education', number: '04', title: 'School & Learning', category: 'Education website', description: 'An organised learning platform for schools, training centres and online courses.', features: ['Courses and programmes', 'Learning information', 'Student enquiries'], style: 'preview-learning-ui' },
   { id: 'property', number: '05', title: 'Real Estate', category: 'Property website', description: 'A visual property listing website for agents and property businesses to showcase available homes and spaces.', features: ['Property listings', 'Price and location details', 'Viewing enquiries'], style: 'preview-property-ui' },
   { id: 'booking', number: '06', title: 'Booking & Appointments', category: 'Booking website', description: 'A simple booking experience for salons, consultants, clinics and service providers who accept appointments.', features: ['Service selection', 'Available time slots', 'Booking requests'], style: 'preview-booking-ui' },
-  { id: 'dashboard', number: '07', title: 'Admin Dashboard', category: 'Web application UI', description: 'A structured dashboard for managing business information, customers, tasks, payments and reports.', features: ['Summary cards', 'Data tables', 'Management tools'], style: 'preview-dashboard-ui' },
+  { id: 'dashboard', number: '07', title: 'Business Management System', category: 'Web application UI', description: 'A structured dashboard for managing business information, customers, tasks, payments and reports.', features: ['Summary cards', 'Data tables', 'Management tools'], style: 'preview-dashboard-ui' },
 ]
 
 function SampleSitePreview({ type }) {
@@ -219,7 +219,7 @@ function SampleSitePreview({ type }) {
   if (type === 'preview-dashboard-ui') return (
     <div className="sample-browser sample-dashboard">
       <div className="sample-dashboard-side"><b>◈　WORKSPACE</b><span>▦　 Overview</span><span>▤　 Projects</span><span>♙　 Customers</span><span>▧　 Reports</span></div>
-      <div className="sample-dashboard-main"><div className="sample-dashboard-top">Dashboard <small>Welcome back, Admin</small></div><div className="sample-dashboard-stats"><i><small>REVENUE</small><b>KES 84,500</b></i><i><small>ORDERS</small><b>128</b></i><i><small>CUSTOMERS</small><b>64</b></i></div><div className="sample-dashboard-chart"><b>Performance overview</b><div><i /><i /><i /><i /><i /><i /><i /></div></div></div>
+      <div className="sample-dashboard-main"><div className="sample-dashboard-top">Workspace overview <small>Your business at a glance</small></div><div className="sample-dashboard-stats"><i><small>REVENUE</small><b>KES 84,500</b></i><i><small>ORDERS</small><b>128</b></i><i><small>CUSTOMERS</small><b>64</b></i></div><div className="sample-dashboard-chart"><b>Performance overview</b><div><i /><i /><i /><i /><i /><i /><i /></div></div></div>
     </div>
   )
   return (
