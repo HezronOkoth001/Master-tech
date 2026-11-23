@@ -5,7 +5,9 @@ import AdminWorkspaceSections from './AdminWorkspaceSections'
 import { useEffect, useState } from 'react'
 
 const WORKSPACE_STORAGE_KEY = 'masters-tech-workspace'
-const API_URL = 'http://127.0.0.1:8000/api/projects'
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
+const API_URL = `${API_BASE_URL}/api/projects`
+const WORKSPACE_API_URL = `${API_BASE_URL}/api/workspace`
 
 const emptyWorkspaceData = {
   Clients: [],
@@ -23,30 +25,6 @@ const emptyWorkspaceData = {
     phone: '+254700806728',
     currency: 'KES',
   }],
-}
-
-function loadWorkspaceData() {
-  try {
-    const saved = localStorage.getItem(WORKSPACE_STORAGE_KEY)
-    if (!saved) return emptyWorkspaceData
-    const parsed = JSON.parse(saved)
-    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
-      return emptyWorkspaceData
-    }
-
-    return Object.fromEntries(
-      Object.entries(emptyWorkspaceData).map(([section, defaults]) => [
-        section,
-        Array.isArray(parsed[section])
-          ? parsed[section].filter(
-              (record) => record && typeof record === 'object' && !Array.isArray(record)
-            )
-          : defaults,
-      ])
-    )
-  } catch {
-    return emptyWorkspaceData
-  }
 }
 
 const navigation = [
@@ -78,7 +56,9 @@ function AdminDashboard() {
   const [projects, setProjects] = useState([])
   const [projectsLoading, setProjectsLoading] = useState(true)
   const [projectsError, setProjectsError] = useState('')
-  const [workspaceData, setWorkspaceData] = useState(loadWorkspaceData)
+  const [workspaceData, setWorkspaceData] = useState(emptyWorkspaceData)
+  const [workspaceLoading, setWorkspaceLoading] = useState(true)
+  const [workspaceError, setWorkspaceError] = useState('')
 
   useEffect(() => {
     let isActive = true
@@ -109,11 +89,67 @@ function AdminDashboard() {
   }, [])
 
   useEffect(() => {
-    localStorage.setItem(WORKSPACE_STORAGE_KEY, JSON.stringify(workspaceData))
-  }, [workspaceData])
+    let isActive = true
 
-  function updateWorkspaceSection(section, records) {
-    setWorkspaceData((previous) => ({ ...previous, [section]: records }))
+    async function loadWorkspace() {
+      try {
+        let legacyData = {}
+        try {
+          legacyData = JSON.parse(localStorage.getItem(WORKSPACE_STORAGE_KEY) || '{}')
+        } catch {
+          legacyData = {}
+        }
+
+        const sections = Object.keys(emptyWorkspaceData)
+        const entries = await Promise.all(sections.map(async (section) => {
+          const response = await fetch(`${WORKSPACE_API_URL}/${section.toLowerCase()}`)
+          if (!response.ok) throw new Error(`Could not load ${section.toLowerCase()} records.`)
+          let records = await response.json()
+
+          // Import records from the previous browser-only version once, when the database section is empty.
+          if (records.length === 0 && Array.isArray(legacyData[section]) && legacyData[section].length > 0) {
+            const migrationResponse = await fetch(`${WORKSPACE_API_URL}/${section.toLowerCase()}`, {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(legacyData[section]),
+            })
+            if (!migrationResponse.ok) throw new Error(`Could not migrate ${section.toLowerCase()} records.`)
+            records = await migrationResponse.json()
+          }
+
+          if (section === 'Settings' && records.length === 0) {
+            records = emptyWorkspaceData.Settings
+          }
+          return [section, records]
+        }))
+
+        if (isActive) setWorkspaceData(Object.fromEntries(entries))
+      } catch (error) {
+        if (isActive) setWorkspaceError(error.message || 'Could not load workspace records.')
+      } finally {
+        if (isActive) setWorkspaceLoading(false)
+      }
+    }
+
+    loadWorkspace()
+    return () => { isActive = false }
+  }, [])
+
+  async function updateWorkspaceSection(section, records) {
+    const response = await fetch(`${WORKSPACE_API_URL}/${section.toLowerCase()}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(records),
+    })
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => null)
+      throw new Error(error?.detail || `Could not save ${section.toLowerCase()} records.`)
+    }
+
+    const savedRecords = await response.json()
+    setWorkspaceData((previous) => ({ ...previous, [section]: savedRecords }))
+    return savedRecords
   }
 
   const activeClients = workspaceData.Clients.filter((client) => client.status === 'Active').length
@@ -185,6 +221,7 @@ function AdminDashboard() {
         </header>
 
         <section className="admin-content">
+          {workspaceError && <div className="admin-notice" role="alert"><span className="notice-icon">!</span><div><strong>Workspace connection problem</strong><p>{workspaceError} Check that the backend is running and the database is reachable.</p></div></div>}
           <div className="admin-welcome">
             <div>
               <span className="admin-eyebrow">
@@ -347,12 +384,13 @@ function AdminDashboard() {
                 <div>
                   <strong>Dashboard preview</strong>
                   <p>
-                    Project records are saved in the database. Other workspace
-                    records are saved in this browser.
+                    Projects and workspace records are stored in PostgreSQL.
                   </p>
                 </div>
               </div>
             </>
+          ) : workspaceLoading ? (
+            <div className="admin-panel"><p>Loading workspace records from the database...</p></div>
           ) : activePage === 'Projects' ? (
             <AdminProjects projects={projects} setProjects={setProjects} />
           ) : (
