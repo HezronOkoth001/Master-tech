@@ -3,7 +3,6 @@ import AdminDashboard from './AdminDashboard'
 import { useEffect, useState } from 'react'
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
-const API_URL = `${API_BASE}/api/projects`
 const REVIEWS_API_URL = `${API_BASE}/api/reviews`
 const PROMOTION_API_URL = `${API_BASE}/api/public/promotion`
 
@@ -115,7 +114,7 @@ function SiteHeader({ whatsappLink }) {
         <a href="/">Home</a>
         <a href="/about">About</a>
         <a href="/services">Services</a>
-        <a href="/portfolio">Portfolio</a>
+        <a href="/sample-sites">Sample Sites</a>
         <a className="nav-review-link" href="/reviews">Reviews</a>
         <a href="/contact">Contact</a>
       </nav>
@@ -146,12 +145,78 @@ function PageIntro({ label, title, description }) {
   )
 }
 
+
+const sampleSites = [
+  { id: 'business', number: '01', title: 'Business & Corporate', category: 'Business website', description: 'A clean, professional website for a company that wants to explain its services, build trust and receive enquiries.', features: ['Company overview', 'Services and team', 'Contact enquiries'], style: 'preview-business-ui' },
+  { id: 'shop', number: '02', title: 'Online Store', category: 'E-commerce', description: 'A product-focused online shop with product cards, categories, prices and a clear shopping experience.', features: ['Product catalogue', 'Shopping cart layout', 'Promotions and offers'], style: 'preview-shop-ui' },
+  { id: 'restaurant', number: '03', title: 'Restaurant & Café', category: 'Food and hospitality', description: 'A welcoming design for restaurants, cafés and food businesses to display menus and make it easy to get in touch.', features: ['Menu highlights', 'Food photography layout', 'Reservations and location'], style: 'preview-food-ui' },
+  { id: 'education', number: '04', title: 'School & Learning', category: 'Education website', description: 'An organised learning platform for schools, training centres and online courses.', features: ['Courses and programmes', 'Learning information', 'Student enquiries'], style: 'preview-learning-ui' },
+  { id: 'property', number: '05', title: 'Real Estate', category: 'Property website', description: 'A visual property listing website for agents and property businesses to showcase available homes and spaces.', features: ['Property listings', 'Price and location details', 'Viewing enquiries'], style: 'preview-property-ui' },
+  { id: 'booking', number: '06', title: 'Booking & Appointments', category: 'Booking website', description: 'A simple booking experience for salons, consultants, clinics and service providers who accept appointments.', features: ['Service selection', 'Available time slots', 'Booking requests'], style: 'preview-booking-ui' },
+  { id: 'dashboard', number: '07', title: 'Admin Dashboard', category: 'Web application UI', description: 'A structured dashboard for managing business information, customers, tasks, payments and reports.', features: ['Summary cards', 'Data tables', 'Management tools'], style: 'preview-dashboard-ui' },
+]
+
+function SampleSitePreview({ type }) {
+  if (type === 'preview-shop-ui') return (
+    <div className="sample-browser sample-shop">
+      <div className="sample-browser-bar"><i /><i /><i /><span>YOURSTORE.COM</span></div>
+      <div className="sample-shop-nav"><b>SHOP<span>NOW.</span></b><small>NEW IN　 WOMEN　 MEN　 HOME</small><strong>⌕　♙　▢</strong></div>
+      <div className="sample-shop-hero"><div><small>THE NEW COLLECTION</small><b>Find your<br />everyday style.</b><em>SHOP COLLECTION　↗</em></div><div className="sample-fashion-shape"><i /><b /></div></div>
+      <div className="sample-product-row"><i /><i /><i /></div>
+    </div>
+  )
+  if (type === 'preview-food-ui') return (
+    <div className="sample-browser sample-food">
+      <div className="sample-browser-bar"><i /><i /><i /><span>THEGARDEN.CAFE</span></div>
+      <div className="sample-food-nav"><b>the garden.</b><small>MENU　 OUR STORY　 FIND US</small></div>
+      <div className="sample-food-hero"><small>FRESH · LOCAL · MADE WITH LOVE</small><b>Good food.<br />Good mood.</b><span>EXPLORE OUR MENU　↗</span></div>
+      <div className="sample-food-menu"><i /><i /><i /></div>
+    </div>
+  )
+  if (type === 'preview-learning-ui') return (
+    <div className="sample-browser sample-learning">
+      <div className="sample-browser-bar"><i /><i /><i /><span>LEARNHUB.ACADEMY</span></div>
+      <div className="sample-learning-nav"><b>learn<span>hub.</span></b><small>COURSES　 ABOUT　 RESOURCES</small></div>
+      <div className="sample-learning-hero"><div><small>LEARN SOMETHING NEW</small><b>Skills for your<br />next chapter.</b><span>EXPLORE COURSES</span></div><div className="sample-learning-art"><i>✦</i><b>LEARN<br />GROW<br />ACHIEVE</b></div></div>
+      <div className="sample-learning-bottom"><i /><i /><i /></div>
+    </div>
+  )
+  if (type === 'preview-property-ui') return (
+    <div className="sample-browser sample-property">
+      <div className="sample-browser-bar"><i /><i /><i /><span>HOMESPACES.CO</span></div>
+      <div className="sample-property-nav"><b>H<span>O</span>ME / SPACE</b><small>BUY　 RENT　 SELL</small></div>
+      <div className="sample-property-hero"><small>FIND A PLACE TO CALL HOME</small><b>Spaces that<br />feel like yours.</b><div className="sample-property-search">Location　⌄　 Property type　⌄　 <strong>SEARCH</strong></div></div>
+      <div className="sample-property-list"><i /><i /></div>
+    </div>
+  )
+  if (type === 'preview-booking-ui') return (
+    <div className="sample-browser sample-booking">
+      <div className="sample-browser-bar"><i /><i /><i /><span>BOOKMYTIME.COM</span></div>
+      <div className="sample-booking-nav"><b>studio<span>+</span></b><small>SERVICES　 OUR TEAM　 CONTACT</small></div>
+      <div className="sample-booking-hero"><div><small>YOUR TIME, YOUR WAY</small><b>Make time<br />for yourself.</b><span>BOOK AN APPOINTMENT</span></div><div className="sample-calendar"><b>SELECT A DATE</b><div> M　 T　 W　 T　 F</div><strong> 12　13　14　15　16</strong><small>AVAILABLE TIMES</small><i>09:00　 11:30　 14:00</i></div></div>
+    </div>
+  )
+  if (type === 'preview-dashboard-ui') return (
+    <div className="sample-browser sample-dashboard">
+      <div className="sample-dashboard-side"><b>◈　WORKSPACE</b><span>▦　 Overview</span><span>▤　 Projects</span><span>♙　 Customers</span><span>▧　 Reports</span></div>
+      <div className="sample-dashboard-main"><div className="sample-dashboard-top">Dashboard <small>Welcome back, Admin</small></div><div className="sample-dashboard-stats"><i><small>REVENUE</small><b>KES 84,500</b></i><i><small>ORDERS</small><b>128</b></i><i><small>CUSTOMERS</small><b>64</b></i></div><div className="sample-dashboard-chart"><b>Performance overview</b><div><i /><i /><i /><i /><i /><i /><i /></div></div></div>
+    </div>
+  )
+  return (
+    <div className="sample-browser sample-business">
+      <div className="sample-browser-bar"><i /><i /><i /><span>YOURBUSINESS.CO.KE</span></div>
+      <div className="sample-business-nav"><b>BRAND<span>.</span></b><small>HOME　 ABOUT　 SERVICES　 CONTACT</small></div>
+      <div className="sample-business-hero"><small>WELCOME TO YOUR BUSINESS</small><b>Ideas into<br />experiences.</b><p>A professional online home for your brand.</p><span>DISCOVER MORE　↗</span></div>
+      <div className="sample-business-bottom"><i /><i /><i /></div>
+    </div>
+  )
+}
+
 function App() {
-  const [projects, setProjects] = useState([])
-  const [projectsLoading, setProjectsLoading] = useState(true)
-  const [projectsError, setProjectsError] = useState('')
   const [promotion, setPromotion] = useState(null)
-  const pathname = window.location.pathname.replace(/\/$/, '') || '/'
+  const requestedPathname = window.location.pathname.replace(/\/$/, '') || '/'
+  const pathname = requestedPathname === '/portfolio' ? '/sample-sites' : requestedPathname
+  if (requestedPathname === '/portfolio') window.history.replaceState(null, '', '/sample-sites')
   const whatsappLink = 'https://wa.me/254700806728?text=' + encodeURIComponent('Hello Masters Tech, I would like to know more about your services.')
 
   useEffect(() => {
@@ -159,7 +224,7 @@ function App() {
       '/': ['Masters Tech | Website Development, Security & SEO', 'Masters Tech helps businesses build professional websites, improve website security and grow online visibility through SEO and Google Maps.'],
       '/about': ['About Masters Tech | Digital Solutions for Businesses', 'Learn about Masters Tech, our approach to website development, website security and helping businesses improve their online presence.'],
       '/services': ['Website Development, Security & SEO Services | Masters Tech', 'Explore Masters Tech services: business website development, website maintenance and security, search engine optimization and Google Maps visibility.'],
-      '/portfolio': ['Website Development Portfolio | Masters Tech', 'View website projects and digital solutions created by Masters Tech for businesses and organisations.'],
+      '/sample-sites': ['Website Design Samples & UI Ideas | Masters Tech', 'Explore sample website designs for business websites, online shops, restaurants, education, property listings and booking platforms. Choose a style for your next website.'],
       '/contact': ['Contact Masters Tech | Request a Website or SEO Service', 'Contact Masters Tech to discuss a business website, website security, SEO, Google Maps visibility or a custom web project.'],
       '/reviews': ['Customer Reviews | Masters Tech', 'Read customer feedback and share your experience working with Masters Tech.'],
     }
@@ -181,29 +246,6 @@ function App() {
       .catch(() => {})
     return () => { active = false }
   }, [])
-
-  useEffect(() => {
-    if (pathname !== '/portfolio') return undefined
-    let active = true
-    async function fetchProjects() {
-      try {
-        const response = await fetch(API_URL)
-        if (!response.ok) throw new Error('Unable to load portfolio projects.')
-        const data = await response.json()
-        if (!Array.isArray(data)) throw new Error('The projects response is invalid.')
-        if (active) setProjects(data.map((project) => ({
-          id: project.id, name: project.title, category: project.category,
-          description: project.description, website: project.project_url || '', status: project.status,
-        })))
-      } catch {
-        if (active) setProjectsError('Projects could not be loaded. Please make sure the backend is running.')
-      } finally {
-        if (active) setProjectsLoading(false)
-      }
-    }
-    fetchProjects()
-    return () => { active = false }
-  }, [pathname])
 
   if (pathname === '/admin') return <AdminDashboard />
 
@@ -293,7 +335,7 @@ function App() {
           <div className="discovery-links">
             <a href="/about">Learn about us <span>↗</span></a>
             <a href="/services">Explore our services <span>↗</span></a>
-            <a href="/portfolio">View our portfolio <span>↗</span></a>
+            <a href="/sample-sites">Explore sample UIs <span>↗</span></a>
             <a href="/contact">Contact our team <span>↗</span></a>
           </div>
         </section>
@@ -373,96 +415,40 @@ function App() {
         </section>
       </>
     ),
-    '/portfolio': (
+    '/sample-sites': (
       <>
-        <PageIntro label="OUR PORTFOLIO" title={<>Selected website projects and <span>digital work.</span></>} description="Explore examples of website development and digital solutions. Each project gives you an idea of the work Masters Tech can deliver." />
-<section className="portfolio-section section-padding" id="portfolio">
+        <PageIntro label="SAMPLE SITES & UI IDEAS" title={<>Explore website styles for <span>your next idea.</span></>} description="Browse different website layouts and visual styles. These samples help you explain what you like and help us understand the kind of website you want us to build." />
+        <section className="sample-sites-section section-padding">
           <div className="section-heading">
             <div>
-              <span className="section-label">OUR PORTFOLIO</span>
-              <h2>Projects built with <span>purpose.</span></h2>
+              <span className="section-label">DESIGN INSPIRATION</span>
+              <h2>What type of website do you <span>have in mind?</span></h2>
             </div>
-            <p>
-              Explore our demonstrations and completed work. Each project
-              shows the kind of digital solutions we can create.
-            </p>
+            <p>Choose a sample as a starting point. We can adjust the colours, sections and features to suit your business.</p>
           </div>
-
-    <div className="portfolio-grid">
-      {projectsLoading && <p>Loading portfolio projects...</p>}
-
-      {projectsError && <p role="status">{projectsError}</p>}
-      {projects.map((project, index) => (
-        <article className="portfolio-card" key={project.id}>
-          <div
-            className={`portfolio-preview ${
-              index % 3 === 0
-                ? 'preview-business'
-                : index % 3 === 1
-                  ? 'preview-security'
-                  : 'preview-education'
-            }`}
-          >
-            <span className="preview-label">
-              {project.status === 'Demo'
-                ? 'DEMO PROJECT'
-                : project.status === 'Completed'
-                  ? 'COMPLETED PROJECT'
-                  : 'IN PROGRESS'}
-            </span>
-
-            <div className="preview-window">
-              <span className="preview-brand">{project.name}</span>
-              <div className="preview-lines">
-                <i />
-                <i />
-                <i />
-              </div>
-              <div className="preview-button">{project.category}</div>
-            </div>
+          <div className="sample-sites-grid">
+            {sampleSites.map((sample) => (
+              <article className="sample-site-card" key={sample.id}>
+                <div className={`sample-site-visual ${sample.style}`}>
+                  <SampleSitePreview type={sample.style} />
+                  <span className="sample-visual-tag">UI CONCEPT</span>
+                </div>
+                <div className="sample-site-info">
+                  <div className="sample-site-meta"><span>{sample.category}</span><small>{sample.number}</small></div>
+                  <h2>{sample.title}</h2>
+                  <p>{sample.description}</p>
+                  <ul>{sample.features.map((feature) => <li key={feature}><span>✓</span>{feature}</li>)}</ul>
+                  <a className="sample-site-action" href={`https://wa.me/254700806728?text=${encodeURIComponent(`Hello Masters Tech, I am interested in the ${sample.title} sample UI. I would like to discuss a similar website for my business.`)}`} target="_blank" rel="noreferrer">Discuss this design <span>↗</span></a>
+                </div>
+              </article>
+            ))}
           </div>
-
-          <div className="portfolio-info">
-            <div className="project-meta">
-              <span>
-                {project.status === 'Demo'
-                  ? 'Sample project'
-                  : project.status === 'Completed'
-                    ? 'Completed project'
-                    : 'In progress'}
-              </span>
-              <span>{String(index + 1).padStart(2, '0')}</span>
-            </div>
-
-            <h3>{project.name}</h3>
-            <p>
-              {project.description ||
-                'Explore this project to learn more about the services and features.'}
-            </p>
-
-            <div className="project-tags">
-              <span>{project.category}</span>
-              <span>{project.status}</span>
-            </div>
-
-            {project.website && (
-              <a
-                className="service-link project-action"
-                href={project.website}
-                target="_blank"
-                rel="noreferrer"
-              >
-                View project <span>↗</span>
-              </a>
-            )}
-          </div>
-        </article>
-      ))}
-
-      {!projectsLoading && !projectsError && projects.length === 0 && (
-        <p>No projects have been added to the portfolio yet.</p>
-      )}
-    </div>
+          <p className="sample-sites-note">These are visual design concepts to help you choose a direction. They are not live websites or completed client projects. Your final website can be customised to your content, brand and requirements.</p>
+        </section>
+        <section className="inner-content-section section-padding">
+          <h2>Have a different design in mind?</h2>
+          <p>Send us a reference, describe your idea or choose one of the samples above. We can discuss a design that fits your business.</p>
+          <a className="button-primary" href={whatsappLink} target="_blank" rel="noreferrer">Discuss your website idea <span>↗</span></a>
         </section>
       </>
     ),
