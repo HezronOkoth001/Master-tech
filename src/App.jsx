@@ -309,6 +309,11 @@ function App() {
                 Explore our designs <span>↓</span>
               </a>
             </div>
+            <a className="hero-whatsapp-link" href={whatsappLink} target="_blank" rel="noreferrer" aria-label="Chat with Masters Tech on WhatsApp">
+              <svg viewBox="0 0 32 32" role="img" aria-hidden="true"><path d="M16 3.2A12.7 12.7 0 0 0 5.1 22.4L3.4 28.7l6.5-1.7A12.8 12.8 0 1 0 16 3.2Z" /><path d="M12.1 10.2c-.3-.7-.7-.7-1-.7h-.8c-.3 0-.8.1-1.2.6-.4.5-1.5 1.5-1.5 3.6s1.5 4.1 1.7 4.4c.2.3 2.9 4.6 7.1 6.2 3.5 1.4 4.2 1.1 5 .9.8-.1 2.5-1 2.9-2 .4-1 .4-1.8.3-2-.1-.2-.4-.3-.8-.5l-2.8-1.4c-.4-.2-.7-.2-1 .2-.3.4-1.1 1.4-1.4 1.7-.3.3-.5.3-.9.1-.4-.2-1.8-.7-3.4-2.1-1.3-1.1-2.1-2.5-2.4-2.9-.2-.4 0-.6.2-.8l.7-.8c.2-.3.3-.5.5-.8.1-.3 0-.6 0-.8l-1.2-2.9Z" /></svg>
+              <span>Prefer WhatsApp? <strong>Chat with us directly</strong></span>
+              <span className="hero-whatsapp-arrow">↗</span>
+            </a>
             <div className="hero-note">
               <span className="note-line" />
               <span>WEBSITE DEVELOPMENT · SEO · GOOGLE VISIBILITY</span>
@@ -330,8 +335,15 @@ function App() {
                 <div className="laptop-browser-bar"><i /><i /><i /><span>yourbusiness.co.ke</span></div>
                 <div className="laptop-site-preview">
                   <div className="laptop-site-nav"><b>YOUR BRAND<span>.</span></b><small>HOME　 ABOUT　 SERVICES　 CONTACT</small></div>
-                  <div className="laptop-site-hero"><small>WELCOME TO YOUR NEXT CHAPTER</small><b>Make your<br />business shine.</b><span>DISCOVER MORE ↗</span></div>
-                  <div className="laptop-site-bottom"><i /><i /><i /></div>
+                  <div className="laptop-site-hero">
+                    <div className="laptop-site-copy"><small>WELCOME TO YOUR NEXT CHAPTER</small><b>Make your<br />business shine.</b><span>DISCOVER MORE ↗</span></div>
+                    <div className="laptop-site-art" aria-hidden="true"><div className="laptop-art-orbit"><i /><i /><i /></div><div className="laptop-art-card"><small>GROW ONLINE</small><b>+48%</b><span>More visibility</span><div /></div></div>
+                  </div>
+                  <div className="laptop-site-bottom">
+                    <div><i>✦</i><span><b>Stand out online</b><small>A polished first impression</small></span></div>
+                    <div><i>↗</i><span><b>Reach more people</b><small>Be easier to discover</small></span></div>
+                    <div><i>◎</i><span><b>Built for every screen</b><small>Mobile-friendly design</small></span></div>
+                  </div>
                 </div>
               </div>
               <div className="laptop-base"><span /></div>
