@@ -318,7 +318,7 @@ function AdminWorkspaceSections({ section, records = [], clients = [], onChange 
                 ) : field.type === 'textarea' ? (
                   <textarea value={form[field.name] ?? ''} onChange={(event) => setForm((old) => ({ ...old, [field.name]: event.target.value }))} required={field.required} rows={3} maxLength={2000} />
                 ) : (
-                  <input type={field.type || 'text'} value={form[field.name] ?? ''} onChange={(event) => setForm((old) => ({ ...old, [field.name]: event.target.value }))} required={field.required} maxLength={field.type === 'number' ? undefined : 250} min={field.type === 'number' ? '0' : undefined} step={field.type === 'number' ? '0.01' : undefined} />
+                  <input type={field.type || 'text'} value={form[field.name] ?? ''} onChange={(event) => setForm((old) => ({ ...old, [field.name]: event.target.value }))} required={field.required} maxLength={field.type === 'number' ? undefined : 250} min={field.type === 'number' ? '0' : undefined} max={field.name === 'taxRate' ? '100' : undefined} step={field.type === 'number' ? '0.01' : undefined} />
                 )}
               </label>
             ))}
