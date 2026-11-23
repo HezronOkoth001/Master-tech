@@ -353,7 +353,7 @@ function AdminWorkspaceSections({ section, records = [], clients = [], onChange 
         <div className="admin-panel workspace-table-wrap">
           <div className="workspace-table-scroll">
             <table className="workspace-table">
-              <thead><tr>{schema.columns.map((key) => <th key={key}>{schema.fields.find((field) => field.name === key)?.label || key}</th>)}<th>Actions</th></tr></thead>
+              <thead><tr>{schema.columns.map((key) => <th key={key}>{key === 'totalAmount' ? 'Total (KES)' : schema.fields.find((field) => field.name === key)?.label || key}</th>)}<th>Actions</th></tr></thead>
               <tbody>
                 {visibleRecords.map((record) => (
                   <tr key={record.id}>
