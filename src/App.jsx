@@ -71,7 +71,7 @@ function PublicReviewForm() {
   }
 
   return (
-    <section className="reviews-section section-padding" id="reviews">
+    <section className="reviews-section section-padding" id="customer-reviews">
       <div className="section-heading">
         <div>
           <span className="section-label">CLIENT FEEDBACK</span>
@@ -91,7 +91,7 @@ function PublicReviewForm() {
           ))}
         </div>
       )}
-      <form className="public-review-form" onSubmit={submitReview}>
+      <form className="public-review-form" id="write-review" onSubmit={submitReview}>
         <div className="public-review-grid">
           <label>
             Your name *
@@ -194,6 +194,45 @@ function App() {
     'https://wa.me/254700806728?text=' +
     encodeURIComponent('Hello Masters Tech, I would like to know more about your services.')
 
+  if (window.location.pathname === '/reviews') {
+    return (
+      <div className="site-wrapper reviews-page-wrapper">
+        <header className="navbar">
+          <a className="brand" href="/" aria-label="Masters Tech home">
+            <span className="brand-mark">M</span>
+            <span><strong>MASTERS</strong><small>TECH</small></span>
+          </a>
+          <nav className="nav-links">
+            <a href="/">Home</a>
+            <a href="#customer-reviews">Customer reviews</a>
+            <a href="#write-review">Write a review</a>
+          </nav>
+          <a className="nav-cta" href={whatsappLink} target="_blank" rel="noreferrer">Let's Talk <span>↗</span></a>
+        </header>
+        <main>
+          <section className="reviews-page-intro">
+            <span className="section-label">MASTERS TECH · CUSTOMER FEEDBACK</span>
+            <h1>What customers <span>are saying.</span></h1>
+            <p>Read experiences from people who have worked with Masters Tech, or share your own experience.</p>
+            <div className="reviews-page-actions">
+              <a className="button-secondary" href="#customer-reviews">See customer reviews <span>↓</span></a>
+              <a className="button-primary" href="#write-review">Write a review <span>↗</span></a>
+            </div>
+          </section>
+          <PublicReviewForm />
+        </main>
+        <footer className="footer">
+          <a className="brand footer-brand" href="/">
+            <span className="brand-mark">M</span>
+            <span><strong>MASTERS</strong><small>TECH</small></span>
+          </a>
+          <p>Digital solutions for a stronger online presence.</p>
+          <span>© {new Date().getFullYear()} Masters Tech. All rights reserved.</span>
+        </footer>
+      </div>
+    )
+  }
+
   return (
     <div className="site-wrapper">
       <header className="navbar">
@@ -210,7 +249,7 @@ function App() {
           <a href="#about">About</a>
           <a href="#services">Services</a>
             <a href="#portfolio">Portfolio</a>
-          <a href="#reviews">Reviews</a>
+          <a className="nav-review-link" href="/reviews">Reviews</a>
           <a href="#contact">Contact</a>
         </nav>
 
@@ -442,8 +481,6 @@ function App() {
       )}
     </div>
         </section>
-
-        <PublicReviewForm />
 
         <section className="contact-section section-padding" id="contact">
           <span className="section-label">HAVE A PROJECT IN MIND?</span>
