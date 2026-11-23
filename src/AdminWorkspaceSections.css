@@ -31,3 +31,6 @@
 .message-composer h3 { margin: 0; color: #fff; font-size: 16px; }
 .message-composer-help { margin: 0; color: #aeb1bd; font-size: 12px; line-height: 1.6; }
 .message-composer .project-form-actions { margin-top: 0; }
+
+.invoice-calculation { display: flex; flex-wrap: wrap; gap: 14px 24px; padding: 14px 16px; border: 1px solid #3a3b45; border-radius: 8px; background: #171922; color: #aeb1bd; font-size: 12px; }
+.invoice-calculation strong { color: #e5c653; }
