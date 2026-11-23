@@ -222,6 +222,7 @@ function AdminDashboard() {
   const activeClients = workspaceData.Clients.filter((client) => client.status === 'Active').length
   const openLeads = workspaceData.Leads.filter((lead) => !['Won', 'Lost'].includes(lead.status)).length
   const pendingTasks = workspaceData.Tasks.filter((task) => task.status !== 'Done').length
+  const pendingReviews = workspaceData.Reviews.filter((review) => review.status === 'Pending approval').length
 
   return (
     <div className="admin-layout">
@@ -441,6 +442,19 @@ function AdminDashboard() {
                       <strong>Review tasks</strong>
                       <small>Keep your work organized</small>
                     </span>
+                    <span className="quick-action-arrow">↗</span>
+                  </button>
+
+                  <button
+                    className="admin-quick-action admin-review-quick-action"
+                    onClick={() => setActivePage('Reviews')}
+                  >
+                    <span className="quick-action-icon">★</span>
+                    <span>
+                      <strong>Manage customer reviews</strong>
+                      <small>{pendingReviews > 0 ? pendingReviews + ' waiting for your approval' : 'Approve, edit or hide website reviews'}</small>
+                    </span>
+                    {pendingReviews > 0 && <span className="admin-review-pending-count">{pendingReviews}</span>}
                     <span className="quick-action-arrow">↗</span>
                   </button>
                 </section>
