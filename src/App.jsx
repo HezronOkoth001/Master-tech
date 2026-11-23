@@ -487,7 +487,7 @@ function App() {
             </div>
           )}
           <p className="sample-sites-note">The Explore more UIs gallery displays externally sourced design inspiration. Images remain hosted by their original publishers and belong to their respective creators. Select an image to visit its source. Use these examples as inspiration for a custom design, not as finished Masters Tech projects.</p>
-          <p className="sample-sites-note">These are visual design concepts to help you choose a direction. They are not live websites or completed client projects. Your final website can be customised to your content, brand and requirements.</p> to help you choose a direction. They are not live websites or completed client projects. Your final website can be customised to your content, brand and requirements.</p>
+          <p className="sample-sites-note">Our sample-site concepts above are starting points, not live websites or completed client projects. Your final website can be customised to your content, brand and requirements.</p>
         </section>
         <section className="inner-content-section section-padding">
           <h2>Have a different design in mind?</h2>
