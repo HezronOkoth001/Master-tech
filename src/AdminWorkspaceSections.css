@@ -66,3 +66,18 @@
 .invoice-calculation { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); }
 .invoice-calculation span { display: flex; justify-content: space-between; gap: 8px; }
 .invoice-calculation span:last-child { color: #fff; font-weight: 700; }
+
+
+/* Public homepage promotion controls in the Pricing tab */
+.public-promotion-editor { display: grid; gap: 17px; }
+.public-promotion-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.public-promotion-heading h3 { margin: 0 0 7px; color: #fff; font-size: 16px; }
+.public-promotion-heading p { max-width: 680px; margin: 0; color: #aeb1bd; font-size: 12px; line-height: 1.6; }
+.promotion-status { flex: 0 0 auto; padding: 6px 9px; border: 1px solid #555; border-radius: 20px; color: #c6c8d0; font-size: 9px; font-weight: 700; letter-spacing: .8px; }
+.promotion-status.is-active { border-color: #287a4c; color: #86dfa7; background: rgba(40,122,76,.12); }
+.promotion-choice-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.promotion-choice { min-width: 116px; padding: 13px 18px; border: 1px solid #55515a; border-radius: 7px; background: #171922; color: #fff; font-size: 15px; font-weight: 800; cursor: pointer; }
+.promotion-choice.selected { border-color: #e5c653; background: rgba(212,175,55,.15); color: #f1d66f; box-shadow: inset 0 0 0 1px #e5c653; }
+.promotion-toggle { display: flex; align-items: center; gap: 10px; color: #e5e7eb; font-size: 12px; }
+.promotion-toggle input { width: 16px; height: 16px; accent-color: #d4af37; }
+@media (max-width: 650px) { .public-promotion-heading { flex-direction: column; } }
