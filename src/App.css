@@ -1321,3 +1321,23 @@ a {
 .sample-sites-note { margin: 25px 0 0; padding: 15px 18px; border-left: 2px solid var(--gold); background: #151a25; color: #aeb4c0; font-size: 11px; line-height: 1.8; }
 @media (max-width: 900px) { .sample-sites-grid { grid-template-columns: 1fr; } .sample-site-card { max-width: 680px; width: 100%; margin: 0 auto; } }
 @media (max-width: 600px) { .sample-site-visual { height: 225px; padding: 13px; } .sample-browser { height: 195px; } .sample-business-hero, .sample-shop-hero, .sample-food-hero, .sample-learning-hero, .sample-property-hero { height: 117px; } .sample-booking-hero { height: 145px; } .sample-site-info { padding: 19px; } .sample-site-info > p { min-height: 0; } .sample-site-info ul { grid-template-columns: 1fr; } .sample-business-hero b, .sample-shop-hero b, .sample-food-hero b, .sample-learning-hero b, .sample-property-hero b, .sample-booking-hero b { font-size: 21px; } }
+
+
+/* External UI inspiration gallery */
+.sample-sites-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin: 28px 0 25px; padding-bottom: 14px; border-bottom: 1px solid #2b303c; }
+.sample-sites-tabs button { display: inline-flex; align-items: center; gap: 9px; padding: 11px 16px; border: 1px solid #353b49; border-radius: 6px; background: #151a25; color: #c4c9d2; font: inherit; font-size: 12px; cursor: pointer; transition: .2s ease; }
+.sample-sites-tabs button:hover { border-color: var(--gold); color: #fff; }
+.sample-sites-tabs button.active { border-color: var(--gold); background: rgba(212,175,55,.12); color: #f3d36a; }
+.sample-sites-tabs button span { padding: 3px 6px; border-radius: 20px; background: #303644; color: #e1c45d; font-size: 9px; }
+.ui-inspiration-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 20px; }
+.ui-inspiration-card { min-width: 0; overflow: hidden; border: 1px solid #292e3a; border-radius: 8px; background: #111722; }
+.ui-inspiration-image { position: relative; display: block; height: 225px; overflow: hidden; background: #202735; }
+.ui-inspiration-image img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+.ui-inspiration-image:hover img { transform: scale(1.045); }
+.ui-inspiration-image > span { position: absolute; right: 10px; bottom: 10px; padding: 7px 9px; border-radius: 4px; background: rgba(9,13,20,.88); color: #f1d36b; font-size: 10px; }
+.ui-inspiration-info { padding: 14px 15px 16px; }
+.ui-inspiration-info small { color: var(--gold); font-size: 9px; letter-spacing: .7px; text-transform: uppercase; }
+.ui-inspiration-info h3 { margin: 8px 0 6px; color: #f1f2f4; font-size: 14px; }
+.ui-inspiration-info p { margin: 0; color: #8f98a8; font-size: 10px; }
+@media (max-width: 900px) { .ui-inspiration-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 560px) { .ui-inspiration-grid { grid-template-columns: 1fr; } .ui-inspiration-image { height: 230px; } .sample-sites-tabs button { flex: 1; justify-content: center; } }
