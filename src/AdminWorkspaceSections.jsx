@@ -130,6 +130,14 @@ function money(value) {
   return 'KES ' + Number(value || 0).toLocaleString('en-KE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 }
 
+function nextDocumentNumber(records) {
+  const highest = records.reduce((max, record) => {
+    const match = String(record.invoiceNumber || '').match(/^MT-(\\d+)$/)
+    return match ? Math.max(max, Number(match[1])) : max
+  }, 0)
+  return 'MT-' + String(highest + 1).padStart(4, '0')
+}
+
 function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char])
 }
@@ -169,8 +177,7 @@ function AdminWorkspaceSections({ section, records = [], clients = [], onChange 
   function openNewForm() {
     const defaults = schema.singleRecord && records[0] ? { ...emptyForm(schema), ...records[0] } : emptyForm(schema)
     if (section === 'Invoices') {
-      const sequence = records.length + 1
-      defaults.invoiceNumber = 'MT-' + String(sequence).padStart(4, '0')
+      defaults.invoiceNumber = nextDocumentNumber(records)
       defaults.issueDate = new Date().toISOString().slice(0, 10)
     }
     setForm(defaults)
@@ -285,6 +292,24 @@ function AdminWorkspaceSections({ section, records = [], clients = [], onChange 
     setLineItems((items) => items.map((item, itemIndex) => itemIndex === index ? { ...item, [key]: value } : item))
   }
 
+  async function convertQuotation(record) {
+    const invoice = {
+      ...record,
+      id: String(Date.now()),
+      documentType: 'Invoice',
+      invoiceNumber: nextDocumentNumber(records),
+      issueDate: new Date().toISOString().slice(0, 10),
+      status: 'Draft',
+      convertedFrom: record.invoiceNumber,
+    }
+    try {
+      await onChange([invoice, ...records])
+      setMessage('Quotation converted to a new draft invoice. Review it and update the due date before issuing.')
+    } catch (error) {
+      setMessage(error.message || 'Could not convert this quotation.')
+    }
+  }
+
   return (
     <div className="workspace-manager">
       <div className="workspace-toolbar">
@@ -374,7 +399,7 @@ function AdminWorkspaceSections({ section, records = [], clients = [], onChange 
             <tr key={record.id}>
               {schema.columns.map((key) => <td key={key}>{key === 'rating' ? '★'.repeat(Math.max(0, Math.min(5, Number(record[key]) || 0))) : key === 'totalAmount' ? money(record.totalAmount) : key === 'amount' && section === 'Invoices' ? money(record.amount) : key === 'submittedAt' && record[key] ? new Date(record[key]).toLocaleString() : key === 'quotedPrice' || key === 'clientOffer' ? (record[key] ? money(record[key]) : '—') : (record[key] || '—')}</td>)}
               {section === 'Leads' && <td><div className="lead-table-progress"><div className="lead-progress-track"><span style={{ width: (stageProgress[record.status] ?? 10) + '%' }} /></div><small>{stageProgress[record.status] ?? 10}%</small></div></td>}
-              <td className="workspace-row-actions"><button onClick={() => editRecord(record)}>Edit</button>{section === 'Invoices' && <button onClick={() => printDocument(record)}>Preview / PDF</button>}{!schema.singleRecord && <button className="managed-delete-button" onClick={() => deleteRecord(record)}>Delete</button>}</td>
+              <td className="workspace-row-actions"><button onClick={() => editRecord(record)}>Edit</button>{section === 'Invoices' && <button onClick={() => printDocument(record)}>Preview / PDF</button>}{section === 'Invoices' && record.documentType === 'Quotation' && record.status === 'Accepted' && <button onClick={() => convertQuotation(record)}>Create invoice</button>}{!schema.singleRecord && <button className="managed-delete-button" onClick={() => deleteRecord(record)}>Delete</button>}</td>
             </tr>
           ))}</tbody>
         </table></div></div>
