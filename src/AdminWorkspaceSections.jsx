@@ -323,8 +323,15 @@ function AdminWorkspaceSections({ section, records = [], clients = [], onChange 
               </label>
             ))}
           </div>
+          {section === 'Invoices' && (
+            <div className="invoice-calculation">
+              <span>Subtotal: <strong>KES {Number(form.amount || 0).toLocaleString('en-KE')}</strong></span>
+              <span>Tax ({Math.min(100, Math.max(0, Number(form.taxRate) || 0))}%): <strong>KES {(Math.max(0, Number(form.amount) || 0) * Math.min(100, Math.max(0, Number(form.taxRate) || 0)) / 100).toLocaleString('en-KE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong></span>
+              <span>Total due: <strong>KES {(Math.max(0, Number(form.amount) || 0) * (1 + Math.min(100, Math.max(0, Number(form.taxRate) || 0)) / 100)).toLocaleString('en-KE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong></span>
+            </div>
+          )}
           <div className="project-form-actions">
-            <button className="admin-view-site" type="submit" disabled={saving}>{saving ? 'Saving...' : 'Save ' + (section === 'Settings' ? 'settings' : 'record')}</button>
+            <button className="admin-view-site" type="submit" disabled={saving}>{saving ? 'Saving...' : 'Save ' + (section === 'Settings' ? 'settings' : section === 'Invoices' ? 'invoice' : section === 'Tasks' ? 'task' : section === 'Leads' ? 'lead' : 'record')}</button>
             <button className="project-cancel-button" type="button" onClick={resetForm} disabled={saving}>Cancel</button>
           </div>
         </form>
