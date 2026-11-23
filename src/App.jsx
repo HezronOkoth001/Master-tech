@@ -479,7 +479,6 @@ function App() {
         </section>
         <section className="contact-details section-padding">
           <div><span className="section-label">WHATSAPP</span><h2>Start a conversation</h2><p>Send a message and tell us about your project.</p><a className="button-primary" href={whatsappLink} target="_blank" rel="noreferrer">Chat on WhatsApp <span>↗</span></a></div>
-          <div><span className="section-label">EMAIL</span><h2>Send an enquiry</h2><p>You can also contact Masters Tech by email.</p><a className="button-secondary" href="mailto:info@masterstech.co.ke">Email Masters Tech <span>↗</span></a></div>
         </section>
       </>
     ),
