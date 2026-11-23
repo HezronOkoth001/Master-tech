@@ -50,6 +50,19 @@ const schemas = {
     ],
     columns: ['title', 'project', 'client', 'assignedTo', 'dueDate', 'priority', 'status'],
   },
+  Pricing: {
+    title: 'Pricing catalogue',
+    description: 'Manage your standard website packages, domain and hosting estimates, add-ons, SEO services and maintenance plans.',
+    fields: [
+      { name: 'name', label: 'Service / package name', required: true },
+      { name: 'category', label: 'Category', type: 'select', options: ['Website packages', 'Domain', 'Hosting', 'Website features', 'SEO & Google visibility', 'Maintenance plans', 'Other'] },
+      { name: 'price', label: 'Standard price (KES)', type: 'number', required: true },
+      { name: 'billing', label: 'Billing frequency', type: 'select', options: ['One-time', 'Annual', 'Monthly', 'From'] },
+      { name: 'description', label: 'Description / what is included', type: 'textarea' },
+      { name: 'status', label: 'Availability', type: 'select', options: ['Active', 'Inactive'] },
+    ],
+    columns: ['name', 'category', 'price', 'billing', 'status'],
+  },
   Invoices: {
     title: 'Invoices & quotations',
     description: 'Prepare professional quotations and invoices, print or save them as PDF, and track payment status.',
@@ -142,7 +155,7 @@ function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char])
 }
 
-function AdminWorkspaceSections({ section, records = [], clients = [], onChange }) {
+function AdminWorkspaceSections({ section, records = [], clients = [], pricing = [], onChange }) {
   const schema = schemas[section]
   const [formOpen, setFormOpen] = useState(false)
   const [editingId, setEditingId] = useState(null)
@@ -164,8 +177,13 @@ function AdminWorkspaceSections({ section, records = [], clients = [], onChange 
 
   const subtotal = lineItems.reduce((sum, item) => sum + Math.max(0, Number(item.quantity) || 0) * Math.max(0, Number(item.unitPrice) || 0), 0)
   const taxRate = Math.min(100, Math.max(0, Number(form.taxRate) || 0))
-  const taxAmount = subtotal * taxRate / 100
-  const totalAmount = subtotal + taxAmount
+  const discountValue = Math.max(0, Number(form.discountValue) || 0)
+  const discountAmount = form.discountType === 'Percentage'
+    ? Math.min(subtotal, subtotal * Math.min(100, discountValue) / 100)
+    : form.discountType === 'Fixed amount' ? Math.min(subtotal, discountValue) : 0
+  const taxableSubtotal = Math.max(0, subtotal - discountAmount)
+  const taxAmount = taxableSubtotal * taxRate / 100
+  const totalAmount = taxableSubtotal + taxAmount
 
   function resetForm() {
     setForm(emptyForm(schema))
@@ -179,6 +197,8 @@ function AdminWorkspaceSections({ section, records = [], clients = [], onChange 
     if (section === 'Invoices') {
       defaults.invoiceNumber = nextDocumentNumber(records)
       defaults.issueDate = new Date().toISOString().slice(0, 10)
+      defaults.discountType = 'None'
+      defaults.discountValue = '0'
     }
     setForm(defaults)
     setLineItems([{ description: 'Website design and development', quantity: '1', unitPrice: '' }])
@@ -194,7 +214,11 @@ function AdminWorkspaceSections({ section, records = [], clients = [], onChange 
     if (section === 'Invoices') {
       record.lineItems = lineItems.filter((item) => item.description.trim()).map((item) => ({ ...item, quantity: Math.max(1, Number(item.quantity) || 1), unitPrice: Math.max(0, Number(item.unitPrice) || 0) }))
       record.amount = Number(subtotal.toFixed(2))
+      record.discountType = form.discountType || 'None'
+      record.discountValue = Number(discountValue.toFixed(2))
+      record.discountAmount = Number(discountAmount.toFixed(2))
       record.taxRate = String(taxRate)
+      record.taxableSubtotal = Number(taxableSubtotal.toFixed(2))
       record.taxAmount = Number(taxAmount.toFixed(2))
       record.totalAmount = Number(totalAmount.toFixed(2))
     }
@@ -234,7 +258,7 @@ function AdminWorkspaceSections({ section, records = [], clients = [], onChange 
       <div class="top"><div><div class="brand">MASTERS <span class="gold">TECH</span></div><div class="muted">Website Development & Digital Solutions</div></div><div class="tag">${escapeHtml(type.toUpperCase())}</div></div>
       <div class="details"><div><div class="label">Prepared for</div><strong>${escapeHtml(record.client)}</strong><div class="muted">${escapeHtml(record.clientEmail)}<br>${escapeHtml(record.clientPhone)}</div></div><div><div class="label">Document details</div><strong>No: ${escapeHtml(record.invoiceNumber)}</strong><div class="muted">Date: ${escapeHtml(record.issueDate)}<br>${type === 'Quotation' ? 'Valid until' : 'Due date'}: ${escapeHtml(record.dueDate)}<br>Status: ${escapeHtml(record.status)}</div></div></div>
       <table><thead><tr><th>Description</th><th>Qty</th><th>Amount</th></tr></thead><tbody>${rows}</tbody></table>
-      <div class="totals"><div><span>Subtotal</span><strong>${money(record.amount)}</strong></div><div><span>Tax (${escapeHtml(record.taxRate || 0)}%)</span><strong>${money(record.taxAmount)}</strong></div><div class="grand"><span>Total</span><span>${money(record.totalAmount)}</span></div></div>
+      <div class="totals"><div><span>Subtotal</span><strong>${money(record.amount)}</strong></div>${Number(record.discountAmount) > 0 ? '<div><span>Client discount</span><strong>-' + money(record.discountAmount) + '</strong></div>' : ''}<div><span>Taxable amount</span><strong>${money(record.taxableSubtotal ?? (Number(record.amount || 0) - Number(record.discountAmount || 0)))}</strong></div><div><span>Tax (${escapeHtml(record.taxRate || 0)}%)</span><strong>${money(record.taxAmount)}</strong></div><div class="grand"><span>Total</span><span>${money(record.totalAmount)}</span></div></div>
       ${record.notes ? '<div class="notes"><strong>Notes / terms</strong><br>' + escapeHtml(record.notes) + '</div>' : ''}
       <div class="footer">Thank you for considering Masters Tech. We appreciate your business.</div><p class="muted" style="text-align:center">Use your browser's Print option and choose "Save as PDF" to create a PDF copy.</p><button onclick="window.print()">Print / Save as PDF</button>
       </main></body></html>`
@@ -357,18 +381,53 @@ function AdminWorkspaceSections({ section, records = [], clients = [], onChange 
 
           {section === 'Invoices' && (
             <>
+              {pricing.length === 0 && <p className="message-composer-help">Your pricing catalogue is empty. Add your standard packages and services in the Pricing tab first, or enter custom lines below.</p>}
               <div className="invoice-items-editor">
-                <div className="invoice-items-heading"><h3>Services / items</h3><button type="button" className="invoice-add-item" onClick={() => setLineItems((items) => [...items, { description: '', quantity: '1', unitPrice: '' }])}>+ Add line</button></div>
+                <div className="invoice-items-heading"><h3>Services / items</h3><button type="button" className="invoice-add-item" onClick={() => setLineItems((items) => [...items, { description: '', category: 'Other', quantity: '1', unitPrice: '' }])}>+ Add custom line</button></div>
+                <div className="invoice-catalogue-picker">
+                  <label className="workspace-field">Add from your pricing catalogue
+                    <select defaultValue="" onChange={(event) => {
+                      const selected = pricing.find((item) => String(item.id) === event.target.value)
+                      if (selected) setLineItems((items) => [...items, { description: selected.name, category: selected.category, billing: selected.billing, quantity: '1', unitPrice: String(selected.price) }])
+                      event.target.value = ''
+                    }}>
+                      <option value="">Choose a package or service...</option>
+                      {pricing.filter((item) => item.status !== 'Inactive').map((item) => <option key={item.id} value={item.id}>{item.category} — {item.name} ({money(item.price)} / {item.billing})</option>)}
+                    </select>
+                  </label>
+                  <small>Catalogue prices are starting prices. You can change the quantity and unit price for this client's quotation without changing the catalogue.</small>
+                </div>
                 {lineItems.map((item, index) => (
                   <div className="invoice-item-row" key={index}>
-                    <label className="workspace-field">Description<input value={item.description} onChange={(event) => updateLineItem(index, 'description', event.target.value)} placeholder="e.g. Website development" required /></label>
+                    <label className="workspace-field">Description<input value={item.description} onChange={(event) => updateLineItem(index, 'description', event.target.value)} placeholder="e.g. Website development" required /><small>{item.category || 'Custom item'}{item.billing && item.billing !== 'One-time' ? ' · ' + item.billing : ''}</small></label>
                     <label className="workspace-field">Qty<input type="number" min="1" step="1" value={item.quantity} onChange={(event) => updateLineItem(index, 'quantity', event.target.value)} required /></label>
                     <label className="workspace-field">Unit price (KES)<input type="number" min="0" step="0.01" value={item.unitPrice} onChange={(event) => updateLineItem(index, 'unitPrice', event.target.value)} required /></label>
                     <button type="button" className="invoice-remove-item" onClick={() => setLineItems((items) => items.length > 1 ? items.filter((_, itemIndex) => itemIndex !== index) : items)} aria-label="Remove line item">×</button>
                   </div>
                 ))}
               </div>
-              <div className="invoice-calculation"><span>Subtotal: <strong>{money(subtotal)}</strong></span><span>Tax ({taxRate}%): <strong>{money(taxAmount)}</strong></span><span>Total: <strong>{money(totalAmount)}</strong></span></div>
+              <div className="invoice-discount-panel">
+                <h3>Client-specific offer / negotiation</h3>
+                <p className="message-composer-help">This discount is saved only on this quotation or invoice. It does not change your standard catalogue prices or apply to other clients.</p>
+                <div className="workspace-form-grid">
+                  <label className="workspace-field">Discount type
+                    <select value={form.discountType || 'None'} onChange={(event) => setForm((old) => ({ ...old, discountType: event.target.value }))}>
+                      <option>None</option><option>Percentage</option><option>Fixed amount</option>
+                    </select>
+                  </label>
+                  <label className="workspace-field">Discount value {form.discountType === 'Percentage' ? '(%)' : '(KES)'}
+                    <input type="number" min="0" max={form.discountType === 'Percentage' ? '100' : undefined} step="0.01" value={form.discountValue ?? '0'} onChange={(event) => setForm((old) => ({ ...old, discountValue: event.target.value }))} />
+                  </label>
+                </div>
+                {discountAmount > 0 && <p className="message-composer-help">Client discount: <strong>{money(discountAmount)}</strong>. This is a private negotiated offer for the named client.</p>}
+              </div>
+              <div className="invoice-calculation">
+                <span>Subtotal: <strong>{money(subtotal)}</strong></span>
+                <span>Client discount: <strong>-{money(discountAmount)}</strong></span>
+                <span>Taxable amount: <strong>{money(taxableSubtotal)}</strong></span>
+                <span>Tax ({taxRate}%): <strong>{money(taxAmount)}</strong></span>
+                <span>Final total: <strong>{money(totalAmount)}</strong></span>
+              </div>
               <p className="message-composer-help">For tax, enter the rate that applies to your business and this transaction. The system calculates it; it does not determine your tax obligations.</p>
             </>
           )}
