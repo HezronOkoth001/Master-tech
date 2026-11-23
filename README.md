@@ -1,16 +1,80 @@
-# React + Vite
+# Masters Tech
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Masters Tech is a React + Vite business website and admin workspace, with a FastAPI backend and PostgreSQL database.
 
-Currently, two official plugins are available:
+## Current features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Public business website and portfolio.
+- Admin dashboard for projects, clients, leads, tasks, invoices, payments, messages, reviews and settings.
+- Project records are stored in PostgreSQL.
+- The other workspace sections are now stored in PostgreSQL through the `/api/workspace/{section}` endpoints.
+- Existing browser-only workspace records are imported into PostgreSQL the first time the updated dashboard loads, provided the matching database section is empty.
 
-## React Compiler
+## Run the frontend
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+From the project root:
 
-## Expanding the ESLint configuration
+```bash
+npm install
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Copy `.env.example` to `.env` if you need to change the backend URL. The default local URL is:
+
+```env
+VITE_API_URL=http://127.0.0.1:8000
+```
+
+Then start Vite:
+
+```bash
+npm run dev
+```
+
+## Run the backend
+
+Open a second terminal:
+
+```bash
+cd backend
+python -m venv .venv
+```
+
+Activate the virtual environment:
+
+**Windows PowerShell**
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+**macOS / Linux**
+```bash
+source .venv/bin/activate
+```
+
+Install the backend packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+Copy `.env.example` to `.env` inside the `backend` folder and set your PostgreSQL connection string. For example:
+
+```env
+DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@localhost:5432/masters_tech
+```
+
+Start the API from the `backend` folder:
+
+```bash
+uvicorn main:app --reload
+```
+
+The API health check is available at `http://127.0.0.1:8000/health`, and the interactive API documentation is at `http://127.0.0.1:8000/docs`.
+
+## Important security note
+
+This is still a development-stage application. The admin dashboard and write API endpoints do not yet have administrator login/authentication. Run it locally only; do not expose or deploy the admin API publicly until authentication and authorization have been implemented and tested.
+
+## Next development milestone
+
+Implement administrator authentication, protect all admin write endpoints, and then test the complete application against the configured PostgreSQL database before deployment.
