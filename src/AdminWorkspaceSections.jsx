@@ -132,7 +132,7 @@ function money(value) {
 
 function nextDocumentNumber(records) {
   const highest = records.reduce((max, record) => {
-    const match = String(record.invoiceNumber || '').match(/^MT-(\\d+)$/)
+    const match = String(record.invoiceNumber || '').match(/^MT-(\d+)$/)
     return match ? Math.max(max, Number(match[1])) : max
   }, 0)
   return 'MT-' + String(highest + 1).padStart(4, '0')
