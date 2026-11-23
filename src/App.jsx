@@ -70,7 +70,7 @@ function PublicReviewForm() {
         </div>
         <p>Your feedback helps others understand what it is like to work with Masters Tech.</p>
       </div>
-      {approvedReviews.length > 0 && (
+      {approvedReviews.length > 0 ? (
         <div className="approved-reviews-grid">
           {approvedReviews.map((review) => (
             <article className="approved-review-card" key={review.id}>
@@ -80,6 +80,12 @@ function PublicReviewForm() {
               {review.project && <small>{review.project}</small>}
             </article>
           ))}
+        </div>
+      ) : (
+        <div className="reviews-empty-state">
+          <span>★ ★ ★ ★ ★</span>
+          <strong>Your experience could be the first one shared here.</strong>
+          <p>When a review is approved, it will appear in this space and help others learn about working with Masters Tech.</p>
         </div>
       )}
       <form className="public-review-form" id="write-review" onSubmit={submitReview}>
