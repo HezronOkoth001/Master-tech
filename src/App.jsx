@@ -32,6 +32,7 @@ const services = [
 ]
 
 const REVIEWS_API_URL = `${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/reviews`
+const PROMOTION_API_URL = `${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/public/promotion`
 
 function PublicReviewForm() {
   const [form, setForm] = useState({ customer: '', rating: '5', project: '', review: '' })
@@ -129,6 +130,16 @@ function App() {
   const [projects, setProjects] = useState([])
   const [projectsLoading, setProjectsLoading] = useState(true)
   const [projectsError, setProjectsError] = useState('')
+  const [promotion, setPromotion] = useState(null)
+
+  useEffect(() => {
+    let active = true
+    fetch(PROMOTION_API_URL)
+      .then((response) => response.ok ? response.json() : null)
+      .then((data) => { if (active && data && Number(data.discountPercent) > 0) setPromotion(data) })
+      .catch(() => {})
+    return () => { active = false }
+  }, [])
 
   useEffect(() => {
     let isActive = true
@@ -209,6 +220,19 @@ function App() {
       </header>
 
       <main>
+        {promotion && (
+          <section className="homepage-promotion" aria-label="Current special offer">
+            <div className="homepage-promotion-inner">
+              <span className="homepage-promotion-kicker">LIMITED-TIME OFFER</span>
+              <div className="homepage-promotion-copy">
+                <strong>{promotion.discountPercent}% OFF</strong>
+                <span>{promotion.message}</span>
+                <small>On {promotion.appliesTo}{promotion.endsAt ? ` · Offer ends ${new Date(`${promotion.endsAt}T00:00:00`).toLocaleDateString()}` : ''}</small>
+              </div>
+              <a href={'https://wa.me/254700806728?text=' + encodeURIComponent(`Hello Masters Tech, I saw your ${promotion.discountPercent}% promotion and would like to claim the offer.`)} target="_blank" rel="noreferrer">Claim this offer <span>↗</span></a>
+            </div>
+          </section>
+        )}
         <section className="hero" id="home">
           <div className="hero-content">
             <div className="eyebrow">
