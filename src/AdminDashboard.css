@@ -1107,3 +1107,124 @@
     transition-duration: .01ms !important;
   }
 }
+
+
+/* Admin workspace: matching deep navy, cool grey and electric blue palette */
+.admin-layout {
+  background: #080d17;
+  color: #e8eef7;
+}
+.admin-sidebar {
+  background: #0b1220;
+  border-right-color: rgba(148,163,184,.18);
+  color: #c4cfdd;
+}
+.admin-brand { color: #f8fbff; }
+.admin-brand-mark {
+  background: linear-gradient(135deg,#2563eb,#0891b2);
+  color: #fff;
+}
+.admin-brand small { color: #7dd3fc; }
+.sidebar-label { color: #8392a8; }
+.admin-nav-item { color: #bdc9d9; }
+.admin-nav-item:hover { background: rgba(59,130,246,.12); color: #fff; }
+.admin-nav-item.active {
+  background: rgba(37,99,235,.2);
+  border-color: rgba(96,165,250,.35);
+  color: #93c5fd;
+}
+.active-indicator { background: #22d3ee; }
+.admin-user-avatar {
+  background: linear-gradient(135deg,#2563eb,#0891b2);
+  color: #fff;
+}
+.admin-user-info strong { color: #f8fbff; }
+.admin-user-info small, .admin-breadcrumb { color: #94a3b8; }
+.sidebar-bottom { border-top-color: rgba(148,163,184,.2); }
+.admin-main, .admin-content { background: #080d17; }
+.admin-topbar {
+  background: rgba(11,18,32,.96);
+  border-bottom-color: rgba(148,163,184,.18);
+}
+.admin-current-page, .admin-welcome h1,
+.admin-panel-heading h2, .admin-project-details strong,
+.admin-placeholder h2, .projects-toolbar h2,
+.project-form h3, .projects-empty h3,
+.managed-project-card h3 { color: #f3f7fc; }
+.admin-welcome p, .admin-panel-heading p,
+.admin-placeholder p, .projects-toolbar p,
+.admin-project-details small, .admin-stat-card > small { color: #aab8ca; }
+.admin-eyebrow { color: #7db7ff; }
+.admin-date-label {
+  background: #151f30; border-color: rgba(148,163,184,.25); color: #d5dfeb;
+}
+.admin-stat-card, .admin-panel {
+  background: linear-gradient(145deg,#151f30,#0e1726);
+  border-color: rgba(148,163,184,.2);
+  box-shadow: 0 12px 30px rgba(0,0,0,.22);
+}
+.admin-stat-top { color: #bdc9d8; }
+.admin-stat-card > strong { color: #f8fbff; }
+.admin-stat-icon, .admin-project-symbol, .quick-action-icon {
+  background: rgba(59,130,246,.17);
+  color: #8fc2ff;
+}
+.admin-project-row, .admin-quick-action { border-bottom-color: rgba(148,163,184,.18); }
+.admin-project-badge { background: rgba(148,163,184,.14); color: #d5dfeb; }
+.admin-completed-badge { background: rgba(34,197,94,.14); color: #86efac; }
+.admin-text-button, .managed-project-link { color: #7dd3fc; }
+.admin-text-button:hover, .managed-project-link:hover { color: #bae6fd; }
+.admin-add-project {
+  border-color: rgba(59,130,246,.55);
+  background: rgba(37,99,235,.12);
+  color: #93c5fd;
+}
+.admin-add-project:hover { background: rgba(37,99,235,.22); }
+.admin-view-site {
+  border: 0;
+  background: linear-gradient(115deg,#2563eb,#0891b2);
+  color: #fff;
+  box-shadow: 0 7px 18px rgba(37,99,235,.25);
+}
+.admin-view-site:hover { background: linear-gradient(115deg,#3b82f6,#06b6d4); }
+.admin-layout input, .admin-layout select, .admin-layout textarea,
+.project-form input, .project-form select, .project-form textarea {
+  background: #0c1422;
+  border-color: rgba(148,163,184,.28);
+  color: #edf4fc;
+}
+.admin-layout input::placeholder, .admin-layout textarea::placeholder,
+.project-form input::placeholder, .project-form textarea::placeholder { color: #8493a8; }
+.admin-layout input:focus, .admin-layout select:focus, .admin-layout textarea:focus,
+.project-form input:focus, .project-form select:focus, .project-form textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,.18);
+}
+.admin-layout select option, .project-form select option { background: #111b2e; color: #f3f7fc; }
+.project-form label { color: #d5dfeb; }
+.project-cancel-button, .managed-project-actions button {
+  background: #182438; border-color: rgba(148,163,184,.28); color: #e6edf7;
+}
+.project-cancel-button:hover, .managed-project-actions button:hover { background: #22334e; }
+.managed-project-status { background: rgba(37,99,235,.17); color: #93c5fd; }
+.managed-project-category, .projects-count strong, .placeholder-icon { color: #7dd3fc; }
+.managed-project-card > p, .projects-count { color: #b4c1d2; }
+.admin-notice {
+  background: rgba(37,99,235,.1);
+  border-color: rgba(96,165,250,.3);
+}
+.notice-icon { background: rgba(37,99,235,.2); color: #93c5fd; }
+.admin-notice strong { color: #bfdbfe; }
+.admin-notice p { color: #b4c7df; }
+.managed-project-actions { border-top-color: rgba(148,163,184,.2); }
+.managed-project-actions .managed-delete-button {
+  border-color: rgba(248,113,113,.4); color: #fca5a5;
+}
+.managed-project-actions .managed-delete-button:hover { background: rgba(127,29,29,.25); }
+@media (prefers-reduced-motion: no-preference) {
+  .admin-stat-card, .admin-panel { transition: transform .22s ease, box-shadow .22s ease; }
+  .admin-stat-card:hover, .admin-panel:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 36px rgba(0,0,0,.3);
+  }
+}
