@@ -114,6 +114,8 @@ function AdminWorkspaceSections({ section, records = [], onChange }) {
   const [editingId, setEditingId] = useState(null)
   const [search, setSearch] = useState('')
   const [form, setForm] = useState(() => emptyForm(schema))
+  const [saving, setSaving] = useState(false)
+  const [message, setMessage] = useState('')
 
   const visibleRecords = useMemo(() => {
     const term = search.trim().toLowerCase()
@@ -133,17 +135,26 @@ function AdminWorkspaceSections({ section, records = [], onChange }) {
     setFormOpen(true)
   }
 
-  function saveRecord(event) {
+  async function saveRecord(event) {
     event.preventDefault()
-    const record = { ...form, id: editingId ?? Date.now() }
-    if (schema.singleRecord) {
-      onChange([record])
-    } else if (editingId !== null) {
-      onChange(records.map((item) => item.id === editingId ? record : item))
-    } else {
-      onChange([record, ...records])
+    setSaving(true)
+    setMessage('')
+    const record = { ...form, id: editingId ?? String(Date.now()) }
+    const nextRecords = schema.singleRecord
+      ? [record]
+      : editingId !== null
+        ? records.map((item) => String(item.id) === String(editingId) ? record : item)
+        : [record, ...records]
+
+    try {
+      await onChange(nextRecords)
+      resetForm()
+      setMessage('Record saved to the database.')
+    } catch (error) {
+      setMessage(error.message || 'Could not save this record.')
+    } finally {
+      setSaving(false)
     }
-    resetForm()
   }
 
   function editRecord(record) {
@@ -152,10 +163,16 @@ function AdminWorkspaceSections({ section, records = [], onChange }) {
     setFormOpen(true)
   }
 
-  function deleteRecord(record) {
+  async function deleteRecord(record) {
     const label = record.name || record.title || record.invoiceNumber || record.reference || record.sender || record.customer || 'this record'
     if (!window.confirm('Delete ' + label + '? This cannot be undone.')) return
-    onChange(records.filter((item) => item.id !== record.id))
+    setMessage('')
+    try {
+      await onChange(records.filter((item) => String(item.id) !== String(record.id)))
+      setMessage('Record deleted from the database.')
+    } catch (error) {
+      setMessage(error.message || 'Could not delete this record.')
+    }
   }
 
   return (
@@ -169,6 +186,8 @@ function AdminWorkspaceSections({ section, records = [], onChange }) {
           {formOpen ? 'Cancel' : schema.singleRecord && records.length ? 'Edit settings' : '+ Add ' + (section === 'Tasks' ? 'task' : section === 'Clients' ? 'client' : section === 'Leads' ? 'lead' : section === 'Invoices' ? 'invoice' : section === 'Payments' ? 'payment' : section === 'Messages' ? 'message' : section === 'Reviews' ? 'review' : 'settings')}
         </button>
       </div>
+
+      {message && <p role="status" aria-live="polite">{message}</p>}
 
       {formOpen && (
         <form className="admin-panel workspace-form" onSubmit={saveRecord}>
@@ -191,8 +210,8 @@ function AdminWorkspaceSections({ section, records = [], onChange }) {
             ))}
           </div>
           <div className="project-form-actions">
-            <button className="admin-view-site" type="submit">Save {section === 'Settings' ? 'settings' : 'record'}</button>
-            <button className="project-cancel-button" type="button" onClick={resetForm}>Cancel</button>
+            <button className="admin-view-site" type="submit" disabled={saving}>{saving ? 'Saving...' : 'Save ' + (section === 'Settings' ? 'settings' : 'record')}</button>
+            <button className="project-cancel-button" type="button" onClick={resetForm} disabled={saving}>Cancel</button>
           </div>
         </form>
       )}
