@@ -2,6 +2,7 @@
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
+from datetime import datetime, timezone
 from sqlalchemy.orm import Session
 
 from database import Base, engine, SessionLocal
@@ -155,7 +156,7 @@ def submit_public_review(
             "review": review_data.review.strip(),
             "status": "Pending approval",
             "source": "Website",
-            "submittedAt": __import__("datetime").datetime.now(__import__("datetime").timezone.utc).isoformat(),
+            "submittedAt": datetime.now(timezone.utc).isoformat(),
         },
     )
     db.add(review_record)
