@@ -1076,3 +1076,10 @@ a {
 .public-review-actions > span, .public-review-feedback { color: #777780; font-size: 12px; line-height: 1.6; }
 .public-review-feedback { margin: 18px 0 0; color: #315d3a; }
 @media (max-width: 640px) { .public-review-form { padding: 20px; } .public-review-grid { grid-template-columns: 1fr; } .public-review-wide { grid-column: auto; } }
+
+.approved-reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 28px 0 8px; }
+.approved-review-card { padding: 22px; border: 1px solid #e6e6e8; border-radius: 12px; background: #fff; }
+.approved-review-stars { color: #c29b20; letter-spacing: 2px; }
+.approved-review-card p { color: #4d4d55; font-size: 14px; line-height: 1.7; }
+.approved-review-card strong, .approved-review-card small { display: block; color: #202027; }
+.approved-review-card small { margin-top: 4px; color: #777780; font-size: 12px; }
