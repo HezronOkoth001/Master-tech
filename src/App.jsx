@@ -322,7 +322,7 @@ function App() {
                   <small>On {promotion.appliesTo}{promotion.endsAt ? ` · Offer ends ${new Date(`${promotion.endsAt}T00:00:00`).toLocaleDateString()}` : ''}</small>
                 </div>
               </div>
-              <a className="promotion-claim-button" href={'https://wa.me/254700806728?text=' + encodeURIComponent(`Hello Masters Tech, I saw your ${promotion.discountPercent}% promotion and would like to claim the offer.`)} target="_blank" rel="noreferrer">Claim your offer <span className="promotion-pointing-finger" aria-hidden="true">☝️</span></a>
+              <a className="promotion-claim-button" href={'https://wa.me/254700806728?text=' + encodeURIComponent(`Hello Masters Tech, I saw your ${promotion.discountPercent}% promotion and would like to claim the offer.`)} target="_blank" rel="noreferrer">Claim your offer</a>
             </div>
           </section>
         )}
