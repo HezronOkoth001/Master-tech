@@ -1020,3 +1020,90 @@
     grid-column: auto;
   }
 }
+
+
+/* Masters Tech light workspace refresh — clean surfaces with restrained motion */
+.admin-layout {
+  background: #f5f7fb;
+  color: #263247;
+  animation: mt-page-enter .45s ease both;
+}
+.admin-sidebar {
+  background: #ffffff;
+  color: #536176;
+  border-right: 1px solid #e7ebf2;
+  box-shadow: 5px 0 24px rgba(29, 43, 67, .035);
+}
+.admin-brand { color: #182338; }
+.admin-brand small, .admin-user-info small { color: #7d899b; }
+.sidebar-label { color: #9aa5b5; }
+.admin-nav-item { color: #637087; }
+.admin-nav-item:hover { background: #f4f6fa; color: #24334b; }
+.admin-nav-item.active {
+  background: #fff8df;
+  border-color: #f1df9b;
+  color: #80620b;
+}
+.admin-user-info strong { color: #263247; }
+.sidebar-bottom { border-top-color: #e8edf4; }
+.admin-main, .admin-content { background: #f5f7fb; }
+.admin-topbar {
+  background: rgba(255,255,255,.92);
+  border-bottom-color: #e8edf4;
+  box-shadow: 0 3px 16px rgba(31,48,75,.025);
+}
+.admin-current-page { color: #25334a; }
+.admin-status { color: #64748b; }
+.admin-welcome h1, .admin-panel-heading h2 { color: #1e2b40; }
+.admin-welcome p, .admin-panel-heading p { color: #718096; }
+.admin-date-label { background: #fff; border-color: #e4e9f1; color: #627087; }
+.admin-stat-card, .admin-panel {
+  background: #fff;
+  border-color: #e7ecf3;
+  box-shadow: 0 8px 28px rgba(34, 52, 82, .055);
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+.admin-stat-card:hover, .admin-panel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 13px 32px rgba(34, 52, 82, .085);
+}
+.admin-stat-top { color: #718096; }
+.admin-stat-card > strong { color: #1e2b40; }
+.admin-stat-card > small, .admin-project-details small { color: #8793a5; }
+.admin-project-details strong { color: #263247; }
+.admin-project-row { border-bottom-color: #edf0f5; }
+.admin-panel-heading h2 { color: #24334b; }
+.admin-text-button { color: #8b6a0b; }
+.workspace-manager { color: #263247; }
+.workspace-toolbar h2 { color: #1f2d42; }
+.workspace-toolbar p { color: #718096; }
+.workspace-table-wrap, .workspace-table-container { background: #fff; }
+.admin-layout input, .admin-layout select, .admin-layout textarea {
+  background: #fff;
+  border-color: #dfe5ee;
+  color: #263247;
+}
+.admin-layout input:focus, .admin-layout select:focus, .admin-layout textarea:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 0 3px rgba(212,175,55,.13);
+  outline: none;
+}
+.admin-view-site {
+  box-shadow: 0 5px 13px rgba(212,175,55,.18);
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.admin-view-site:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(212,175,55,.24); }
+.admin-nav-item, .admin-stat-card, .admin-panel, .admin-view-site {
+  animation: mt-soft-rise .42s ease both;
+}
+.admin-nav-item:nth-child(2) { animation-delay: .025s; }
+.admin-nav-item:nth-child(3) { animation-delay: .05s; }
+.admin-nav-item:nth-child(4) { animation-delay: .075s; }
+@keyframes mt-page-enter { from { opacity: .75; } to { opacity: 1; } }
+@keyframes mt-soft-rise { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .admin-layout *, .admin-layout *::before, .admin-layout *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
