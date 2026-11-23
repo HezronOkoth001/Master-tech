@@ -183,7 +183,7 @@ def submit_public_review(
 
 WORKSPACE_SECTIONS = {
     "clients", "leads", "tasks", "invoices",
-    "payments", "messages", "reviews", "settings",
+    "payments", "messages", "reviews", "settings", "pricing",
 }
 
 
