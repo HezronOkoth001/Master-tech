@@ -7,9 +7,22 @@ const REVIEWS_API_URL = `${API_BASE}/api/reviews`
 const PROMOTION_API_URL = `${API_BASE}/api/public/promotion`
 
 const services = [
-  { number: '01', title: 'Website Development', description: 'Modern, responsive websites designed to help your business build trust and reach more customers.', features: ['Business websites', 'Landing pages', 'Website redesigns'], icon: '⌘' },
-  { number: '02', title: 'Website Security', description: 'Practical security improvements that help protect your website, its data, and your customers.', features: ['Security checks', 'Updates and maintenance', 'Website protection'], icon: '◇' },
-  { number: '03', title: 'SEO & Online Visibility', description: 'Help potential customers discover your business through search engines and Google Maps.', features: ['Search engine optimization', 'Google Maps visibility', 'Performance improvements'], icon: '↗' },
+  {
+    number: '01',
+    title: 'Website Design & Development',
+    description: 'Give your business a home on the internet. I design and build clean, modern websites that explain what you offer, help visitors trust your business and make it easy for them to contact you.',
+    outcome: 'Whether you are starting from scratch or improving an existing website, we can shape it around your business and the people you want to reach.',
+    features: ['Business and company websites', 'Landing pages for products or services', 'Website redesigns and improvements', 'Mobile-friendly layouts and contact options'],
+    icon: '⌘',
+  },
+  {
+    number: '02',
+    title: 'SEO & Google Visibility',
+    description: 'A good website should be easy for people to find. I help improve how your business appears in search results and on Google, so potential customers can discover what you offer when they are looking.',
+    outcome: 'We focus on the important details that help search engines understand your website and help customers find useful information about your business.',
+    features: ['Search engine optimisation (SEO)', 'Google Business Profile guidance', 'Google Search and Maps visibility', 'Website content and page improvements'],
+    icon: '↗',
+  },
 ]
 
 function PublicReviewForm() {
@@ -244,7 +257,7 @@ function App() {
     const pages = {
       '/': ['Masters Tech | Website Development, Security & SEO', 'Masters Tech helps businesses build professional websites, improve website security and grow online visibility through SEO and Google Maps.'],
       '/about': ['About Hezron Okoth | Masters Tech Website Development & SEO', 'Meet Hezron Okoth, the person behind Masters Tech. Learn about professional website development, SEO and Google visibility services for businesses.'],
-      '/services': ['Website Development, Security & SEO Services | Masters Tech', 'Explore Masters Tech services: business website development, website maintenance and security, search engine optimization and Google Maps visibility.'],
+      '/services': ['Website Design, Development & SEO Services | Masters Tech', 'Explore Masters Tech website design and development, search engine optimisation, and Google visibility services for businesses.'],
       '/sample-sites': ['Website Design Samples & UI Ideas | Masters Tech', 'Explore sample website designs for business websites, online shops, restaurants, education, property listings and booking platforms. Choose a style for your next website.'],
       '/contact': ['Contact Masters Tech | Request a Website or SEO Service', 'Contact Masters Tech to discuss a business website, website security, SEO, Google Maps visibility or a custom web project.'],
       '/reviews': ['Customer Reviews | Masters Tech', 'Read customer feedback and share your experience working with Masters Tech.'],
@@ -469,16 +482,21 @@ function App() {
     ),
     '/services': (
       <>
-        <PageIntro label="OUR SERVICES" title={<>Digital services built around <span>your business.</span></>} description="From a new business website to search visibility and ongoing website care, explore practical services that help your business reach and serve customers online." />
-<section className="services-section section-padding" id="services">
+        <PageIntro
+          label="HOW I CAN HELP YOUR BUSINESS"
+          title={<>Let's make it easier for customers to <span>find and choose you.</span></>}
+          description="Whether you need a website for a new idea or want more people to discover your existing business online, you're in the right place. Explore what I can help you with, then let's talk about what makes sense for your goals."
+        />
+        <section className="services-section section-padding" id="services">
           <div className="section-heading">
             <div>
-              <span className="section-label">OUR SERVICES</span>
-              <h2>Everything your business needs to <span>grow online.</span></h2>
+              <span className="section-label">WHAT I CAN HELP WITH</span>
+              <h2>Simple digital solutions. <span>Made for real businesses.</span></h2>
             </div>
             <p>
-              Practical digital services focused on your website, your security,
-              and your visibility.
+              You don't need to understand all the technical details. Start with
+              what you want your business to achieve, and we can work out the
+              right approach together.
             </p>
           </div>
 
@@ -491,6 +509,8 @@ function App() {
                 </div>
                 <h3>{service.title}</h3>
                 <p>{service.description}</p>
+                <div className="service-outcome">{service.outcome}</div>
+                <span className="service-includes-label">WHAT WE CAN WORK ON</span>
                 <ul>
                   {service.features.map((feature) => (
                     <li key={feature}><span>✓</span> {feature}</li>
@@ -502,16 +522,56 @@ function App() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Discuss this service <span>↗</span>
+                  Let's discuss this <span>↗</span>
                 </a>
               </article>
             ))}
           </div>
         </section>
-        <section className="inner-content-section section-padding">
-          <h2>Not sure what your business needs?</h2>
-          <p>Tell us what you want to achieve. We can discuss the right website, maintenance or online visibility solution for your business.</p>
-          <a className="button-primary" href="/contact">Request a consultation <span>↗</span></a>
+
+        <section className="services-journey-section section-padding">
+          <div className="services-journey-heading">
+            <span className="section-label">A FRIENDLY, STRAIGHTFORWARD PROCESS</span>
+            <h2>From your first idea to <span>something people can use.</span></h2>
+            <p>
+              Every business is different, so I take time to understand what
+              you need before suggesting a solution. Here's what getting started
+              together can look like.
+            </p>
+          </div>
+          <div className="services-journey-grid">
+            <article>
+              <span>01</span>
+              <h3>Tell me about your business</h3>
+              <p>Share what you do, who you want to reach and what you would like your website or online presence to achieve. You can come with a clear plan or just a starting idea.</p>
+            </article>
+            <article>
+              <span>02</span>
+              <h3>We plan the right solution</h3>
+              <p>We'll talk through the pages, features and style that make sense for your goals. I'll explain the options in simple language so you know what to expect.</p>
+            </article>
+            <article>
+              <span>03</span>
+              <h3>Build, review and improve</h3>
+              <p>I'll work on the agreed solution, share progress and make room for your feedback. The aim is to give your business a useful online presence you feel comfortable sharing.</p>
+            </article>
+          </div>
+        </section>
+
+        <section className="services-help-section section-padding">
+          <div>
+            <span className="section-label">NOT SURE WHERE TO START?</span>
+            <h2>That's completely <span>okay.</span></h2>
+            <p>
+              You don't have to choose a service before reaching out. Maybe you
+              need a website, maybe you want more people to find your business
+              on Google, or maybe you're still figuring out the idea. Tell me a
+              little about it and we'll take it one step at a time.
+            </p>
+          </div>
+          <a className="button-primary" href={whatsappLink} target="_blank" rel="noreferrer">
+            Tell me what you have in mind <span>↗</span>
+          </a>
         </section>
       </>
     ),
