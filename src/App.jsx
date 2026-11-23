@@ -31,6 +31,78 @@ const services = [
   },
 ]
 
+const REVIEWS_API_URL = `${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/reviews`
+
+function PublicReviewForm() {
+  const [form, setForm] = useState({ customer: '', rating: '5', project: '', review: '' })
+  const [submitting, setSubmitting] = useState(false)
+  const [feedback, setFeedback] = useState('')
+
+  async function submitReview(event) {
+    event.preventDefault()
+    setSubmitting(true)
+    setFeedback('')
+    try {
+      const response = await fetch(REVIEWS_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, rating: Number(form.rating) }),
+      })
+      const result = await response.json().catch(() => null)
+      if (!response.ok) throw new Error(result?.detail?.[0]?.msg || result?.detail || 'Your review could not be submitted. Please try again.')
+      setForm({ customer: '', rating: '5', project: '', review: '' })
+      setFeedback('Thank you! Your review has been received and is waiting for approval.')
+    } catch (error) {
+      setFeedback(error.message || 'Could not submit your review. Please try again later.')
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  return (
+    <section className="reviews-section section-padding" id="reviews">
+      <div className="section-heading">
+        <div>
+          <span className="section-label">CLIENT FEEDBACK</span>
+          <h2>Worked with us? <span>Share your experience.</span></h2>
+        </div>
+        <p>Your feedback helps others understand what it is like to work with Masters Tech.</p>
+      </div>
+      <form className="public-review-form" onSubmit={submitReview}>
+        <div className="public-review-grid">
+          <label>
+            Your name *
+            <input value={form.customer} onChange={(event) => setForm((old) => ({ ...old, customer: event.target.value }))} required minLength={2} maxLength={120} placeholder="Enter your name" />
+          </label>
+          <label>
+            Rating *
+            <select value={form.rating} onChange={(event) => setForm((old) => ({ ...old, rating: event.target.value }))}>
+              <option value="5">★★★★★ — Excellent</option>
+              <option value="4">★★★★ — Very good</option>
+              <option value="3">★★★ — Good</option>
+              <option value="2">★★ — Fair</option>
+              <option value="1">★ — Needs improvement</option>
+            </select>
+          </label>
+          <label className="public-review-wide">
+            Project or service (optional)
+            <input value={form.project} onChange={(event) => setForm((old) => ({ ...old, project: event.target.value }))} maxLength={160} placeholder="e.g. Business website" />
+          </label>
+          <label className="public-review-wide">
+            Your review *
+            <textarea value={form.review} onChange={(event) => setForm((old) => ({ ...old, review: event.target.value }))} required minLength={8} maxLength={2000} rows={5} placeholder="Tell us about your experience..." />
+          </label>
+        </div>
+        <div className="public-review-actions">
+          <button className="button-primary" type="submit" disabled={submitting}>{submitting ? 'Submitting...' : 'Submit review'} <span>↗</span></button>
+          <span>Your review will be checked before it appears publicly.</span>
+        </div>
+        {feedback && <p className="public-review-feedback" role="status" aria-live="polite">{feedback}</p>}
+      </form>
+    </section>
+  )
+}
+
 function App() {
   const [projects, setProjects] = useState([])
   const [projectsLoading, setProjectsLoading] = useState(true)
@@ -105,6 +177,7 @@ function App() {
           <a href="#about">About</a>
           <a href="#services">Services</a>
             <a href="#portfolio">Portfolio</a>
+          <a href="#reviews">Reviews</a>
           <a href="#contact">Contact</a>
         </nav>
 
@@ -323,6 +396,8 @@ function App() {
       )}
     </div>
         </section>
+
+        <PublicReviewForm />
 
         <section className="contact-section section-padding" id="contact">
           <span className="section-label">HAVE A PROJECT IN MIND?</span>
