@@ -34,3 +34,24 @@
 
 .invoice-calculation { display: flex; flex-wrap: wrap; gap: 14px 24px; padding: 14px 16px; border: 1px solid #3a3b45; border-radius: 8px; background: #171922; color: #aeb1bd; font-size: 12px; }
 .invoice-calculation strong { color: #e5c653; }
+
+
+/* Quotation and invoice document builder */
+.invoice-items-editor { display: grid; gap: 12px; margin-top: 22px; }
+.invoice-items-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.invoice-items-heading h3 { margin: 0; color: #fff; font-size: 14px; }
+.invoice-add-item, .invoice-remove-item { border: 1px solid #4a4635; border-radius: 6px; background: #242219; color: #e5c653; padding: 8px 12px; font-size: 11px; cursor: pointer; }
+.invoice-item-row { display: grid; grid-template-columns: minmax(180px, 2fr) minmax(70px, .6fr) minmax(130px, 1fr) auto; align-items: end; gap: 12px; padding: 13px; border: 1px solid #343642; border-radius: 8px; background: #12141b; }
+.invoice-remove-item { width: 34px; height: 38px; padding: 0; color: #fca5a5; border-color: #633d43; background: #28191d; font-size: 20px; }
+.invoice-calculation { display: flex; flex-wrap: wrap; gap: 14px 24px; padding: 14px 16px; border: 1px solid #3a3b45; border-radius: 8px; background: #171922; color: #aeb1bd; font-size: 12px; }
+.invoice-calculation strong { color: #e5c653; }
+.workspace-row-actions button:nth-child(2) { margin-right: 5px; }
+.lead-progress-preview { display: grid; gap: 9px; padding: 15px; border: 1px solid #393a43; border-radius: 8px; background: #151720; }
+.lead-progress-label { display: flex; justify-content: space-between; color: #e5e7eb; font-size: 12px; }
+.lead-progress-label span, .lead-table-progress small { color: #e5c653; font-weight: 700; }
+.lead-progress-track { height: 8px; overflow: hidden; border-radius: 99px; background: #30313a; }
+.lead-progress-track span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #9c7b1b, #e5c653); transition: width .2s ease; }
+.lead-progress-preview small { color: #aeb1bd; font-size: 11px; }
+.lead-table-progress { display: grid; grid-template-columns: minmax(65px, 100px) 34px; align-items: center; gap: 8px; min-width: 110px; }
+.lead-table-progress .lead-progress-track { height: 6px; }
+@media (max-width: 650px) { .invoice-item-row { grid-template-columns: 1fr 1fr; } .invoice-item-row .workspace-field:first-child { grid-column: 1 / -1; } .invoice-remove-item { justify-self: end; } }
