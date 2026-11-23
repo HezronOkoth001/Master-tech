@@ -286,63 +286,59 @@ function App() {
             </div>
           </section>
         )}
-<section className="hero" id="home">
+<section className="hero hero-showcase" id="home">
           <div className="hero-content">
             <div className="eyebrow">
               <span className="status-dot" />
-              YOUR DIGITAL GROWTH PARTNER
+              DIGITAL EXPERIENCES FOR AMBITIOUS BUSINESSES
             </div>
-
             <h1>
-              Build your future.
+              Your business.
               <br />
-              <span>Secure your</span>
-              <br />
-              digital presence.
+              <span>Built to stand out.</span>
             </h1>
-
             <p className="hero-description">
-              We help businesses build professional websites, strengthen
-              website security, and get discovered online.
+              We create modern websites that make your business look professional,
+              connect with customers and get discovered on Google.
             </p>
-
             <div className="hero-actions">
               <a className="button-primary" href={whatsappLink} target="_blank" rel="noreferrer">
-                Discuss your project <span>↗</span>
+                Let's build your website <span>↗</span>
               </a>
-              <a className="button-secondary" href="/services">
-                Explore services <span>↓</span>
+              <a className="button-secondary" href="/sample-sites">
+                Explore our designs <span>↓</span>
               </a>
             </div>
-
             <div className="hero-note">
               <span className="note-line" />
-              <span>SMART WEBSITES. STRONGER SECURITY. BETTER VISIBILITY.</span>
+              <span>WEBSITE DEVELOPMENT · SEO · GOOGLE VISIBILITY</span>
             </div>
           </div>
 
-          <div className="hero-visual" aria-label="Abstract digital network illustration">
-            <div className="visual-glow" />
-            <div className="orbit orbit-one" />
-            <div className="orbit orbit-two" />
-            <div className="orbit orbit-three" />
-            <div className="visual-center">
-              <div className="center-shield">M</div>
-              <span>MASTERS TECH</span>
-              <small>DIGITAL SOLUTIONS</small>
+          <div className="hero-visual hero-ui-stage" aria-label="Animated showcase of website designs on laptop screens">
+            <div className="showcase-aura" />
+            <div className="ui-float ui-float-left">
+              <div className="ui-window-bar"><i /><i /><i /><span>shop-online.co.ke</span></div>
+              <div className="ui-shop-preview"><small>NEW COLLECTION</small><b>Find your<br />everyday style.</b><span>SHOP NOW ↗</span><div className="ui-product-shapes"><i /><i /><i /></div></div>
             </div>
-            <div className="floating-card card-top">
-              <span className="mini-icon">↗</span>
-              <span><strong>Online visibility</strong><small>Grow your reach</small></span>
+            <div className="ui-float ui-float-right">
+              <div className="ui-window-bar"><i /><i /><i /><span>business dashboard</span></div>
+              <div className="ui-dashboard-preview"><b>Overview</b><div className="ui-stat-row"><i /><i /><i /></div><div className="ui-chart"><i /><i /><i /><i /><i /><i /><i /></div><small>Performance at a glance</small></div>
             </div>
-            <div className="floating-card card-bottom">
-              <span className="mini-icon">✓</span>
-              <span><strong>Security first</strong><small>Protection matters</small></span>
+            <div className="hero-laptop">
+              <div className="laptop-screen">
+                <div className="laptop-browser-bar"><i /><i /><i /><span>yourbusiness.co.ke</span></div>
+                <div className="laptop-site-preview">
+                  <div className="laptop-site-nav"><b>YOUR BRAND<span>.</span></b><small>HOME　 ABOUT　 SERVICES　 CONTACT</small></div>
+                  <div className="laptop-site-hero"><small>WELCOME TO YOUR NEXT CHAPTER</small><b>Make your<br />business shine.</b><span>DISCOVER MORE ↗</span></div>
+                  <div className="laptop-site-bottom"><i /><i /><i /></div>
+                </div>
+              </div>
+              <div className="laptop-base"><span /></div>
             </div>
-            <div className="visual-caption">DESIGNED FOR THE DIGITAL WORLD</div>
+            <div className="showcase-chip showcase-chip-top"><span>✦</span> Beautiful, responsive design</div>
+            <div className="showcase-chip showcase-chip-bottom"><span>↗</span> Made to grow your business</div>
           </div>
-
-          <div className="hero-index"><span>01</span> / 03</div>
         </section>
 <section className="trust-strip">
           <span>WHAT WE HELP YOU DO</span>
