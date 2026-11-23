@@ -276,13 +276,16 @@ function App() {
         {promotion && (
           <section className="homepage-promotion" aria-label="Current special offer">
             <div className="homepage-promotion-inner">
-              <span className="homepage-promotion-kicker">LIMITED-TIME OFFER</span>
-              <div className="homepage-promotion-copy">
-                <strong>{promotion.discountPercent}% OFF</strong>
-                <span>{promotion.message}</span>
-                <small>On {promotion.appliesTo}{promotion.endsAt ? ` · Offer ends ${new Date(`${promotion.endsAt}T00:00:00`).toLocaleDateString()}` : ''}</small>
+              <div className="homepage-promotion-emblem" aria-hidden="true"><span>✦</span><strong>{promotion.discountPercent}%</strong><small>SAVINGS</small></div>
+              <div className="homepage-promotion-content">
+                <span className="homepage-promotion-kicker"><i /> A LITTLE SOMETHING FOR YOUR BUSINESS</span>
+                <div className="homepage-promotion-copy">
+                  <strong>{promotion.discountPercent}% <span>OFF</span></strong>
+                  <b>{promotion.message}</b>
+                  <small>On {promotion.appliesTo}{promotion.endsAt ? ` · Offer ends ${new Date(`${promotion.endsAt}T00:00:00`).toLocaleDateString()}` : ''}</small>
+                </div>
               </div>
-              <a href={'https://wa.me/254700806728?text=' + encodeURIComponent(`Hello Masters Tech, I saw your ${promotion.discountPercent}% promotion and would like to claim the offer.`)} target="_blank" rel="noreferrer">Claim this offer <span>↗</span></a>
+              <a href={'https://wa.me/254700806728?text=' + encodeURIComponent(`Hello Masters Tech, I saw your ${promotion.discountPercent}% promotion and would like to claim the offer.`)} target="_blank" rel="noreferrer">Claim your offer <span>↗</span></a>
             </div>
           </section>
         )}
@@ -301,6 +304,15 @@ function App() {
               We create modern websites that make your business look professional,
               connect with customers and get discovered on Google.
             </p>
+            <p className="hero-extra-copy">
+              Your website should do more than look good. It should tell your story,
+              make it easy for people to choose you, and turn curious visitors into real enquiries.
+            </p>
+            <div className="hero-benefit-points">
+              <span><i>✓</i> Designed around your business</span>
+              <span><i>✓</i> Easy to use on every screen</span>
+              <span><i>✓</i> Built to help customers take action</span>
+            </div>
             <div className="hero-actions">
               <a className="button-primary" href={whatsappLink} target="_blank" rel="noreferrer">
                 Let's build your website <span>↗</span>
