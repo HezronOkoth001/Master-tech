@@ -1341,3 +1341,76 @@ a {
 .ui-inspiration-info p { margin: 0; color: #8f98a8; font-size: 10px; }
 @media (max-width: 900px) { .ui-inspiration-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
 @media (max-width: 560px) { .ui-inspiration-grid { grid-template-columns: 1fr; } .ui-inspiration-image { height: 230px; } .sample-sites-tabs button { flex: 1; justify-content: center; } }
+
+
+/* Masters Tech public site: brighter surfaces and gentle interaction motion */
+:root {
+  color: #263247;
+  background: #f7f8fb;
+  --muted: #68778d;
+  --surface: #ffffff;
+}
+body { color: #263247; background: #f7f8fb; }
+.site-wrapper {
+  color: #263247;
+  background: #f7f8fb;
+}
+.navbar {
+  border-bottom-color: #e8ecf2;
+}
+.nav-links a { color: #647188; }
+.nav-links a:hover, .text-link:hover { color: #96740d; }
+.nav-cta { color: #263247; border-color: rgba(174,139,27,.55); }
+.hero h1, .section-heading h2, .about-content h2, .contact-section h2 { color: #1e2b40; }
+.hero-description, .admin-welcome p { color: #68778d; }
+.button-secondary { border-color: #dce3ed; color: #33435c; }
+.trust-strip {
+  border-color: #e5eaf1;
+  background: #ffffff;
+}
+.trust-strip > span { color: #8290a3; }
+.trust-strip div { color: #53627a; }
+.floating-card {
+  border-color: #e3e8ef;
+  background: rgba(255,255,255,.94);
+  color: #263247;
+  box-shadow: 0 14px 34px rgba(34,52,82,.10);
+}
+.floating-card small, .visual-center small { color: #77859a; }
+.visual-center {
+  border-color: rgba(212,175,55,.55);
+  background: linear-gradient(145deg,#ffffff,#f1f4f8);
+  color: #25334a;
+  box-shadow: 0 12px 45px rgba(34,52,82,.08);
+}
+.orbit { border-color: rgba(174,139,27,.22); }
+.orbit-two, .orbit-three { border-color: rgba(70,88,116,.10); }
+.hero-note, .hero-index, .visual-caption { color: #8591a3; }
+.inner-page-intro h1, .inner-page-intro h2 { color: #1f2d42; }
+.inner-page-intro p { color: #68778d; }
+.footer { border-top-color: #e5eaf1; color: #68778d; }
+.site-wrapper section:not(.hero) { color: #263247; }
+.site-wrapper .section-heading p, .site-wrapper .about-content p,
+.site-wrapper .service-card p, .site-wrapper .contact-section p { color: #68778d; }
+.site-wrapper .service-card, .site-wrapper .content-card,
+.site-wrapper .contact-card, .site-wrapper .review-card {
+  background: #ffffff;
+  border-color: #e6ebf2;
+  box-shadow: 0 10px 28px rgba(34,52,82,.055);
+}
+.site-wrapper .service-card h3, .site-wrapper .content-card h3,
+.site-wrapper .contact-card h3 { color: #263247; }
+.site-wrapper a, .site-wrapper button { transition: color .2s ease, background .2s ease, transform .22s ease, box-shadow .22s ease; }
+.site-wrapper a:hover, .site-wrapper button:hover { transform: translateY(-1px); }
+.hero-content, .hero-visual, .section-heading, .inner-page-intro {
+  animation: mt-public-enter .65s ease both;
+}
+.hero-visual { animation-delay: .08s; }
+@keyframes mt-public-enter { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .site-wrapper *, .site-wrapper *::before, .site-wrapper *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
