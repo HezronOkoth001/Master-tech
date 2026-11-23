@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import './AdminWorkspaceSections.css'
 
 const leadStages = ['New', 'Contacted', 'Qualified', 'Proposal sent', 'Negotiation', 'Won']
@@ -168,11 +168,28 @@ function AdminWorkspaceSections({ section, records = [], clients = [], pricing =
   const [outgoingMessage, setOutgoingMessage] = useState('')
   const [sending, setSending] = useState(false)
   const [lineItems, setLineItems] = useState([{ description: 'Website design and development', quantity: '1', unitPrice: '' }])
+  const savedPromotion = records.find((record) => record.recordType === 'promotion')
+  const [promotionPercent, setPromotionPercent] = useState(() => Number(savedPromotion?.discountPercent) || 20)
+  const [promotionMessage, setPromotionMessage] = useState(() => savedPromotion?.message || 'Get a special discount on your next website project.')
+  const [promotionEndsAt, setPromotionEndsAt] = useState(() => savedPromotion?.endsAt || '')
+  const [promotionAppliesTo, setPromotionAppliesTo] = useState(() => savedPromotion?.appliesTo || 'Website development services')
+  const [promotionEnabled, setPromotionEnabled] = useState(() => savedPromotion?.status === 'Active')
 
+  useEffect(() => {
+    if (section !== 'Pricing') return
+    const currentPromotion = records.find((record) => record.recordType === 'promotion')
+    setPromotionPercent(Number(currentPromotion?.discountPercent) || 20)
+    setPromotionMessage(currentPromotion?.message || 'Get a special discount on your next website project.')
+    setPromotionEndsAt(currentPromotion?.endsAt || '')
+    setPromotionAppliesTo(currentPromotion?.appliesTo || 'Website development services')
+    setPromotionEnabled(currentPromotion?.status === 'Active')
+  }, [section, records])
+
+  const catalogueRecords = records.filter((record) => record.recordType !== 'promotion')
   const visibleRecords = useMemo(() => {
     const term = search.trim().toLowerCase()
-    if (!term) return records
-    return records.filter((record) => Object.values(record).some((value) => String(value ?? '').toLowerCase().includes(term)))
+    if (!term) return catalogueRecords
+    return catalogueRecords.filter((record) => Object.values(record).some((value) => String(value ?? '').toLowerCase().includes(term)))
   }, [records, search])
 
   const subtotal = lineItems.reduce((sum, item) => sum + Math.max(0, Number(item.quantity) || 0) * Math.max(0, Number(item.unitPrice) || 0), 0)
@@ -184,6 +201,26 @@ function AdminWorkspaceSections({ section, records = [], clients = [], pricing =
   const taxableSubtotal = Math.max(0, subtotal - discountAmount)
   const taxAmount = taxableSubtotal * taxRate / 100
   const totalAmount = taxableSubtotal + taxAmount
+
+  async function savePublicPromotion() {
+    const promotionRecord = {
+      id: 'public-promotion',
+      recordType: 'promotion',
+      name: 'Public website promotion',
+      category: 'Promotion',
+      discountPercent: promotionPercent,
+      message: promotionMessage.trim() || 'Get a special discount on your next website project.',
+      endsAt: promotionEndsAt,
+      appliesTo: promotionAppliesTo.trim() || 'Website development services',
+      status: promotionEnabled ? 'Active' : 'Inactive',
+    }
+    try {
+      await onChange([...catalogueRecords, promotionRecord])
+      setMessage(promotionEnabled ? `${promotionPercent}% public promotion saved and activated.` : 'Public promotion saved as inactive.')
+    } catch (error) {
+      setMessage(error.message || 'Could not save the public promotion.')
+    }
+  }
 
   function resetForm() {
     setForm(emptyForm(schema))
@@ -344,6 +381,34 @@ function AdminWorkspaceSections({ section, records = [], clients = [], pricing =
         </button>
       </div>
 
+      {section === 'Pricing' && (
+        <section className="admin-panel public-promotion-editor">
+          <div className="public-promotion-heading">
+            <div><h3>Homepage promotion</h3><p>Choose a public discount and control whether it appears on your website. This does not change your standard catalogue prices.</p></div>
+            <span className={promotionEnabled ? 'promotion-status is-active' : 'promotion-status'}>{promotionEnabled ? 'ACTIVE' : 'INACTIVE'}</span>
+          </div>
+          <div className="promotion-choice-row" role="group" aria-label="Choose public discount percentage">
+            {[20, 50].map((percent) => (
+              <button key={percent} type="button" className={promotionPercent === percent ? 'promotion-choice selected' : 'promotion-choice'} onClick={() => setPromotionPercent(percent)}>{percent}% OFF</button>
+            ))}
+          </div>
+          <div className="workspace-form-grid">
+            <label className="workspace-field workspace-field-wide">Offer message
+              <input value={promotionMessage} onChange={(event) => setPromotionMessage(event.target.value)} maxLength={180} placeholder="e.g. Save on your new business website" />
+            </label>
+            <label className="workspace-field">Offer applies to
+              <input value={promotionAppliesTo} onChange={(event) => setPromotionAppliesTo(event.target.value)} maxLength={120} placeholder="e.g. Website development services" />
+            </label>
+            <label className="workspace-field">Offer end date (optional)
+              <input type="date" value={promotionEndsAt} onChange={(event) => setPromotionEndsAt(event.target.value)} />
+            </label>
+          </div>
+          <label className="promotion-toggle"><input type="checkbox" checked={promotionEnabled} onChange={(event) => setPromotionEnabled(event.target.checked)} /> Show this promotion on the public homepage</label>
+          <p className="message-composer-help">The homepage will hide the offer after its end date. Apply the discount manually when preparing an eligible client's quotation.</p>
+          <div className="project-form-actions"><button className="admin-view-site" type="button" onClick={savePublicPromotion}>Save promotion</button></div>
+        </section>
+      )}
+
       {section === 'Messages' && (
         <form className="admin-panel workspace-form message-composer" onSubmit={sendClientMessage}>
           <h3>Send a message to a client</h3>
@@ -393,7 +458,7 @@ function AdminWorkspaceSections({ section, records = [], clients = [], pricing =
                       event.target.value = ''
                     }}>
                       <option value="">Choose a package or service...</option>
-                      {pricing.filter((item) => item.status !== 'Inactive').map((item) => <option key={item.id} value={item.id}>{item.category} — {item.name} ({money(item.price)} / {item.billing})</option>)}
+                      {pricing.filter((item) => item.recordType !== 'promotion' && item.status !== 'Inactive').map((item) => <option key={item.id} value={item.id}>{item.category} — {item.name} ({money(item.price)} / {item.billing})</option>)}
                     </select>
                   </label>
                   <small>Catalogue prices are starting prices. You can change the quantity and unit price for this client's quotation without changing the catalogue.</small>
@@ -448,7 +513,7 @@ function AdminWorkspaceSections({ section, records = [], clients = [], pricing =
         </form>
       )}
 
-      <div className="workspace-list-heading"><div><strong>{records.length}</strong> {records.length === 1 ? 'record' : 'records'}</div>{!schema.singleRecord && <input aria-label={'Search ' + section} className="workspace-search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder={'Search ' + section.toLowerCase() + '...'} />}</div>
+      <div className="workspace-list-heading"><div><strong>{catalogueRecords.length}</strong> {catalogueRecords.length === 1 ? 'record' : 'records'}</div>{!schema.singleRecord && <input aria-label={'Search ' + section} className="workspace-search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder={'Search ' + section.toLowerCase() + '...'} />}</div>
 
       {visibleRecords.length === 0 ? (
         <div className="admin-panel workspace-empty"><span>✳</span><h3>{search ? 'No matching records' : 'Nothing here yet'}</h3><p>{search ? 'Try a different search term.' : 'Add a record to start managing this section.'}</p>{!search && <button className="admin-view-site" onClick={openNewForm}>+ Add first record</button>}</div>
