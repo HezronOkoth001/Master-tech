@@ -130,6 +130,40 @@ def delete_project(
     }
 
 
+class PublicReviewCreate(BaseModel):
+    customer: str = Field(min_length=2, max_length=120)
+    rating: int = Field(ge=1, le=5)
+    project: str = Field(default="", max_length=160)
+    review: str = Field(min_length=8, max_length=2000)
+
+
+@app.post("/api/reviews", status_code=201)
+def submit_public_review(
+    review_data: PublicReviewCreate,
+    db: Session = Depends(get_db),
+):
+    """Accept a public website review and hold it for admin approval."""
+    import uuid
+
+    review_record = models.WorkspaceRecord(
+        section="reviews",
+        record_key=str(uuid.uuid4()),
+        data={
+            "customer": review_data.customer.strip(),
+            "rating": review_data.rating,
+            "project": review_data.project.strip(),
+            "review": review_data.review.strip(),
+            "status": "Pending approval",
+            "source": "Website",
+            "submittedAt": __import__("datetime").datetime.now(__import__("datetime").timezone.utc).isoformat(),
+        },
+    )
+    db.add(review_record)
+    db.commit()
+    db.refresh(review_record)
+    return {"success": True, "message": "Thank you. Your review has been submitted for approval."}
+
+
 WORKSPACE_SECTIONS = {
     "clients", "leads", "tasks", "invoices",
     "payments", "messages", "reviews", "settings",
