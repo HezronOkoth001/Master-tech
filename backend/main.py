@@ -138,6 +138,22 @@ class PublicReviewCreate(BaseModel):
     review: str = Field(min_length=8, max_length=2000)
 
 
+@app.get("/api/public/reviews")
+def get_approved_public_reviews(db: Session = Depends(get_db)):
+    """Return only reviews explicitly approved by the administrator."""
+    records = (
+        db.query(models.WorkspaceRecord)
+        .filter(models.WorkspaceRecord.section == "reviews")
+        .order_by(models.WorkspaceRecord.id.desc())
+        .all()
+    )
+    approved = []
+    for record in records:
+        if record.data.get("status") == "Approved":
+            approved.append({"id": record.record_key, **record.data})
+    return approved
+
+
 @app.post("/api/reviews", status_code=201)
 def submit_public_review(
     review_data: PublicReviewCreate,
