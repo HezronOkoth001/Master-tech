@@ -179,6 +179,29 @@ function AdminDashboard() {
     return () => { isActive = false }
   }, [])
 
+  // Refresh the review queue whenever the administrator opens the Reviews tab.
+  // This prevents reviews submitted while the dashboard is already open from being missed.
+  useEffect(() => {
+    if (activePage !== 'Reviews' || workspaceLoading) return undefined
+    let isActive = true
+
+    async function refreshReviews() {
+      try {
+        const response = await fetch(`${WORKSPACE_API_URL}/reviews`)
+        if (!response.ok) throw new Error('Could not refresh customer reviews.')
+        const records = await response.json()
+        if (isActive && Array.isArray(records)) {
+          setWorkspaceData((previous) => ({ ...previous, Reviews: records }))
+        }
+      } catch (error) {
+        if (isActive) setWorkspaceError(error.message || 'Could not refresh customer reviews.')
+      }
+    }
+
+    refreshReviews()
+    return () => { isActive = false }
+  }, [activePage, workspaceLoading])
+
   async function updateWorkspaceSection(section, records) {
     const response = await fetch(`${WORKSPACE_API_URL}/${section.toLowerCase()}`, {
       method: 'PUT',
