@@ -401,6 +401,7 @@ function AdminDashboard() {
             <AdminWorkspaceSections
               section={activePage}
               records={workspaceData[activePage] || []}
+              clients={workspaceData.Clients || []}
               onChange={(records) => updateWorkspaceSection(activePage, records)}
             />
           )}
