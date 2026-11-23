@@ -247,7 +247,7 @@ function App() {
               <a className="button-primary" href={whatsappLink} target="_blank" rel="noreferrer">
                 Discuss your project <span>↗</span>
               </a>
-              <a className="button-secondary" href="#services">
+              <a className="button-secondary" href="/services">
                 Explore services <span>↓</span>
               </a>
             </div>
