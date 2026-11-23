@@ -283,6 +283,23 @@ function AdminWorkspaceSections({ section, records = [], clients = [], pricing =
     setFormOpen(true)
   }
 
+  async function updateReviewStatus(record, status) {
+    const nextRecords = records.map((item) =>
+      String(item.id) === String(record.id) ? { ...item, status } : item
+    )
+    setMessage('')
+    try {
+      await onChange(nextRecords)
+      setMessage(status === 'Approved'
+        ? 'Review approved. It can now appear on the public website.'
+        : status === 'Hidden'
+          ? 'Review hidden from the public website.'
+          : 'Review status updated.')
+    } catch (error) {
+      setMessage(error.message || 'Could not update this review.')
+    }
+  }
+
   function printDocument(record) {
     const type = record.documentType || 'Invoice'
     const rows = (record.lineItems || [{ description: record.notes || 'Professional services', quantity: 1, unitPrice: record.amount || 0 }]).map((item) => {
@@ -524,7 +541,18 @@ function AdminWorkspaceSections({ section, records = [], clients = [], pricing =
             <tr key={record.id}>
               {schema.columns.map((key) => <td key={key}>{key === 'rating' ? '★'.repeat(Math.max(0, Math.min(5, Number(record[key]) || 0))) : key === 'totalAmount' ? money(record.totalAmount) : key === 'amount' && section === 'Invoices' ? money(record.amount) : key === 'submittedAt' && record[key] ? new Date(record[key]).toLocaleString() : key === 'quotedPrice' || key === 'clientOffer' ? (record[key] ? money(record[key]) : '—') : (record[key] || '—')}</td>)}
               {section === 'Leads' && <td><div className="lead-table-progress"><div className="lead-progress-track"><span style={{ width: (stageProgress[record.status] ?? 10) + '%' }} /></div><small>{stageProgress[record.status] ?? 10}%</small></div></td>}
-              <td className="workspace-row-actions"><button onClick={() => editRecord(record)}>Edit</button>{section === 'Invoices' && <button onClick={() => printDocument(record)}>Preview / PDF</button>}{section === 'Invoices' && record.documentType === 'Quotation' && record.status === 'Accepted' && <button onClick={() => convertQuotation(record)}>Create invoice</button>}{!schema.singleRecord && <button className="managed-delete-button" onClick={() => deleteRecord(record)}>Delete</button>}</td>
+              <td className="workspace-row-actions">
+                {section === 'Reviews' && record.status !== 'Approved' && (
+                  <button className="review-approve-button" onClick={() => updateReviewStatus(record, 'Approved')}>Approve</button>
+                )}
+                {section === 'Reviews' && record.status !== 'Hidden' && (
+                  <button className="review-hide-button" onClick={() => updateReviewStatus(record, 'Hidden')}>Hide</button>
+                )}
+                <button onClick={() => editRecord(record)}>{section === 'Reviews' ? 'Edit / update' : 'Edit'}</button>
+                {section === 'Invoices' && <button onClick={() => printDocument(record)}>Preview / PDF</button>}
+                {section === 'Invoices' && record.documentType === 'Quotation' && record.status === 'Accepted' && <button onClick={() => convertQuotation(record)}>Create invoice</button>}
+                {!schema.singleRecord && <button className="managed-delete-button" onClick={() => deleteRecord(record)}>Delete</button>}
+              </td>
             </tr>
           ))}</tbody>
         </table></div></div>
