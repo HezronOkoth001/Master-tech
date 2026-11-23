@@ -2545,3 +2545,32 @@ body { color: #f5f8fc; background: var(--mt-black); }
     padding-left: 20px;
   }
 }
+
+.reviews-empty-state {
+  max-width: 820px;
+  margin: 28px auto 8px;
+  padding: 30px 24px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  background: rgba(255,255,255,.62);
+  text-align: center;
+}
+.reviews-empty-state > span {
+  display: block;
+  margin-bottom: 12px;
+  color: #b58a18;
+  letter-spacing: 4px;
+}
+.reviews-empty-state strong {
+  display: block;
+  color: #172033;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+}
+.reviews-empty-state p {
+  max-width: 540px;
+  margin: 9px auto 0;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.8;
+}
