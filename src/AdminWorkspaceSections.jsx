@@ -67,15 +67,16 @@ const schemas = {
   },
   Messages: {
     title: 'Enquiries and messages',
-    description: 'Manually record enquiries received through WhatsApp, email, or your website.',
+    description: 'Choose a saved client, prepare a message for WhatsApp or email, and keep a record of your conversations.',
     fields: [
-      { name: 'sender', label: 'Sender name', required: true },
+      { name: 'recipient', label: 'Recipient name' },
+      { name: 'sender', label: 'Sender name' },
       { name: 'contact', label: 'Contact details' },
       { name: 'channel', label: 'Channel', type: 'select', options: ['Website', 'WhatsApp', 'Email', 'Facebook', 'Other'] },
       { name: 'message', label: 'Message / enquiry', type: 'textarea', required: true },
-      { name: 'status', label: 'Status', type: 'select', options: ['Unread', 'Replied', 'Follow up', 'Closed'] },
+      { name: 'status', label: 'Status', type: 'select', options: ['Ready to send', 'Sent', 'Unread', 'Replied', 'Follow up', 'Closed'] },
     ],
-    columns: ['sender', 'contact', 'channel', 'message', 'status'],
+    columns: ['recipient', 'sender', 'contact', 'channel', 'message', 'status'],
   },
   Reviews: {
     title: 'Customer reviews',
@@ -108,7 +109,7 @@ function emptyForm(schema) {
   return Object.fromEntries(schema.fields.map((field) => [field.name, field.name === 'currency' ? 'KES' : '']))
 }
 
-function AdminWorkspaceSections({ section, records = [], onChange }) {
+function AdminWorkspaceSections({ section, records = [], clients = [], onChange }) {
   const schema = schemas[section]
   const [formOpen, setFormOpen] = useState(false)
   const [editingId, setEditingId] = useState(null)
@@ -116,6 +117,10 @@ function AdminWorkspaceSections({ section, records = [], onChange }) {
   const [form, setForm] = useState(() => emptyForm(schema))
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState('')
+  const [recipientId, setRecipientId] = useState('')
+  const [outgoingChannel, setOutgoingChannel] = useState('WhatsApp')
+  const [outgoingMessage, setOutgoingMessage] = useState('')
+  const [sending, setSending] = useState(false)
 
   const visibleRecords = useMemo(() => {
     const term = search.trim().toLowerCase()
@@ -163,6 +168,60 @@ function AdminWorkspaceSections({ section, records = [], onChange }) {
     setFormOpen(true)
   }
 
+  async function sendClientMessage(event) {
+    event.preventDefault()
+    const recipient = clients.find((client) => String(client.id) === String(recipientId))
+    if (!recipient) {
+      setMessage('Select a client before preparing a message.')
+      return
+    }
+
+    const destination = outgoingChannel === 'WhatsApp' ? recipient.phone : recipient.email
+    if (!destination?.trim()) {
+      setMessage(outgoingChannel === 'WhatsApp'
+        ? 'This client does not have a phone number. Add one in the Clients tab first.'
+        : 'This client does not have an email address. Add one in the Clients tab first.')
+      return
+    }
+    if (!outgoingMessage.trim()) {
+      setMessage('Write your message before continuing.')
+      return
+    }
+
+    const cleanPhone = String(destination).replace(/[^0-9]/g, '')
+    if (outgoingChannel === 'WhatsApp' && cleanPhone.length < 8) {
+      setMessage('The saved phone number does not look valid. Include the country code, for example 2547XXXXXXXX.')
+      return
+    }
+
+    setSending(true)
+    setMessage('')
+    const logEntry = {
+      id: String(Date.now()),
+      recipient: recipient.name,
+      contact: destination,
+      channel: outgoingChannel,
+      message: outgoingMessage.trim(),
+      status: 'Ready to send',
+      direction: 'Outgoing',
+      createdAt: new Date().toISOString(),
+    }
+
+    try {
+      await onChange([logEntry, ...records])
+      const url = outgoingChannel === 'WhatsApp'
+        ? `https://wa.me/${cleanPhone}?text=${encodeURIComponent(outgoingMessage.trim())}`
+        : `mailto:${encodeURIComponent(destination.trim())}?subject=${encodeURIComponent('Message from Masters Tech')}&body=${encodeURIComponent(outgoingMessage.trim())}`
+      window.open(url, '_blank', 'noopener,noreferrer')
+      setOutgoingMessage('')
+      setMessage(`Message prepared for ${recipient.name}. Complete the send in ${outgoingChannel}, then update its status to Sent here.`)
+    } catch (error) {
+      setMessage(error.message || 'Could not save the message record.')
+    } finally {
+      setSending(false)
+    }
+  }
+
   async function deleteRecord(record) {
     const label = record.name || record.title || record.invoiceNumber || record.reference || record.sender || record.customer || 'this record'
     if (!window.confirm('Delete ' + label + '? This cannot be undone.')) return
@@ -186,6 +245,37 @@ function AdminWorkspaceSections({ section, records = [], onChange }) {
           {formOpen ? 'Cancel' : schema.singleRecord && records.length ? 'Edit settings' : '+ Add ' + (section === 'Tasks' ? 'task' : section === 'Clients' ? 'client' : section === 'Leads' ? 'lead' : section === 'Invoices' ? 'invoice' : section === 'Payments' ? 'payment' : section === 'Messages' ? 'message' : section === 'Reviews' ? 'review' : 'settings')}
         </button>
       </div>
+
+      {section === 'Messages' && (
+        <form className="admin-panel workspace-form message-composer" onSubmit={sendClientMessage}>
+          <h3>Send a message to a client</h3>
+          <p className="message-composer-help">Choose a saved client and a channel. The message will open in WhatsApp or your email app for you to review and send.</p>
+          <div className="workspace-form-grid">
+            <label className="workspace-field">
+              Client
+              <select value={recipientId} onChange={(event) => setRecipientId(event.target.value)} required>
+                <option value="">Select a client...</option>
+                {clients.map((client) => <option key={client.id} value={client.id}>{client.name}</option>)}
+              </select>
+            </label>
+            <label className="workspace-field">
+              Channel
+              <select value={outgoingChannel} onChange={(event) => setOutgoingChannel(event.target.value)}>
+                <option value="WhatsApp">WhatsApp</option>
+                <option value="Email">Email</option>
+              </select>
+            </label>
+            <label className="workspace-field workspace-field-wide">
+              Message
+              <textarea value={outgoingMessage} onChange={(event) => setOutgoingMessage(event.target.value)} rows={4} maxLength={2000} placeholder="Write the message you want to send..." required />
+            </label>
+          </div>
+          {clients.length === 0 && <p className="message-composer-help">There are no saved clients yet. Add a client with a phone number or email address in the Clients tab first.</p>}
+          <div className="project-form-actions">
+            <button className="admin-view-site" type="submit" disabled={sending || clients.length === 0}>{sending ? 'Preparing...' : outgoingChannel === 'WhatsApp' ? 'Open WhatsApp' : 'Open email'}</button>
+          </div>
+        </form>
+      )}
 
       {message && <p role="status" aria-live="polite">{message}</p>}
 
