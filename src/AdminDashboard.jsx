@@ -123,7 +123,11 @@ function AdminDashboard() {
           return [section, records]
         }))
 
-        if (isActive) setWorkspaceData(Object.fromEntries(entries))
+        if (isActive) {
+          setWorkspaceData(Object.fromEntries(entries))
+          // Prevent deleted legacy records from being imported again on a later refresh.
+          localStorage.removeItem(WORKSPACE_STORAGE_KEY)
+        }
       } catch (error) {
         if (isActive) setWorkspaceError(error.message || 'Could not load workspace records.')
       } finally {
