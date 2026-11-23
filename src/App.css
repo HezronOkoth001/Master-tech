@@ -2525,3 +2525,23 @@ body { color: #f5f8fc; background: var(--mt-black); }
     text-align: center;
   }
 }
+
+
+/* Customer reviews section on the homepage and reviews page */
+.reviews-section {
+  padding-right: max(32px, calc((100% - 1200px) / 2));
+  padding-left: max(32px, calc((100% - 1200px) / 2));
+  background:
+    radial-gradient(ellipse at 8% 0, rgba(59,130,246,.07), transparent 36%),
+    #f8fafc;
+}
+.reviews-section .section-heading h2 { color: #172033; }
+.reviews-section .section-heading h2 span { color: #9a7410; }
+.reviews-section .section-heading > p { color: #596579; }
+.reviews-section .section-label { color: #8a6810; }
+@media (max-width: 640px) {
+  .reviews-section {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+}
