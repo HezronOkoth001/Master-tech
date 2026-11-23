@@ -41,7 +41,7 @@ function PublicReviewForm() {
 
   useEffect(() => {
     let active = true
-    fetch(\`\${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/public/reviews\`)
+    fetch((import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000') + '/api/public/reviews')
       .then((response) => response.ok ? response.json() : [])
       .then((data) => { if (active && Array.isArray(data)) setApprovedReviews(data) })
       .catch(() => {})
