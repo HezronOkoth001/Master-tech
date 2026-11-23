@@ -662,17 +662,30 @@ function App() {
     ),
     '/contact': (
       <>
-        <PageIntro label="CONTACT MASTERS TECH" title={<>Let's discuss your <span>next project.</span></>} description="Need a business website, a website refresh, security support or help getting found on Google? Get in touch and tell us what your business needs." />
-<section className="contact-section section-padding" id="contact">
+        <PageIntro label="CONTACT MASTERS TECH" title={<>Let's discuss your <span>next project.</span></>} description="Need a business website, a website refresh or help getting found on Google? Get in touch and tell me what your business needs." />
+        <section className="contact-section section-padding" id="contact">
           <span className="section-label">HAVE A PROJECT IN MIND?</span>
           <h2>Let's build something <span>that works for you.</span></h2>
-          <p>Tell us what your business needs. We'll take it from there.</p>
+          <p>WhatsApp is the quickest way to reach me. You can also email me or connect through my social profiles.</p>
           <a className="button-primary" href={whatsappLink} target="_blank" rel="noreferrer">
             Chat with Masters Tech on WhatsApp <span>↗</span>
           </a>
         </section>
         <section className="contact-details section-padding">
-          <div><span className="section-label">WHATSAPP</span><h2>Start a conversation</h2><p>Send a message and tell us about your project.</p><a className="button-primary" href={whatsappLink} target="_blank" rel="noreferrer">Chat on WhatsApp <span>↗</span></a></div>
+          <div className="contact-primary-method">
+            <span className="section-label">MAIN CONTACT</span>
+            <h2>Let's talk on WhatsApp</h2>
+            <p>For questions, project ideas and enquiries, send me a message directly. I usually recommend WhatsApp for the quickest conversation.</p>
+            <a className="button-primary" href={whatsappLink} target="_blank" rel="noreferrer">Chat on WhatsApp <span>↗</span></a>
+          </div>
+          <div className="contact-other-methods">
+            <span className="section-label">OTHER WAYS TO REACH ME</span>
+            <h2>Email & social media</h2>
+            <p>Prefer email, or want to follow my work and updates? Find me here.</p>
+            <a className="contact-method-link" href="mailto:orichohezron@gmail.com"><span className="contact-method-icon" aria-hidden="true">✉</span><span><small>EMAIL</small><strong>orichohezron@gmail.com</strong></span><b aria-hidden="true">↗</b></a>
+            <a className="contact-method-link" href="https://www.instagram.com/hezron.oricho/" target="_blank" rel="noopener noreferrer"><span className="contact-method-icon" aria-hidden="true">◎</span><span><small>INSTAGRAM</small><strong>@hezron.oricho</strong></span><b aria-hidden="true">↗</b></a>
+            <a className="contact-method-link" href="https://www.facebook.com/profile.php?id=61595747563710" target="_blank" rel="noopener noreferrer"><span className="contact-method-icon" aria-hidden="true">f</span><span><small>FACEBOOK</small><strong>Hezron Okoth · Facebook profile</strong></span><b aria-hidden="true">↗</b></a>
+          </div>
         </section>
       </>
     ),
