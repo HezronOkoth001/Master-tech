@@ -1083,3 +1083,16 @@ a {
 .approved-review-card p { color: #4d4d55; font-size: 14px; line-height: 1.7; }
 .approved-review-card strong, .approved-review-card small { display: block; color: #202027; }
 .approved-review-card small { margin-top: 4px; color: #777780; font-size: 12px; }
+
+
+/* Public homepage promotion banner */
+.homepage-promotion { background: linear-gradient(105deg, #a91620, #d62935 55%, #a91620); color: #fff; }
+.homepage-promotion-inner { width: min(1200px, calc(100% - 64px)); min-height: 116px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 28px; padding: 22px 0; }
+.homepage-promotion-kicker { flex: 0 0 auto; padding: 8px 10px; border: 1px solid rgba(255,255,255,.45); border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: 1.4px; }
+.homepage-promotion-copy { display: grid; gap: 4px; flex: 1; }
+.homepage-promotion-copy strong { font-family: 'Space Grotesk', sans-serif; font-size: clamp(27px, 4vw, 42px); line-height: 1; }
+.homepage-promotion-copy span { font-size: 14px; font-weight: 600; }
+.homepage-promotion-copy small { color: rgba(255,255,255,.82); font-size: 11px; }
+.homepage-promotion-inner > a { flex: 0 0 auto; padding: 13px 18px; border-radius: 5px; background: #fff; color: #a91620; font-size: 12px; font-weight: 700; }
+.homepage-promotion-inner > a span { margin-left: 8px; }
+@media (max-width: 700px) { .homepage-promotion-inner { width: min(100% - 36px, 560px); align-items: flex-start; flex-direction: column; gap: 13px; } .homepage-promotion-kicker { font-size: 9px; } .homepage-promotion-inner > a { width: 100%; text-align: center; } }
