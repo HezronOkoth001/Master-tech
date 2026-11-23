@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { jsPDF } from 'jspdf'
 import './AdminWorkspaceSections.css'
 
 const leadStages = ['New', 'Contacted', 'Qualified', 'Proposal sent', 'Negotiation', 'Won']
@@ -328,6 +329,147 @@ function AdminWorkspaceSections({ section, records = [], clients = [], pricing =
     documentWindow.focus()
   }
 
+  function downloadDocumentPdf(record) {
+    const doc = new jsPDF({ unit: 'mm', format: 'a4' })
+    const pageWidth = doc.internal.pageSize.getWidth()
+    const pageHeight = doc.internal.pageSize.getHeight()
+    const left = 18
+    const right = pageWidth - 18
+    let y = 20
+    const type = record.documentType || 'Invoice'
+    const addPageIfNeeded = (height = 10) => {
+      if (y + height > pageHeight - 18) { doc.addPage(); y = 20 }
+    }
+    const writeWrapped = (value, x, maxWidth, lineHeight = 5) => {
+      const lines = doc.splitTextToSize(String(value ?? '—'), maxWidth)
+      addPageIfNeeded(lines.length * lineHeight)
+      doc.text(lines, x, y)
+      y += lines.length * lineHeight
+    }
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(20)
+    doc.setTextColor(30, 41, 59)
+    doc.text('MASTERS TECH', left, y)
+    doc.setFontSize(16)
+    doc.setTextColor(169, 133, 19)
+    doc.text(type.toUpperCase(), right, y, { align: 'right' })
+    y += 7
+    doc.setDrawColor(212, 175, 55)
+    doc.setLineWidth(1)
+    doc.line(left, y, right, y)
+    y += 10
+    doc.setFontSize(10)
+    doc.setTextColor(90, 90, 90)
+    doc.setFont('helvetica', 'bold')
+    doc.text('PREPARED FOR', left, y)
+    doc.text('DOCUMENT DETAILS', 112, y)
+    y += 6
+    doc.setTextColor(35, 35, 35)
+    doc.setFont('helvetica', 'bold')
+    doc.text(String(record.client || 'Client'), left, y)
+    doc.text('No: ' + String(record.invoiceNumber || ''), 112, y)
+    y += 5
+    doc.setFont('helvetica', 'normal')
+    doc.text(String(record.clientEmail || ''), left, y)
+    doc.text('Date: ' + String(record.issueDate || ''), 112, y)
+    y += 5
+    doc.text(String(record.clientPhone || ''), left, y)
+    doc.text((type === 'Quotation' ? 'Valid until: ' : 'Due date: ') + String(record.dueDate || ''), 112, y)
+    y += 11
+
+    const columns = [left, 112, 132, 158, right]
+    const row = (description, qty, unitPrice, amount, header = false) => {
+      const descLines = doc.splitTextToSize(String(description || '—'), 88)
+      const rowHeight = Math.max(9, descLines.length * 4.5 + 4)
+      addPageIfNeeded(rowHeight)
+      if (header) {
+        doc.setFillColor(243, 240, 230)
+        doc.rect(left, y - 5, right - left, 9, 'F')
+        doc.setFont('helvetica', 'bold')
+        doc.setTextColor(55, 55, 55)
+      } else {
+        doc.setFont('helvetica', 'normal')
+        doc.setTextColor(45, 45, 45)
+      }
+      doc.setFontSize(9)
+      doc.text(descLines, columns[0] + 2, y)
+      doc.text(String(qty), columns[1], y)
+      doc.text(money(unitPrice), columns[2], y)
+      doc.text(money(amount), columns[4], y, { align: 'right' })
+      y += rowHeight
+      if (!header) {
+        doc.setDrawColor(225, 225, 225)
+        doc.line(left, y - 3, right, y - 3)
+      }
+    }
+    row('Description', 'Qty', 'Unit price', 'Amount', true)
+    ;(record.lineItems || [{ description: record.notes || 'Professional services', quantity: 1, unitPrice: record.amount || 0 }]).forEach((item) => {
+      const quantity = Number(item.quantity) || 1
+      const unitPrice = Number(item.unitPrice) || 0
+      const detail = [item.category, item.billing && item.billing !== 'One-time' ? item.billing : ''].filter(Boolean).join(' · ')
+      row(item.description + (detail ? ' — ' + detail : ''), quantity, unitPrice, quantity * unitPrice)
+    })
+    y += 4
+    const totals = [
+      ['Subtotal', money(record.amount)],
+      ...(Number(record.discountAmount) > 0 ? [['Client discount', '-' + money(record.discountAmount)]] : []),
+      ['Taxable amount', money(record.taxableSubtotal ?? (Number(record.amount || 0) - Number(record.discountAmount || 0)))],
+      ['Tax (' + String(record.taxRate || 0) + '%)', money(record.taxAmount)],
+      ['FINAL TOTAL', money(record.totalAmount)],
+    ]
+    totals.forEach(([label, value], index) => {
+      addPageIfNeeded(8)
+      doc.setFont('helvetica', index === totals.length - 1 ? 'bold' : 'normal')
+      doc.setFontSize(index === totals.length - 1 ? 12 : 9)
+      doc.setTextColor(index === totals.length - 1 ? 169 : 55, index === totals.length - 1 ? 133 : 55, index === totals.length - 1 ? 19 : 55)
+      doc.text(label, 116, y)
+      doc.text(value, right, y, { align: 'right' })
+      y += index === totals.length - 1 ? 9 : 6
+    })
+    if (record.notes) {
+      y += 5
+      addPageIfNeeded(15)
+      doc.setFont('helvetica', 'bold')
+      doc.setFontSize(10)
+      doc.setTextColor(35, 35, 35)
+      doc.text('Notes / terms', left, y)
+      y += 6
+      doc.setFont('helvetica', 'normal')
+      doc.setFontSize(9)
+      writeWrapped(record.notes, left, right - left, 4.5)
+    }
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(8)
+    doc.setTextColor(110, 110, 110)
+    doc.text('Thank you for considering Masters Tech. We appreciate your business.', pageWidth / 2, pageHeight - 10, { align: 'center' })
+    const safeNumber = String(record.invoiceNumber || 'document').replace(/[^a-z0-9-_]/gi, '-')
+    doc.save('Masters-Tech-' + type + '-' + safeNumber + '.pdf')
+    setMessage(type + ' PDF downloaded. You can now attach it in the client WhatsApp chat.')
+  }
+
+  function sendQuotationWhatsApp(record) {
+    const phone = String(record.clientPhone || '').replace(/[^0-9]/g, '')
+    if (!phone || phone.length < 8) {
+      setMessage('Add a valid client WhatsApp number, including the country code (for example 2547XXXXXXXX), then edit and save this quotation.')
+      return
+    }
+    const message = [
+      'Hello ' + (record.client || 'there') + ',',
+      '',
+      'Please find the details of your quotation from Masters Tech:',
+      'Quotation: ' + (record.invoiceNumber || ''),
+      'Date: ' + (record.issueDate || ''),
+      'Valid until: ' + (record.dueDate || ''),
+      'Total: ' + money(record.totalAmount),
+      '',
+      'I have prepared the quotation PDF for you. Please let me know if you have any questions.',
+      '',
+      'Masters Tech',
+    ].join('\n')
+    window.open('https://wa.me/' + phone + '?text=' + encodeURIComponent(message), '_blank', 'noopener,noreferrer')
+    setMessage('WhatsApp opened for ' + (record.client || 'the client') + '. Attach the downloaded quotation PDF before sending.')
+  }
+
   async function sendClientMessage(event) {
     event.preventDefault()
     const recipient = clients.find((client) => String(client.id) === String(recipientId))
@@ -549,7 +691,9 @@ function AdminWorkspaceSections({ section, records = [], clients = [], pricing =
                   <button className="review-hide-button" onClick={() => updateReviewStatus(record, 'Hidden')}>Hide</button>
                 )}
                 <button onClick={() => editRecord(record)}>{section === 'Reviews' ? 'Edit / update' : 'Edit'}</button>
-                {section === 'Invoices' && <button onClick={() => printDocument(record)}>Preview / PDF</button>}
+                {section === 'Invoices' && <button onClick={() => printDocument(record)}>Preview</button>}
+                {section === 'Invoices' && record.documentType === 'Quotation' && <button onClick={() => downloadDocumentPdf(record)}>Download PDF</button>}
+                {section === 'Invoices' && record.documentType === 'Quotation' && <button className="review-approve-button" onClick={() => sendQuotationWhatsApp(record)}>Send via WhatsApp</button>}
                 {section === 'Invoices' && record.documentType === 'Quotation' && record.status === 'Accepted' && <button onClick={() => convertQuotation(record)}>Create invoice</button>}
                 {!schema.singleRecord && <button className="managed-delete-button" onClick={() => deleteRecord(record)}>Delete</button>}
               </td>
