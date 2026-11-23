@@ -243,7 +243,7 @@ function App() {
   useEffect(() => {
     const pages = {
       '/': ['Masters Tech | Website Development, Security & SEO', 'Masters Tech helps businesses build professional websites, improve website security and grow online visibility through SEO and Google Maps.'],
-      '/about': ['About Masters Tech | Digital Solutions for Businesses', 'Learn about Masters Tech, our approach to website development, website security and helping businesses improve their online presence.'],
+      '/about': ['About Hezron Okoth | Masters Tech Website Development & SEO', 'Meet Hezron Okoth, the person behind Masters Tech. Learn about professional website development, SEO and Google visibility services for businesses.'],
       '/services': ['Website Development, Security & SEO Services | Masters Tech', 'Explore Masters Tech services: business website development, website maintenance and security, search engine optimization and Google Maps visibility.'],
       '/sample-sites': ['Website Design Samples & UI Ideas | Masters Tech', 'Explore sample website designs for business websites, online shops, restaurants, education, property listings and booking platforms. Choose a style for your next website.'],
       '/contact': ['Contact Masters Tech | Request a Website or SEO Service', 'Contact Masters Tech to discuss a business website, website security, SEO, Google Maps visibility or a custom web project.'],
@@ -372,27 +372,86 @@ function App() {
     ),
     '/about': (
       <>
-        <PageIntro label="ABOUT MASTERS TECH" title={<>A practical technology partner for <span>business growth.</span></>} description="We help businesses establish a professional online presence with useful websites, dependable support and better visibility in search." />
-<section className="about-section section-padding" id="about">
-          <div className="about-mark">M<span>.</span></div>
-          <div className="about-content">
-            <span className="section-label">ABOUT MASTERS TECH</span>
-            <h2>Technology should work <span>for your business.</span></h2>
+        <PageIntro label="THE PERSON BEHIND MASTERS TECH" title={<>Thoughtful websites. <span>Real business purpose.</span></>} description="I'm Hezron, the person behind Masters Tech. I help businesses turn their ideas into professional websites and make it easier for customers to find them online." />
+        <section className="about-section about-founder-section section-padding" id="about">
+          <div className="about-founder-visual">
+            <div className="about-founder-orbit about-founder-orbit-one" />
+            <div className="about-founder-orbit about-founder-orbit-two" />
+            <div className="about-founder-monogram">H<span>.</span></div>
+            <div className="about-founder-caption"><span className="about-founder-live-dot" /> INDEPENDENT WEB DEVELOPER</div>
+            <div className="about-founder-side-note">IDEAS INTO<br /><strong>ONLINE EXPERIENCES</strong></div>
+          </div>
+          <div className="about-content about-founder-copy">
+            <span className="section-label">HELLO, I'M HEZRON OKOTH</span>
+            <h2>I build digital experiences that help businesses <span>move forward.</span></h2>
             <p>
-              Masters Tech helps businesses establish and improve their online
-              presence through web development, website security, and search
-              visibility. Our focus is on practical solutions, clear communication,
-              and building digital experiences around real business needs.
+              I created Masters Tech around a simple idea: every business deserves
+              a professional online presence that explains what it offers, builds
+              confidence and makes it easy for customers to take the next step.
             </p>
-            <a className="text-link" href={whatsappLink} target="_blank" rel="noreferrer">
-              Let's discuss your goals <span>↗</span>
-            </a>
+            <p>
+              I enjoy turning ideas into clean, useful and responsive websites.
+              From planning the layout and designing the experience to building
+              the pages and making sure they work across phones, tablets and
+              computers, I focus on the details that make a website feel complete.
+            </p>
+            <p>
+              I believe in clear communication, practical solutions and taking
+              time to understand what each business is trying to achieve. You
+              work directly with me, so your ideas and feedback stay part of the
+              process from beginning to end.
+            </p>
+            <a className="text-link" href={whatsappLink} target="_blank" rel="noreferrer">Let's talk about your idea <span>↗</span></a>
           </div>
         </section>
-        <section className="inner-content-section section-padding">
-          <h2>Our approach</h2>
-          <p>We start by understanding what your business needs, then recommend and build a solution that is clear, useful and suitable for your goals. We value straightforward communication, responsive design and solutions that are easy for customers to use.</p>
-          <a className="button-primary" href="/contact">Talk to Masters Tech <span>↗</span></a>
+
+        <section className="about-services-section section-padding">
+          <div className="about-section-heading">
+            <span className="section-label">WHAT MASTERS TECH DOES</span>
+            <h2>More than a website. <span>A better way to show up online.</span></h2>
+            <p>I focus on the essential digital tools that help customers understand your business, trust what they see and find you when they search.</p>
+          </div>
+          <div className="about-service-grid">
+            <article className="about-service-card">
+              <span className="about-service-number">01 / BUILD</span>
+              <div className="about-service-icon">⌘</div>
+              <h3>Website design & development</h3>
+              <p>Professional, mobile-friendly websites shaped around your business, your customers and the services you provide.</p>
+              <ul><li>Business and company websites</li><li>Landing pages and redesigns</li><li>Clear pages that guide visitors to contact you</li></ul>
+            </article>
+            <article className="about-service-card about-service-card-featured">
+              <span className="about-service-number">02 / GET FOUND</span>
+              <div className="about-service-icon">↗</div>
+              <h3>SEO & Google visibility</h3>
+              <p>Practical improvements that help search engines understand your website and help potential customers discover your business.</p>
+              <ul><li>Search-friendly page structure and content</li><li>On-page SEO improvements</li><li>Google Business Profile and Maps visibility guidance</li></ul>
+            </article>
+            <article className="about-service-card">
+              <span className="about-service-number">03 / IMPROVE</span>
+              <div className="about-service-icon">✦</div>
+              <h3>Useful digital experiences</h3>
+              <p>Thoughtful details that make your website easier to use and help visitors move from browsing to making an enquiry.</p>
+              <ul><li>Responsive layouts for different screens</li><li>Simple navigation and clear calls to action</li><li>Performance and usability improvements</li></ul>
+            </article>
+          </div>
+        </section>
+
+        <section className="about-process-section section-padding">
+          <div className="about-process-intro">
+            <span className="section-label">HOW I WORK</span>
+            <h2>Clear steps. <span>Careful work.</span></h2>
+            <p>No confusing technical talk. I'll keep you involved and explain what we're building at every stage.</p>
+          </div>
+          <div className="about-process-list">
+            <div><span>01</span><section><h3>We understand your business</h3><p>We discuss your goals, audience, services and what you want your website to achieve.</p></section></div>
+            <div><span>02</span><section><h3>Plan, design and build</h3><p>I shape the structure and visual direction, then build a responsive website around your needs.</p></section></div>
+            <div><span>03</span><section><h3>Prepare you for online visibility</h3><p>I apply search-friendly foundations and help you take practical steps towards being found on Google.</p></section></div>
+          </div>
+        </section>
+
+        <section className="about-final-cta section-padding">
+          <div><span className="section-label">HAVE A PROJECT IN MIND?</span><h2>Let's make your business <span>stand out online.</span></h2><p>Tell me what you're working on. We can talk through your idea and the right next step.</p></div>
+          <div className="about-final-actions"><a className="button-primary" href={whatsappLink} target="_blank" rel="noreferrer">Start a WhatsApp chat <span>↗</span></a><a className="button-secondary" href="/sample-sites">Explore website designs <span>→</span></a></div>
         </section>
       </>
     ),
