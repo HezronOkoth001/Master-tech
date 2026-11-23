@@ -26,3 +26,8 @@
 .workspace-row-actions button { padding: 6px 8px; margin-right: 5px; border: 1px solid #3b3d47; border-radius: 5px; background: #20212a; color: #e5c653; font-size: 10px; }
 .workspace-row-actions .managed-delete-button { color: #fca5a5; }
 @media (max-width: 650px) { .workspace-toolbar { flex-direction: column; } .workspace-form-grid { grid-template-columns: 1fr; } .workspace-field-wide { grid-column: auto; } .workspace-list-heading { align-items: stretch; flex-direction: column; } .workspace-search { max-width: none; } }
+
+.message-composer { display: grid; gap: 16px; }
+.message-composer h3 { margin: 0; color: #fff; font-size: 16px; }
+.message-composer-help { margin: 0; color: #aeb1bd; font-size: 12px; line-height: 1.6; }
+.message-composer .project-form-actions { margin-top: 0; }
