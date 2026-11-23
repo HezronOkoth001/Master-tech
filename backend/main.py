@@ -154,6 +154,35 @@ def get_approved_public_reviews(db: Session = Depends(get_db)):
     return approved
 
 
+@app.get("/api/public/promotion")
+def get_active_public_promotion(db: Session = Depends(get_db)):
+    """Return the active, non-expired homepage promotion without exposing the full pricing catalogue."""
+    records = (
+        db.query(models.WorkspaceRecord)
+        .filter(models.WorkspaceRecord.section == "pricing")
+        .all()
+    )
+    today = datetime.now(timezone.utc).date()
+    for record in records:
+        data = record.data
+        if data.get("recordType") != "promotion" or data.get("status") != "Active":
+            continue
+        ends_at = data.get("endsAt")
+        if ends_at:
+            try:
+                if datetime.strptime(ends_at, "%Y-%m-%d").date() < today:
+                    continue
+            except ValueError:
+                continue
+        return {
+            "discountPercent": int(data.get("discountPercent", 20)),
+            "message": data.get("message", "Get a special discount on your next website project."),
+            "appliesTo": data.get("appliesTo", "Website development services"),
+            "endsAt": ends_at or "",
+        }
+    return None
+
+
 @app.post("/api/reviews", status_code=201)
 def submit_public_review(
     review_data: PublicReviewCreate,
