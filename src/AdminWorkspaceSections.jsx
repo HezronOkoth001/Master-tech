@@ -194,6 +194,8 @@ function AdminWorkspaceSections({ section, records = [], clients = [], onChange 
       return
     }
 
+    // Open a blank tab during the click event so the browser does not block it after the database save.
+    const messageWindow = window.open('about:blank', '_blank')
     setSending(true)
     setMessage('')
     const logEntry = {
