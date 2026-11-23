@@ -16,41 +16,48 @@ const schemas = {
   },
   Leads: {
     title: 'Potential customers',
-    description: 'Track enquiries and follow up with people interested in your services.',
+    description: 'Manage your sales pipeline, record where enquiries came from, and schedule the next follow-up.',
     fields: [
-      { name: 'name', label: 'Lead name', required: true },
+      { name: 'name', label: 'Lead / contact name', required: true },
+      { name: 'company', label: 'Company / business' },
+      { name: 'contact', label: 'Email or phone', required: true },
       { name: 'service', label: 'Service interested in', type: 'select', options: ['Website Development', 'Website Security', 'SEO & Online Visibility', 'Other'] },
-      { name: 'contact', label: 'Email or phone' },
-      { name: 'source', label: 'Where they found you', type: 'select', options: ['WhatsApp', 'Website', 'Facebook', 'Referral', 'Other'] },
-      { name: 'status', label: 'Lead status', type: 'select', options: ['New', 'Contacted', 'In discussion', 'Won', 'Lost'] },
-      { name: 'notes', label: 'Notes', type: 'textarea' },
+      { name: 'source', label: 'Enquiry source', type: 'select', options: ['WhatsApp', 'Website', 'Facebook', 'Referral', 'Phone call', 'Other'] },
+      { name: 'status', label: 'Sales stage', type: 'select', options: ['New', 'Contacted', 'Qualified', 'Proposal sent', 'Negotiation', 'Won', 'Lost'] },
+      { name: 'nextFollowUp', label: 'Next follow-up date', type: 'date' },
+      { name: 'notes', label: 'Follow-up notes', type: 'textarea' },
     ],
-    columns: ['name', 'service', 'contact', 'source', 'status'],
+    columns: ['name', 'company', 'service', 'source', 'status', 'nextFollowUp'],
   },
   Tasks: {
     title: 'Work tasks',
-    description: 'Plan work, set deadlines, and track progress.',
+    description: 'Create actionable work items, assign responsibility, set deadlines, and track completion.',
     fields: [
       { name: 'title', label: 'Task title', required: true },
       { name: 'project', label: 'Related project' },
-      { name: 'dueDate', label: 'Due date', type: 'date' },
-      { name: 'priority', label: 'Priority', type: 'select', options: ['Low', 'Medium', 'High'] },
-      { name: 'status', label: 'Task status', type: 'select', options: ['To do', 'In progress', 'Done'] },
+      { name: 'client', label: 'Client / business' },
+      { name: 'assignedTo', label: 'Assigned to' },
+      { name: 'description', label: 'What needs to be done', type: 'textarea' },
+      { name: 'dueDate', label: 'Due date', type: 'date', required: true },
+      { name: 'priority', label: 'Priority', type: 'select', options: ['Low', 'Medium', 'High', 'Urgent'] },
+      { name: 'status', label: 'Task progress', type: 'select', options: ['To do', 'In progress', 'Waiting for client', 'Blocked', 'Done'] },
     ],
-    columns: ['title', 'project', 'dueDate', 'priority', 'status'],
+    columns: ['title', 'project', 'client', 'assignedTo', 'dueDate', 'priority', 'status'],
   },
   Invoices: {
     title: 'Invoices',
-    description: 'Record amounts owed and invoice due dates. This does not send invoices or collect money.',
+    description: 'Track billing, tax, due dates, and payment progress. Saving an invoice here records it; it does not email or collect payment automatically.',
     fields: [
       { name: 'invoiceNumber', label: 'Invoice number', required: true },
-      { name: 'client', label: 'Client name', required: true },
-      { name: 'amount', label: 'Amount (KES)', type: 'number', required: true },
-      { name: 'issueDate', label: 'Issue date', type: 'date' },
-      { name: 'dueDate', label: 'Due date', type: 'date' },
-      { name: 'status', label: 'Invoice status', type: 'select', options: ['Draft', 'Sent', 'Partially paid', 'Paid', 'Overdue'] },
+      { name: 'client', label: 'Bill to (client)', required: true },
+      { name: 'amount', label: 'Subtotal before tax (KES)', type: 'number', required: true },
+      { name: 'taxRate', label: 'Tax rate (%)', type: 'number' },
+      { name: 'issueDate', label: 'Invoice date', type: 'date', required: true },
+      { name: 'dueDate', label: 'Payment due date', type: 'date', required: true },
+      { name: 'status', label: 'Payment status', type: 'select', options: ['Draft', 'Issued', 'Partially paid', 'Paid', 'Overdue', 'Cancelled'] },
+      { name: 'notes', label: 'Invoice notes / payment terms', type: 'textarea' },
     ],
-    columns: ['invoiceNumber', 'client', 'amount', 'dueDate', 'status'],
+    columns: ['invoiceNumber', 'client', 'amount', 'taxRate', 'totalAmount', 'dueDate', 'status'],
   },
   Payments: {
     title: 'Payment records',
@@ -80,15 +87,17 @@ const schemas = {
   },
   Reviews: {
     title: 'Customer reviews',
-    description: 'Record customer feedback. Reviews added here are private records and are not published to the public website yet.',
+    description: 'Reviews submitted through the public website appear here automatically. Approve suitable reviews before publishing them.',
     fields: [
       { name: 'customer', label: 'Customer name', required: true },
       { name: 'rating', label: 'Rating (1–5)', type: 'select', options: ['1', '2', '3', '4', '5'] },
       { name: 'project', label: 'Project / service' },
       { name: 'review', label: 'Review text', type: 'textarea', required: true },
-      { name: 'status', label: 'Review status', type: 'select', options: ['Pending approval', 'Approved', 'Hidden'] },
+      { name: 'source', label: 'Submitted from' },
+      { name: 'submittedAt', label: 'Submitted at' },
+      { name: 'status', label: 'Publication status', type: 'select', options: ['Pending approval', 'Approved', 'Hidden'] },
     ],
-    columns: ['customer', 'rating', 'project', 'review', 'status'],
+    columns: ['customer', 'rating', 'project', 'review', 'source', 'submittedAt', 'status'],
   },
   Settings: {
     title: 'Workspace settings',
@@ -145,6 +154,13 @@ function AdminWorkspaceSections({ section, records = [], clients = [], onChange 
     setSaving(true)
     setMessage('')
     const record = { ...form, id: editingId ?? String(Date.now()) }
+    if (section === 'Invoices') {
+      const subtotal = Math.max(0, Number(record.amount) || 0)
+      const taxRate = Math.min(100, Math.max(0, Number(record.taxRate) || 0))
+      record.taxRate = String(taxRate)
+      record.taxAmount = Number((subtotal * taxRate / 100).toFixed(2))
+      record.totalAmount = Number((subtotal + record.taxAmount).toFixed(2))
+    }
     const nextRecords = schema.singleRecord
       ? [record]
       : editingId !== null
@@ -334,7 +350,7 @@ function AdminWorkspaceSections({ section, records = [], clients = [], onChange 
               <tbody>
                 {visibleRecords.map((record) => (
                   <tr key={record.id}>
-                    {schema.columns.map((key) => <td key={key}>{key === 'rating' ? '★'.repeat(Math.max(0, Math.min(5, Number(record[key]) || 0))) : (record[key] || '—')}</td>)}
+                    {schema.columns.map((key) => <td key={key}>{key === 'rating' ? '★'.repeat(Math.max(0, Math.min(5, Number(record[key]) || 0))) : key === 'totalAmount' ? (record.totalAmount == null ? '—' : 'KES ' + Number(record.totalAmount).toLocaleString('en-KE')) : key === 'amount' && section === 'Invoices' ? 'KES ' + Number(record.amount || 0).toLocaleString('en-KE') : key === 'submittedAt' && record[key] ? new Date(record[key]).toLocaleString() : (record[key] || '—')}</td>)}
                     <td className="workspace-row-actions">
                       <button onClick={() => editRecord(record)}>Edit</button>
                       {!schema.singleRecord && <button className="managed-delete-button" onClick={() => deleteRecord(record)}>Delete</button>}
