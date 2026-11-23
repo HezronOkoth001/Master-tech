@@ -393,6 +393,7 @@ function App() {
             <a href="/contact">Contact our team <span>↗</span></a>
           </div>
         </section>
+        <PublicReviewForm />
       </>
     ),
     '/about': (
