@@ -685,6 +685,7 @@ function App() {
             <a className="contact-method-link" href="mailto:orichohezron@gmail.com"><span className="contact-method-icon" aria-hidden="true">✉</span><span><small>EMAIL</small><strong>orichohezron@gmail.com</strong></span><b aria-hidden="true">↗</b></a>
             <a className="contact-method-link" href="https://www.instagram.com/hezron.oricho/" target="_blank" rel="noopener noreferrer"><span className="contact-method-icon" aria-hidden="true">◎</span><span><small>INSTAGRAM</small><strong>@hezron.oricho</strong></span><b aria-hidden="true">↗</b></a>
             <a className="contact-method-link" href="https://www.facebook.com/profile.php?id=61595747563710" target="_blank" rel="noopener noreferrer"><span className="contact-method-icon" aria-hidden="true">f</span><span><small>FACEBOOK</small><strong>Hezron Okoth · Facebook profile</strong></span><b aria-hidden="true">↗</b></a>
+            <a className="contact-method-link" href="https://www.reddit.com/user/Hezron_oricho/" target="_blank" rel="noopener noreferrer"><span className="contact-method-icon" aria-hidden="true">r/</span><span><small>REDDIT</small><strong>u/Hezron_oricho</strong></span><b aria-hidden="true">↗</b></a>
           </div>
         </section>
       </>
