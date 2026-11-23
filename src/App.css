@@ -2290,3 +2290,44 @@ body { color: #f5f8fc; background: var(--mt-black); }
   .hero-benefit-points span { font-size: 10px; }
   .hero-showcase .hero-actions { margin-top: 21px; }
 }
+
+
+/* Red and blue balance for the limited-time discount banner */
+.homepage-promotion {
+  background:
+    radial-gradient(ellipse at 7% 55%,rgba(239,68,68,.3),transparent 34%),
+    radial-gradient(ellipse at 88% 10%,rgba(59,130,246,.3),transparent 40%),
+    linear-gradient(108deg,#35101d 0%,#182b50 52%,#09172b 100%);
+  border-top-color: rgba(248,113,113,.42);
+  border-bottom-color: rgba(96,165,250,.38);
+}
+.homepage-promotion::after {
+  content: "";
+  position: absolute;
+  top: -90px;
+  left: 28%;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: rgba(220,38,38,.12);
+  filter: blur(45px);
+  pointer-events: none;
+}
+.homepage-promotion-emblem {
+  border-color: rgba(252,165,165,.8);
+  background: radial-gradient(circle at 35% 25%,rgba(248,113,113,.48),rgba(185,28,28,.28) 43%,rgba(37,99,235,.24) 76%,rgba(7,20,38,.95));
+  box-shadow: 0 0 0 7px rgba(239,68,68,.08),0 0 34px rgba(239,68,68,.24),0 0 48px rgba(59,130,246,.13),inset 0 0 22px rgba(255,255,255,.09);
+}
+.homepage-promotion-emblem > span { color: #fecaca; }
+.homepage-promotion-kicker { color: #fecaca; }
+.homepage-promotion-kicker i { background: #f87171; box-shadow: 0 0 12px rgba(248,113,113,.9); }
+.homepage-promotion-copy strong span { color: #fca5a5; }
+.homepage-promotion-inner > a {
+  color: #fff;
+  background: linear-gradient(110deg,#dc2626 0%,#ef4444 48%,#2563eb 100%);
+  border-color: rgba(255,255,255,.28);
+  box-shadow: 0 9px 26px rgba(220,38,38,.22),0 5px 20px rgba(37,99,235,.18);
+}
+.homepage-promotion-inner > a:hover {
+  box-shadow: 0 13px 30px rgba(220,38,38,.3),0 8px 24px rgba(37,99,235,.24);
+}
