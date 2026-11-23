@@ -2331,3 +2331,197 @@ body { color: #f5f8fc; background: var(--mt-black); }
 .homepage-promotion-inner > a:hover {
   box-shadow: 0 13px 30px rgba(220,38,38,.3),0 8px 24px rgba(37,99,235,.24);
 }
+
+
+/* Friendlier, more informative services page */
+.services-section .service-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 1040px;
+  margin: 0 auto;
+  gap: 24px;
+}
+.services-section .service-card {
+  min-height: 0;
+  padding: clamp(25px, 3vw, 36px);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(59,130,246,.09), transparent 36%),
+    linear-gradient(145deg, rgba(20,27,42,.98), rgba(11,16,27,.98));
+}
+.services-section .service-card h3 {
+  margin-top: 25px;
+  font-size: clamp(21px, 2.2vw, 25px);
+  line-height: 1.25;
+}
+.services-section .service-card > p {
+  min-height: 0;
+  color: #c0c9d8;
+  font-size: 13px;
+  line-height: 1.9;
+}
+.service-outcome {
+  margin-top: 17px;
+  padding: 15px 16px;
+  border-left: 2px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  color: #dce5f2;
+  background: rgba(255,255,255,.035);
+  font-size: 12px;
+  line-height: 1.85;
+}
+.service-includes-label {
+  display: block;
+  margin-top: 23px;
+  color: var(--gold);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+.services-section .service-card ul {
+  gap: 12px;
+  margin: 15px 0 27px;
+}
+.services-section .service-card li {
+  display: flex;
+  align-items: flex-start;
+  color: #d4dbe6;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.services-section .service-card li span {
+  flex: 0 0 auto;
+  margin-right: 9px;
+}
+.services-section .service-link {
+  font-size: 12px;
+}
+.services-journey-section {
+  border-top: 1px solid #202430;
+  border-bottom: 1px solid #202430;
+  background: linear-gradient(180deg, rgba(16,22,35,.62), rgba(8,12,20,.28));
+}
+.services-journey-heading {
+  max-width: 760px;
+  margin: 0 auto 42px;
+  text-align: center;
+}
+.services-journey-heading h2,
+.services-help-section h2 {
+  margin: 15px 0;
+  color: #f5f5f7;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(31px, 4vw, 44px);
+  line-height: 1.18;
+  letter-spacing: -1.6px;
+}
+.services-journey-heading h2 span,
+.services-help-section h2 span {
+  color: var(--gold);
+}
+.services-journey-heading > p,
+.services-help-section p {
+  color: #aeb8c8;
+  font-size: 13px;
+  line-height: 1.9;
+}
+.services-journey-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.services-journey-grid article {
+  padding: 27px 24px;
+  border: 1px solid #252d3c;
+  border-radius: 13px;
+  background: rgba(17,24,39,.68);
+}
+.services-journey-grid article > span {
+  display: inline-grid;
+  place-items: center;
+  width: 39px;
+  height: 39px;
+  border: 1px solid rgba(212,175,55,.4);
+  border-radius: 50%;
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 800;
+}
+.services-journey-grid h3 {
+  margin: 22px 0 10px;
+  color: #f4f6fa;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 17px;
+}
+.services-journey-grid p {
+  margin: 0;
+  color: #aeb8c8;
+  font-size: 12px;
+  line-height: 1.9;
+}
+.services-help-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 35px;
+  margin: 0 auto 75px;
+  padding-top: 55px;
+  padding-bottom: 55px;
+  border: 1px solid rgba(212,175,55,.22);
+  border-radius: 16px;
+  background:
+    radial-gradient(ellipse at 0 50%, rgba(212,175,55,.09), transparent 48%),
+    #101725;
+}
+.services-help-section > div {
+  max-width: 690px;
+}
+.services-help-section h2 {
+  margin-bottom: 10px;
+}
+.services-help-section p {
+  margin: 0;
+}
+.services-help-section > a {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+@media (max-width: 800px) {
+  .services-journey-grid {
+    grid-template-columns: 1fr;
+  }
+  .services-journey-grid article {
+    padding: 23px;
+  }
+  .services-help-section {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-right: 24px;
+    margin-left: 24px;
+  }
+}
+@media (max-width: 600px) {
+  .services-section .service-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .services-section .service-card {
+    padding: 24px 21px;
+  }
+  .services-journey-heading {
+    margin-bottom: 28px;
+    text-align: left;
+  }
+  .services-journey-heading h2,
+  .services-help-section h2 {
+    font-size: 31px;
+  }
+  .services-help-section {
+    gap: 22px;
+    padding: 30px 22px;
+  }
+  .services-help-section > a {
+    width: 100%;
+    white-space: normal;
+    text-align: center;
+  }
+}
