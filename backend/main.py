@@ -128,3 +128,82 @@ def delete_project(
         "success": True,
         "message": "Project deleted successfully",
     }
+
+
+WORKSPACE_SECTIONS = {
+    "clients", "leads", "tasks", "invoices",
+    "payments", "messages", "reviews", "settings",
+}
+
+
+def validate_workspace_section(section: str):
+    if section not in WORKSPACE_SECTIONS:
+        raise HTTPException(status_code=404, detail="Workspace section not found")
+
+
+@app.get("/api/workspace/{section}")
+def get_workspace_records(section: str, db: Session = Depends(get_db)):
+    validate_workspace_section(section)
+    records = (
+        db.query(models.WorkspaceRecord)
+        .filter(models.WorkspaceRecord.section == section)
+        .order_by(models.WorkspaceRecord.id.asc())
+        .all()
+    )
+    return [
+        {"id": record.record_key, **record.data}
+        for record in records
+    ]
+
+
+@app.put("/api/workspace/{section}")
+def replace_workspace_records(
+    section: str,
+    records: list[dict],
+    db: Session = Depends(get_db),
+):
+    """Replace one workspace section with the records submitted by the admin UI."""
+    validate_workspace_section(section)
+
+    if len(records) > 1000:
+        raise HTTPException(status_code=400, detail="A section cannot contain more than 1000 records.")
+
+    prepared_records = []
+    seen_keys = set()
+
+    for record in records:
+        if not isinstance(record, dict):
+            raise HTTPException(status_code=422, detail="Each record must be an object.")
+
+        record_key = str(record.get("id", "")).strip()
+        if not record_key or len(record_key) > 100:
+            raise HTTPException(status_code=422, detail="Every record must have a valid id.")
+
+        if record_key in seen_keys:
+            raise HTTPException(status_code=422, detail="Duplicate record ids are not allowed.")
+
+        seen_keys.add(record_key)
+        data = {key: value for key, value in record.items() if key != "id"}
+        prepared_records.append(
+            models.WorkspaceRecord(
+                section=section,
+                record_key=record_key,
+                data=data,
+            )
+        )
+
+    try:
+        db.query(models.WorkspaceRecord).filter(
+            models.WorkspaceRecord.section == section
+        ).delete(synchronize_session=False)
+
+        db.add_all(prepared_records)
+        db.commit()
+    except Exception:
+        db.rollback()
+        raise HTTPException(status_code=500, detail="Could not save workspace records.")
+
+    return [
+        {"id": record.record_key, **record.data}
+        for record in prepared_records
+    ]
