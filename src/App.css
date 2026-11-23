@@ -1096,3 +1096,53 @@ a {
 .homepage-promotion-inner > a { flex: 0 0 auto; padding: 13px 18px; border-radius: 5px; background: #fff; color: #a91620; font-size: 12px; font-weight: 700; }
 .homepage-promotion-inner > a span { margin-left: 8px; }
 @media (max-width: 700px) { .homepage-promotion-inner { width: min(100% - 36px, 560px); align-items: flex-start; flex-direction: column; gap: 13px; } .homepage-promotion-kicker { font-size: 9px; } .homepage-promotion-inner > a { width: 100%; text-align: center; } }
+
+
+/* Dedicated customer reviews page */
+.nav-links .nav-review-link {
+  padding: 9px 13px;
+  border: 1px solid rgba(212, 175, 55, 0.55);
+  color: var(--gold);
+}
+.nav-links .nav-review-link:hover {
+  background: rgba(212, 175, 55, 0.1);
+}
+.reviews-page-intro {
+  width: min(1200px, calc(100% - 64px));
+  margin: 0 auto;
+  padding: 78px 0 30px;
+}
+.reviews-page-intro h1 {
+  margin: 15px 0 12px;
+  color: #f5f5f7;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(34px, 5vw, 52px);
+  letter-spacing: -1.8px;
+}
+.reviews-page-intro h1 span { color: var(--gold); }
+.reviews-page-intro > p {
+  max-width: 600px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.8;
+}
+.reviews-page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 23px;
+}
+.reviews-page-wrapper .reviews-section {
+  width: min(1200px, calc(100% - 64px));
+  padding: 42px 34px;
+  margin: 0 auto 70px;
+  border-radius: 12px;
+}
+.reviews-page-wrapper .reviews-section .section-heading h2 { color: #202027; }
+.reviews-page-wrapper .reviews-section .section-heading > p { color: #666670; }
+.reviews-page-wrapper .public-review-form { margin-top: 34px; }
+@media (max-width: 600px) {
+  .reviews-page-intro { width: calc(100% - 40px); padding-top: 55px; }
+  .reviews-page-wrapper .reviews-section { width: calc(100% - 40px); padding: 30px 18px; }
+  .nav-links .nav-review-link { padding: 6px 8px; }
+}
