@@ -213,11 +213,17 @@ function AdminWorkspaceSections({ section, records = [], clients = [], onChange 
       await onChange([logEntry, ...records])
       const url = outgoingChannel === 'WhatsApp'
         ? `https://wa.me/${cleanPhone}?text=${encodeURIComponent(outgoingMessage.trim())}`
-        : `mailto:${encodeURIComponent(destination.trim())}?subject=${encodeURIComponent('Message from Masters Tech')}&body=${encodeURIComponent(outgoingMessage.trim())}`
-      window.open(url, '_blank', 'noopener,noreferrer')
+        : `mailto:${destination.trim()}?subject=${encodeURIComponent('Message from Masters Tech')}&body=${encodeURIComponent(outgoingMessage.trim())}`
+      if (messageWindow) {
+        messageWindow.location.href = url
+      } else {
+        setMessage('Your browser blocked the new tab. Allow pop-ups for this site and try again.')
+        return
+      }
       setOutgoingMessage('')
       setMessage(`Message prepared for ${recipient.name}. Complete the send in ${outgoingChannel}, then update its status to Sent here.`)
     } catch (error) {
+      if (messageWindow) messageWindow.close()
       setMessage(error.message || 'Could not save the message record.')
     } finally {
       setSending(false)
