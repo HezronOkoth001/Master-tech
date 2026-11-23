@@ -2690,3 +2690,33 @@ body { color: #f5f8fc; background: var(--mt-black); }
 .contact-method-icon.reddit-icon {
   color: #FF4500;
 }
+
+
+/* Animated attention cue for the homepage promotion claim button */
+.homepage-promotion-inner > a.promotion-claim-button {
+  position: relative;
+  animation: promotion-button-pulse 1.8s ease-in-out infinite;
+}
+.homepage-promotion-inner > a.promotion-claim-button .promotion-pointing-finger {
+  display: inline-block;
+  margin: 0 0 0 3px;
+  font-size: 23px;
+  line-height: 1;
+  transform-origin: center bottom;
+  animation: promotion-finger-point 1s ease-in-out infinite;
+}
+@keyframes promotion-finger-point {
+  0%, 100% { opacity: 1; transform: translateY(0) scale(1); }
+  45% { opacity: .35; transform: translateY(-7px) scale(1.12); }
+  70% { opacity: 1; transform: translateY(-2px) scale(1.04); }
+}
+@keyframes promotion-button-pulse {
+  0%, 100% { box-shadow: 0 9px 26px rgba(220,38,38,.22),0 5px 20px rgba(37,99,235,.18); }
+  50% { box-shadow: 0 12px 32px rgba(239,68,68,.5),0 7px 26px rgba(37,99,235,.32); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .homepage-promotion-inner > a.promotion-claim-button,
+  .homepage-promotion-inner > a.promotion-claim-button .promotion-pointing-finger {
+    animation: none;
+  }
+}
