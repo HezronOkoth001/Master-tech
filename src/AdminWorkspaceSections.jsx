@@ -188,8 +188,8 @@ function AdminWorkspaceSections({ section, records = [], clients = [], pricing =
   const catalogueRecords = records.filter((record) => record.recordType !== 'promotion')
   const visibleRecords = useMemo(() => {
     const term = search.trim().toLowerCase()
-    if (!term) return catalogueRecords
-    return catalogueRecords.filter((record) => Object.values(record).some((value) => String(value ?? '').toLowerCase().includes(term)))
+    if (!term) return records.filter((record) => record.recordType !== 'promotion')
+    return records.filter((record) => record.recordType !== 'promotion' && Object.values(record).some((value) => String(value ?? '').toLowerCase().includes(term)))
   }, [records, search])
 
   const subtotal = lineItems.reduce((sum, item) => sum + Math.max(0, Number(item.quantity) || 0) * Math.max(0, Number(item.unitPrice) || 0), 0)
