@@ -55,3 +55,14 @@
 .lead-table-progress { display: grid; grid-template-columns: minmax(65px, 100px) 34px; align-items: center; gap: 8px; min-width: 110px; }
 .lead-table-progress .lead-progress-track { height: 6px; }
 @media (max-width: 650px) { .invoice-item-row { grid-template-columns: 1fr 1fr; } .invoice-item-row .workspace-field:first-child { grid-column: 1 / -1; } .invoice-remove-item { justify-self: end; } }
+
+
+/* Pricing catalogue and quotation calculator */
+.invoice-catalogue-picker, .invoice-discount-panel { display: grid; gap: 10px; padding: 15px; border: 1px solid #3a3b45; border-radius: 8px; background: #171922; }
+.invoice-catalogue-picker small { color: #aeb1bd; font-size: 11px; line-height: 1.6; }
+.invoice-discount-panel h3 { margin: 0; color: #e5c653; font-size: 14px; }
+.invoice-discount-panel .workspace-form-grid { margin-top: 4px; }
+.invoice-discount-panel .message-composer-help { line-height: 1.6; }
+.invoice-calculation { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); }
+.invoice-calculation span { display: flex; justify-content: space-between; gap: 8px; }
+.invoice-calculation span:last-child { color: #fff; font-weight: 700; }
