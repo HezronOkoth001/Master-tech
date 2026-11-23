@@ -1,6 +1,9 @@
 import { useMemo, useState } from 'react'
 import './AdminWorkspaceSections.css'
 
+const leadStages = ['New', 'Contacted', 'Qualified', 'Proposal sent', 'Negotiation', 'Won']
+const stageProgress = { New: 10, Contacted: 25, Qualified: 40, 'Proposal sent': 55, Negotiation: 75, Won: 100, Lost: 0 }
+
 const schemas = {
   Clients: {
     title: 'Client records',
@@ -16,18 +19,21 @@ const schemas = {
   },
   Leads: {
     title: 'Potential customers',
-    description: 'Manage your sales pipeline, record where enquiries came from, and schedule the next follow-up.',
+    description: 'Track each enquiry from first contact through price discussions and a confirmed deal.',
     fields: [
       { name: 'name', label: 'Lead / contact name', required: true },
       { name: 'company', label: 'Company / business' },
       { name: 'contact', label: 'Email or phone', required: true },
       { name: 'service', label: 'Service interested in', type: 'select', options: ['Website Development', 'Website Security', 'SEO & Online Visibility', 'Other'] },
       { name: 'source', label: 'Enquiry source', type: 'select', options: ['WhatsApp', 'Website', 'Facebook', 'Referral', 'Phone call', 'Other'] },
-      { name: 'status', label: 'Sales stage', type: 'select', options: ['New', 'Contacted', 'Qualified', 'Proposal sent', 'Negotiation', 'Won', 'Lost'] },
+      { name: 'status', label: 'Sales stage', type: 'select', options: [...leadStages, 'Lost'] },
+      { name: 'quotedPrice', label: 'Your quoted price (KES)', type: 'number' },
+      { name: 'clientOffer', label: "Client's proposed price (KES)", type: 'number' },
       { name: 'nextFollowUp', label: 'Next follow-up date', type: 'date' },
-      { name: 'notes', label: 'Follow-up notes', type: 'textarea' },
+      { name: 'objections', label: 'Client concerns / objections', type: 'textarea' },
+      { name: 'notes', label: 'Discussion notes / next action', type: 'textarea' },
     ],
-    columns: ['name', 'company', 'service', 'source', 'status', 'nextFollowUp'],
+    columns: ['name', 'company', 'service', 'status', 'quotedPrice', 'clientOffer', 'nextFollowUp'],
   },
   Tasks: {
     title: 'Work tasks',
@@ -45,19 +51,21 @@ const schemas = {
     columns: ['title', 'project', 'client', 'assignedTo', 'dueDate', 'priority', 'status'],
   },
   Invoices: {
-    title: 'Invoices',
-    description: 'Track billing, tax, due dates, and payment progress. Saving an invoice here records it; it does not email or collect payment automatically.',
+    title: 'Invoices & quotations',
+    description: 'Prepare professional quotations and invoices, print or save them as PDF, and track payment status.',
     fields: [
-      { name: 'invoiceNumber', label: 'Invoice number', required: true },
-      { name: 'client', label: 'Bill to (client)', required: true },
-      { name: 'amount', label: 'Subtotal before tax (KES)', type: 'number', required: true },
+      { name: 'documentType', label: 'Document type', type: 'select', options: ['Quotation', 'Invoice'] },
+      { name: 'invoiceNumber', label: 'Document number', required: true },
+      { name: 'client', label: 'Client / business name', required: true },
+      { name: 'clientEmail', label: 'Client email', type: 'email' },
+      { name: 'clientPhone', label: 'Client phone / WhatsApp' },
+      { name: 'issueDate', label: 'Issue date', type: 'date', required: true },
+      { name: 'dueDate', label: 'Due date / quotation valid until', type: 'date', required: true },
       { name: 'taxRate', label: 'Tax rate (%)', type: 'number' },
-      { name: 'issueDate', label: 'Invoice date', type: 'date', required: true },
-      { name: 'dueDate', label: 'Payment due date', type: 'date', required: true },
-      { name: 'status', label: 'Payment status', type: 'select', options: ['Draft', 'Issued', 'Partially paid', 'Paid', 'Overdue', 'Cancelled'] },
-      { name: 'notes', label: 'Invoice notes / payment terms', type: 'textarea' },
+      { name: 'status', label: 'Document / payment status', type: 'select', options: ['Draft', 'Sent', 'Accepted', 'Partially paid', 'Paid', 'Overdue', 'Cancelled'] },
+      { name: 'notes', label: 'Notes, scope or payment terms', type: 'textarea' },
     ],
-    columns: ['invoiceNumber', 'client', 'amount', 'taxRate', 'totalAmount', 'dueDate', 'status'],
+    columns: ['documentType', 'invoiceNumber', 'client', 'totalAmount', 'dueDate', 'status'],
   },
   Payments: {
     title: 'Payment records',
@@ -115,7 +123,15 @@ const schemas = {
 }
 
 function emptyForm(schema) {
-  return Object.fromEntries(schema.fields.map((field) => [field.name, field.name === 'currency' ? 'KES' : '']))
+  return Object.fromEntries(schema.fields.map((field) => [field.name, field.name === 'currency' ? 'KES' : field.name === 'documentType' ? 'Quotation' : field.name === 'status' && schema.title === 'Invoices & quotations' ? 'Draft' : '']))
+}
+
+function money(value) {
+  return 'KES ' + Number(value || 0).toLocaleString('en-KE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+}
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char])
 }
 
 function AdminWorkspaceSections({ section, records = [], clients = [], onChange }) {
@@ -130,6 +146,7 @@ function AdminWorkspaceSections({ section, records = [], clients = [], onChange 
   const [outgoingChannel, setOutgoingChannel] = useState('WhatsApp')
   const [outgoingMessage, setOutgoingMessage] = useState('')
   const [sending, setSending] = useState(false)
+  const [lineItems, setLineItems] = useState([{ description: 'Website design and development', quantity: '1', unitPrice: '' }])
 
   const visibleRecords = useMemo(() => {
     const term = search.trim().toLowerCase()
@@ -137,14 +154,27 @@ function AdminWorkspaceSections({ section, records = [], clients = [], onChange 
     return records.filter((record) => Object.values(record).some((value) => String(value ?? '').toLowerCase().includes(term)))
   }, [records, search])
 
+  const subtotal = lineItems.reduce((sum, item) => sum + Math.max(0, Number(item.quantity) || 0) * Math.max(0, Number(item.unitPrice) || 0), 0)
+  const taxRate = Math.min(100, Math.max(0, Number(form.taxRate) || 0))
+  const taxAmount = subtotal * taxRate / 100
+  const totalAmount = subtotal + taxAmount
+
   function resetForm() {
     setForm(emptyForm(schema))
+    setLineItems([{ description: 'Website design and development', quantity: '1', unitPrice: '' }])
     setEditingId(null)
     setFormOpen(false)
   }
 
   function openNewForm() {
-    setForm(schema.singleRecord && records[0] ? { ...emptyForm(schema), ...records[0] } : emptyForm(schema))
+    const defaults = schema.singleRecord && records[0] ? { ...emptyForm(schema), ...records[0] } : emptyForm(schema)
+    if (section === 'Invoices') {
+      const sequence = records.length + 1
+      defaults.invoiceNumber = 'MT-' + String(sequence).padStart(4, '0')
+      defaults.issueDate = new Date().toISOString().slice(0, 10)
+    }
+    setForm(defaults)
+    setLineItems([{ description: 'Website design and development', quantity: '1', unitPrice: '' }])
     setEditingId(schema.singleRecord && records[0] ? records[0].id : null)
     setFormOpen(true)
   }
@@ -155,11 +185,11 @@ function AdminWorkspaceSections({ section, records = [], clients = [], onChange 
     setMessage('')
     const record = { ...form, id: editingId ?? String(Date.now()) }
     if (section === 'Invoices') {
-      const subtotal = Math.max(0, Number(record.amount) || 0)
-      const taxRate = Math.min(100, Math.max(0, Number(record.taxRate) || 0))
+      record.lineItems = lineItems.filter((item) => item.description.trim()).map((item) => ({ ...item, quantity: Math.max(1, Number(item.quantity) || 1), unitPrice: Math.max(0, Number(item.unitPrice) || 0) }))
+      record.amount = Number(subtotal.toFixed(2))
       record.taxRate = String(taxRate)
-      record.taxAmount = Number((subtotal * taxRate / 100).toFixed(2))
-      record.totalAmount = Number((subtotal + record.taxAmount).toFixed(2))
+      record.taxAmount = Number(taxAmount.toFixed(2))
+      record.totalAmount = Number(totalAmount.toFixed(2))
     }
     const nextRecords = schema.singleRecord
       ? [record]
@@ -180,70 +210,65 @@ function AdminWorkspaceSections({ section, records = [], clients = [], onChange 
 
   function editRecord(record) {
     setForm({ ...emptyForm(schema), ...record })
+    if (section === 'Invoices') setLineItems(record.lineItems?.length ? record.lineItems : [{ description: 'Website services', quantity: '1', unitPrice: String(record.amount || '') }])
     setEditingId(record.id)
     setFormOpen(true)
+  }
+
+  function printDocument(record) {
+    const type = record.documentType || 'Invoice'
+    const rows = (record.lineItems || [{ description: record.notes || 'Professional services', quantity: 1, unitPrice: record.amount || 0 }]).map((item) => {
+      const quantity = Number(item.quantity) || 1
+      const unitPrice = Number(item.unitPrice) || 0
+      return '<tr><td>' + escapeHtml(item.description) + '</td><td>' + quantity + '</td><td>' + money(quantity * unitPrice) + '</td></tr>'
+    }).join('')
+    const html = `<!doctype html><html><head><meta charset="utf-8"><title>${escapeHtml(type)} ${escapeHtml(record.invoiceNumber)}</title><style>
+      *{box-sizing:border-box}body{font:14px Arial,sans-serif;color:#202124;margin:0;padding:42px}main{max-width:800px;margin:auto}.top{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #d4af37;padding-bottom:22px}.brand{font-size:27px;font-weight:800;letter-spacing:1px}.gold{color:#a98513}.tag{font-size:28px;font-weight:800;letter-spacing:2px}.muted{color:#666;font-size:12px;line-height:1.6}.details{display:flex;justify-content:space-between;gap:30px;margin:28px 0}.details>div{flex:1}.label{font-size:11px;color:#777;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}table{width:100%;border-collapse:collapse;margin-top:25px}th{background:#f3f0e6;text-align:left}th,td{padding:13px 12px;border-bottom:1px solid #ddd}.totals{width:310px;margin:22px 0 0 auto}.totals div{display:flex;justify-content:space-between;padding:7px 0}.grand{font-size:19px;font-weight:800;border-top:2px solid #d4af37;margin-top:8px;padding-top:13px!important}.notes{white-space:pre-wrap;margin-top:30px;padding:16px;background:#f7f7f7;line-height:1.6}.footer{border-top:1px solid #ddd;margin-top:40px;padding-top:16px;text-align:center;color:#666;font-size:12px}@media print{body{padding:0}button{display:none}@page{size:A4;margin:18mm}}</style></head><body><main>
+      <div class="top"><div><div class="brand">MASTERS <span class="gold">TECH</span></div><div class="muted">Website Development & Digital Solutions</div></div><div class="tag">${escapeHtml(type.toUpperCase())}</div></div>
+      <div class="details"><div><div class="label">Prepared for</div><strong>${escapeHtml(record.client)}</strong><div class="muted">${escapeHtml(record.clientEmail)}<br>${escapeHtml(record.clientPhone)}</div></div><div><div class="label">Document details</div><strong>No: ${escapeHtml(record.invoiceNumber)}</strong><div class="muted">Date: ${escapeHtml(record.issueDate)}<br>${type === 'Quotation' ? 'Valid until' : 'Due date'}: ${escapeHtml(record.dueDate)}<br>Status: ${escapeHtml(record.status)}</div></div></div>
+      <table><thead><tr><th>Description</th><th>Qty</th><th>Amount</th></tr></thead><tbody>${rows}</tbody></table>
+      <div class="totals"><div><span>Subtotal</span><strong>${money(record.amount)}</strong></div><div><span>Tax (${escapeHtml(record.taxRate || 0)}%)</span><strong>${money(record.taxAmount)}</strong></div><div class="grand"><span>Total</span><span>${money(record.totalAmount)}</span></div></div>
+      ${record.notes ? '<div class="notes"><strong>Notes / terms</strong><br>' + escapeHtml(record.notes) + '</div>' : ''}
+      <div class="footer">Thank you for considering Masters Tech. We appreciate your business.</div><p class="muted" style="text-align:center">Use your browser's Print option and choose "Save as PDF" to create a PDF copy.</p><button onclick="window.print()">Print / Save as PDF</button>
+      </main></body></html>`
+    const documentWindow = window.open('', '_blank')
+    if (!documentWindow) {
+      setMessage('Your browser blocked the document preview. Allow pop-ups for this site and try again.')
+      return
+    }
+    documentWindow.document.open()
+    documentWindow.document.write(html)
+    documentWindow.document.close()
+    documentWindow.focus()
   }
 
   async function sendClientMessage(event) {
     event.preventDefault()
     const recipient = clients.find((client) => String(client.id) === String(recipientId))
-    if (!recipient) {
-      setMessage('Select a client before preparing a message.')
-      return
-    }
-
+    if (!recipient) { setMessage('Select a client before preparing a message.'); return }
     const destination = outgoingChannel === 'WhatsApp' ? recipient.phone : recipient.email
     if (!destination?.trim()) {
-      setMessage(outgoingChannel === 'WhatsApp'
-        ? 'This client does not have a phone number. Add one in the Clients tab first.'
-        : 'This client does not have an email address. Add one in the Clients tab first.')
+      setMessage(outgoingChannel === 'WhatsApp' ? 'This client does not have a phone number. Add one in the Clients tab first.' : 'This client does not have an email address. Add one in the Clients tab first.')
       return
     }
-    if (!outgoingMessage.trim()) {
-      setMessage('Write your message before continuing.')
-      return
-    }
-
+    if (!outgoingMessage.trim()) { setMessage('Write your message before continuing.'); return }
     const cleanPhone = String(destination).replace(/[^0-9]/g, '')
-    if (outgoingChannel === 'WhatsApp' && cleanPhone.length < 8) {
-      setMessage('The saved phone number does not look valid. Include the country code, for example 2547XXXXXXXX.')
-      return
-    }
-
-    // Open a blank tab during the click event so the browser does not block it after the database save.
+    if (outgoingChannel === 'WhatsApp' && cleanPhone.length < 8) { setMessage('The saved phone number does not look valid. Include the country code, for example 2547XXXXXXXX.'); return }
     const messageWindow = window.open('about:blank', '_blank')
     setSending(true)
     setMessage('')
-    const logEntry = {
-      id: String(Date.now()),
-      recipient: recipient.name,
-      contact: destination,
-      channel: outgoingChannel,
-      message: outgoingMessage.trim(),
-      status: 'Ready to send',
-      direction: 'Outgoing',
-      createdAt: new Date().toISOString(),
-    }
-
+    const logEntry = { id: String(Date.now()), recipient: recipient.name, contact: destination, channel: outgoingChannel, message: outgoingMessage.trim(), status: 'Ready to send', direction: 'Outgoing', createdAt: new Date().toISOString() }
     try {
       await onChange([logEntry, ...records])
-      const url = outgoingChannel === 'WhatsApp'
-        ? `https://wa.me/${cleanPhone}?text=${encodeURIComponent(outgoingMessage.trim())}`
-        : `mailto:${destination.trim()}?subject=${encodeURIComponent('Message from Masters Tech')}&body=${encodeURIComponent(outgoingMessage.trim())}`
-      if (messageWindow) {
-        messageWindow.location.href = url
-      } else {
-        setMessage('Your browser blocked the new tab. Allow pop-ups for this site and try again.')
-        return
-      }
+      const url = outgoingChannel === 'WhatsApp' ? `https://wa.me/${cleanPhone}?text=${encodeURIComponent(outgoingMessage.trim())}` : `mailto:${destination.trim()}?subject=${encodeURIComponent('Message from Masters Tech')}&body=${encodeURIComponent(outgoingMessage.trim())}`
+      if (messageWindow) messageWindow.location.href = url
+      else { setMessage('Your browser blocked the new tab. Allow pop-ups for this site and try again.'); return }
       setOutgoingMessage('')
       setMessage(`Message prepared for ${recipient.name}. Complete the send in ${outgoingChannel}, then update its status to Sent here.`)
     } catch (error) {
       if (messageWindow) messageWindow.close()
       setMessage(error.message || 'Could not save the message record.')
-    } finally {
-      setSending(false)
-    }
+    } finally { setSending(false) }
   }
 
   async function deleteRecord(record) {
@@ -253,20 +278,19 @@ function AdminWorkspaceSections({ section, records = [], clients = [], onChange 
     try {
       await onChange(records.filter((item) => String(item.id) !== String(record.id)))
       setMessage('Record deleted from the database.')
-    } catch (error) {
-      setMessage(error.message || 'Could not delete this record.')
-    }
+    } catch (error) { setMessage(error.message || 'Could not delete this record.') }
+  }
+
+  function updateLineItem(index, key, value) {
+    setLineItems((items) => items.map((item, itemIndex) => itemIndex === index ? { ...item, [key]: value } : item))
   }
 
   return (
     <div className="workspace-manager">
       <div className="workspace-toolbar">
-        <div>
-          <h2>{schema.title}</h2>
-          <p>{schema.description}</p>
-        </div>
+        <div><h2>{schema.title}</h2><p>{schema.description}</p></div>
         <button className="admin-view-site" onClick={formOpen ? resetForm : openNewForm}>
-          {formOpen ? 'Cancel' : schema.singleRecord && records.length ? 'Edit settings' : '+ Add ' + (section === 'Tasks' ? 'task' : section === 'Clients' ? 'client' : section === 'Leads' ? 'lead' : section === 'Invoices' ? 'invoice' : section === 'Payments' ? 'payment' : section === 'Messages' ? 'message' : section === 'Reviews' ? 'review' : 'settings')}
+          {formOpen ? 'Cancel' : schema.singleRecord && records.length ? 'Edit settings' : '+ Add ' + (section === 'Tasks' ? 'task' : section === 'Clients' ? 'client' : section === 'Leads' ? 'lead' : section === 'Invoices' ? 'document' : section === 'Payments' ? 'payment' : section === 'Messages' ? 'message' : section === 'Reviews' ? 'review' : 'settings')}
         </button>
       </div>
 
@@ -275,29 +299,12 @@ function AdminWorkspaceSections({ section, records = [], clients = [], onChange 
           <h3>Send a message to a client</h3>
           <p className="message-composer-help">Choose a saved client and a channel. The message will open in WhatsApp or your email app for you to review and send.</p>
           <div className="workspace-form-grid">
-            <label className="workspace-field">
-              Client
-              <select value={recipientId} onChange={(event) => setRecipientId(event.target.value)} required>
-                <option value="">Select a client...</option>
-                {clients.map((client) => <option key={client.id} value={client.id}>{client.name}</option>)}
-              </select>
-            </label>
-            <label className="workspace-field">
-              Channel
-              <select value={outgoingChannel} onChange={(event) => setOutgoingChannel(event.target.value)}>
-                <option value="WhatsApp">WhatsApp</option>
-                <option value="Email">Email</option>
-              </select>
-            </label>
-            <label className="workspace-field workspace-field-wide">
-              Message
-              <textarea value={outgoingMessage} onChange={(event) => setOutgoingMessage(event.target.value)} rows={4} maxLength={2000} placeholder="Write the message you want to send..." required />
-            </label>
+            <label className="workspace-field">Client<select value={recipientId} onChange={(event) => setRecipientId(event.target.value)} required><option value="">Select a client...</option>{clients.map((client) => <option key={client.id} value={client.id}>{client.name}</option>)}</select></label>
+            <label className="workspace-field">Channel<select value={outgoingChannel} onChange={(event) => setOutgoingChannel(event.target.value)}><option value="WhatsApp">WhatsApp</option><option value="Email">Email</option></select></label>
+            <label className="workspace-field workspace-field-wide">Message<textarea value={outgoingMessage} onChange={(event) => setOutgoingMessage(event.target.value)} rows={4} maxLength={2000} placeholder="Write the message you want to send..." required /></label>
           </div>
           {clients.length === 0 && <p className="message-composer-help">There are no saved clients yet. Add a client with a phone number or email address in the Clients tab first.</p>}
-          <div className="project-form-actions">
-            <button className="admin-view-site" type="submit" disabled={sending || clients.length === 0}>{sending ? 'Preparing...' : outgoingChannel === 'WhatsApp' ? 'Open WhatsApp' : 'Open email'}</button>
-          </div>
+          <div className="project-form-actions"><button className="admin-view-site" type="submit" disabled={sending || clients.length === 0}>{sending ? 'Preparing...' : outgoingChannel === 'WhatsApp' ? 'Open WhatsApp' : 'Open email'}</button></div>
         </form>
       )}
 
@@ -312,8 +319,7 @@ function AdminWorkspaceSections({ section, records = [], clients = [], onChange 
                 {field.label}{field.required ? ' *' : ''}
                 {field.type === 'select' ? (
                   <select value={form[field.name] ?? ''} onChange={(event) => setForm((old) => ({ ...old, [field.name]: event.target.value }))} required={field.required}>
-                    <option value="">Select...</option>
-                    {field.options.map((option) => <option key={option} value={option}>{option}</option>)}
+                    <option value="">Select...</option>{field.options.map((option) => <option key={option} value={option}>{option}</option>)}
                   </select>
                 ) : field.type === 'textarea' ? (
                   <textarea value={form[field.name] ?? ''} onChange={(event) => setForm((old) => ({ ...old, [field.name]: event.target.value }))} required={field.required} rows={3} maxLength={2000} />
@@ -323,51 +329,55 @@ function AdminWorkspaceSections({ section, records = [], clients = [], onChange 
               </label>
             ))}
           </div>
+
           {section === 'Invoices' && (
-            <div className="invoice-calculation">
-              <span>Subtotal: <strong>KES {Number(form.amount || 0).toLocaleString('en-KE')}</strong></span>
-              <span>Tax ({Math.min(100, Math.max(0, Number(form.taxRate) || 0))}%): <strong>KES {(Math.max(0, Number(form.amount) || 0) * Math.min(100, Math.max(0, Number(form.taxRate) || 0)) / 100).toLocaleString('en-KE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong></span>
-              <span>Total due: <strong>KES {(Math.max(0, Number(form.amount) || 0) * (1 + Math.min(100, Math.max(0, Number(form.taxRate) || 0)) / 100)).toLocaleString('en-KE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong></span>
+            <>
+              <div className="invoice-items-editor">
+                <div className="invoice-items-heading"><h3>Services / items</h3><button type="button" className="invoice-add-item" onClick={() => setLineItems((items) => [...items, { description: '', quantity: '1', unitPrice: '' }])}>+ Add line</button></div>
+                {lineItems.map((item, index) => (
+                  <div className="invoice-item-row" key={index}>
+                    <label className="workspace-field">Description<input value={item.description} onChange={(event) => updateLineItem(index, 'description', event.target.value)} placeholder="e.g. Website development" required /></label>
+                    <label className="workspace-field">Qty<input type="number" min="1" step="1" value={item.quantity} onChange={(event) => updateLineItem(index, 'quantity', event.target.value)} required /></label>
+                    <label className="workspace-field">Unit price (KES)<input type="number" min="0" step="0.01" value={item.unitPrice} onChange={(event) => updateLineItem(index, 'unitPrice', event.target.value)} required /></label>
+                    <button type="button" className="invoice-remove-item" onClick={() => setLineItems((items) => items.length > 1 ? items.filter((_, itemIndex) => itemIndex !== index) : items)} aria-label="Remove line item">×</button>
+                  </div>
+                ))}
+              </div>
+              <div className="invoice-calculation"><span>Subtotal: <strong>{money(subtotal)}</strong></span><span>Tax ({taxRate}%): <strong>{money(taxAmount)}</strong></span><span>Total: <strong>{money(totalAmount)}</strong></span></div>
+              <p className="message-composer-help">For tax, enter the rate that applies to your business and this transaction. The system calculates it; it does not determine your tax obligations.</p>
+            </>
+          )}
+
+          {section === 'Leads' && (
+            <div className="lead-progress-preview">
+              <div className="lead-progress-label"><strong>Negotiation progress</strong><span>{stageProgress[form.status] ?? 10}%</span></div>
+              <div className="lead-progress-track"><span style={{ width: (stageProgress[form.status] ?? 10) + '%' }} /></div>
+              <small>{form.status === 'Won' ? 'Deal agreed — ready to prepare an invoice.' : form.status === 'Lost' ? 'This opportunity is marked as lost.' : 'Move the sales stage forward as the conversation develops.'}</small>
             </div>
           )}
+
           <div className="project-form-actions">
-            <button className="admin-view-site" type="submit" disabled={saving}>{saving ? 'Saving...' : 'Save ' + (section === 'Settings' ? 'settings' : section === 'Invoices' ? 'invoice' : section === 'Tasks' ? 'task' : section === 'Leads' ? 'lead' : 'record')}</button>
+            <button className="admin-view-site" type="submit" disabled={saving}>{saving ? 'Saving...' : 'Save ' + (section === 'Settings' ? 'settings' : section === 'Invoices' ? 'document' : section === 'Tasks' ? 'task' : section === 'Leads' ? 'lead' : 'record')}</button>
             <button className="project-cancel-button" type="button" onClick={resetForm} disabled={saving}>Cancel</button>
           </div>
         </form>
       )}
 
-      <div className="workspace-list-heading">
-        <div><strong>{records.length}</strong> {records.length === 1 ? 'record' : 'records'}</div>
-        {!schema.singleRecord && <input aria-label={'Search ' + section} className="workspace-search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder={'Search ' + section.toLowerCase() + '...'} />}
-      </div>
+      <div className="workspace-list-heading"><div><strong>{records.length}</strong> {records.length === 1 ? 'record' : 'records'}</div>{!schema.singleRecord && <input aria-label={'Search ' + section} className="workspace-search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder={'Search ' + section.toLowerCase() + '...'} />}</div>
 
       {visibleRecords.length === 0 ? (
-        <div className="admin-panel workspace-empty">
-          <span>✳</span>
-          <h3>{search ? 'No matching records' : 'Nothing here yet'}</h3>
-          <p>{search ? 'Try a different search term.' : 'Add a record to start managing this section.'}</p>
-          {!search && <button className="admin-view-site" onClick={openNewForm}>+ Add first record</button>}
-        </div>
+        <div className="admin-panel workspace-empty"><span>✳</span><h3>{search ? 'No matching records' : 'Nothing here yet'}</h3><p>{search ? 'Try a different search term.' : 'Add a record to start managing this section.'}</p>{!search && <button className="admin-view-site" onClick={openNewForm}>+ Add first record</button>}</div>
       ) : (
-        <div className="admin-panel workspace-table-wrap">
-          <div className="workspace-table-scroll">
-            <table className="workspace-table">
-              <thead><tr>{schema.columns.map((key) => <th key={key}>{key === 'totalAmount' ? 'Total (KES)' : schema.fields.find((field) => field.name === key)?.label || key}</th>)}<th>Actions</th></tr></thead>
-              <tbody>
-                {visibleRecords.map((record) => (
-                  <tr key={record.id}>
-                    {schema.columns.map((key) => <td key={key}>{key === 'rating' ? '★'.repeat(Math.max(0, Math.min(5, Number(record[key]) || 0))) : key === 'totalAmount' ? (record.totalAmount == null ? '—' : 'KES ' + Number(record.totalAmount).toLocaleString('en-KE')) : key === 'amount' && section === 'Invoices' ? 'KES ' + Number(record.amount || 0).toLocaleString('en-KE') : key === 'submittedAt' && record[key] ? new Date(record[key]).toLocaleString() : (record[key] || '—')}</td>)}
-                    <td className="workspace-row-actions">
-                      <button onClick={() => editRecord(record)}>Edit</button>
-                      {!schema.singleRecord && <button className="managed-delete-button" onClick={() => deleteRecord(record)}>Delete</button>}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <div className="admin-panel workspace-table-wrap"><div className="workspace-table-scroll"><table className="workspace-table">
+          <thead><tr>{schema.columns.map((key) => <th key={key}>{key === 'totalAmount' ? 'Total (KES)' : schema.fields.find((field) => field.name === key)?.label || key}</th>)}{section === 'Leads' && <th>Progress</th>}<th>Actions</th></tr></thead>
+          <tbody>{visibleRecords.map((record) => (
+            <tr key={record.id}>
+              {schema.columns.map((key) => <td key={key}>{key === 'rating' ? '★'.repeat(Math.max(0, Math.min(5, Number(record[key]) || 0))) : key === 'totalAmount' ? money(record.totalAmount) : key === 'amount' && section === 'Invoices' ? money(record.amount) : key === 'submittedAt' && record[key] ? new Date(record[key]).toLocaleString() : key === 'quotedPrice' || key === 'clientOffer' ? (record[key] ? money(record[key]) : '—') : (record[key] || '—')}</td>)}
+              {section === 'Leads' && <td><div className="lead-table-progress"><div className="lead-progress-track"><span style={{ width: (stageProgress[record.status] ?? 10) + '%' }} /></div><small>{stageProgress[record.status] ?? 10}%</small></div></td>}
+              <td className="workspace-row-actions"><button onClick={() => editRecord(record)}>Edit</button>{section === 'Invoices' && <button onClick={() => printDocument(record)}>Preview / PDF</button>}{!schema.singleRecord && <button className="managed-delete-button" onClick={() => deleteRecord(record)}>Delete</button>}</td>
+            </tr>
+          ))}</tbody>
+        </table></div></div>
       )}
     </div>
   )
