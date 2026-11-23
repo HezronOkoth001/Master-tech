@@ -1224,3 +1224,100 @@ a {
   .inner-page-intro h1 { font-size: 37px; }
   .discovery-links, .contact-details { grid-template-columns: 1fr; }
 }
+
+
+/* Sample website UI gallery */
+.sample-sites-section { padding-top: 48px; }
+.sample-sites-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px; }
+.sample-site-card { overflow: hidden; border: 1px solid #292e3a; border-radius: 10px; background: #101520; transition: transform .2s ease, border-color .2s ease; }
+.sample-site-card:hover { transform: translateY(-4px); border-color: rgba(212,175,55,.6); }
+.sample-site-visual { position: relative; min-width: 0; height: 270px; display: grid; place-items: center; overflow: hidden; padding: 22px; background: radial-gradient(circle at 50% 45%, #303747, #111620 75%); }
+.sample-visual-tag { position: absolute; top: 12px; right: 12px; z-index: 3; padding: 6px 9px; border: 1px solid rgba(212,175,55,.5); background: rgba(9,12,18,.88); color: #e7c65a; font-size: 8px; font-weight: 700; letter-spacing: 1.2px; }
+.sample-browser { position: relative; width: 100%; max-width: 480px; height: 218px; overflow: hidden; border: 1px solid #697080; border-radius: 5px; background: #f7f7f5; box-shadow: 0 18px 38px rgba(0,0,0,.35); color: #20232a; font-family: Arial, sans-serif; }
+.sample-browser-bar { height: 18px; display: flex; align-items: center; gap: 4px; padding: 0 8px; background: #e6e7e9; }
+.sample-browser-bar i { width: 5px; height: 5px; border-radius: 50%; background: #a4a7ad; }
+.sample-browser-bar span { margin: 0 auto; color: #777b83; font-size: 6px; letter-spacing: .6px; }
+.sample-business-nav, .sample-shop-nav, .sample-food-nav, .sample-learning-nav, .sample-property-nav, .sample-booking-nav { height: 32px; display: flex; align-items: center; justify-content: space-between; padding: 0 13px; background: #fff; }
+.sample-business-nav b, .sample-shop-nav b, .sample-learning-nav b, .sample-property-nav b, .sample-booking-nav b { font-size: 10px; letter-spacing: .5px; }
+.sample-business-nav b span, .sample-shop-nav b span, .sample-learning-nav b span, .sample-property-nav b span, .sample-booking-nav b span { color: #c29b20; }
+.sample-business-nav small, .sample-shop-nav small, .sample-food-nav small, .sample-learning-nav small, .sample-property-nav small, .sample-booking-nav small { color: #777b83; font-size: 6px; letter-spacing: .4px; }
+.sample-business-hero { height: 137px; padding: 17px 20px; background: linear-gradient(105deg,#f3efe6 0%,#e7e0d2 58%,#c9bda7 100%); }
+.sample-business-hero small, .sample-shop-hero small, .sample-food-hero small, .sample-learning-hero small, .sample-property-hero small, .sample-booking-hero small { display: block; font-size: 6px; letter-spacing: 1px; }
+.sample-business-hero b, .sample-shop-hero b, .sample-food-hero b, .sample-learning-hero b, .sample-property-hero b, .sample-booking-hero b { display: block; margin-top: 7px; font-family: Georgia,serif; font-size: 25px; line-height: 1.02; }
+.sample-business-hero p { margin: 6px 0; font-size: 7px; }
+.sample-business-hero > span, .sample-shop-hero em, .sample-food-hero > span, .sample-learning-hero span, .sample-booking-hero > div > span { display: inline-block; margin-top: 6px; padding: 6px 8px; background: #252a30; color: white; font-size: 6px; font-style: normal; letter-spacing: .5px; }
+.sample-business-bottom, .sample-food-menu, .sample-learning-bottom, .sample-product-row, .sample-property-list { display: flex; gap: 8px; padding: 8px 14px; background: #fff; }
+.sample-business-bottom i, .sample-food-menu i, .sample-learning-bottom i, .sample-product-row i, .sample-property-list i { flex: 1; height: 18px; border-radius: 2px; background: #e6e2d9; }
+.sample-shop { background: #fbf8f3; }
+.sample-shop-nav strong { font-size: 9px; }
+.sample-shop-hero { height: 137px; display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; background: #e9e1d5; }
+.sample-shop-hero > div:first-child { position: relative; z-index: 1; }
+.sample-shop-hero b { font-size: 24px; }
+.sample-shop-hero em { background: #202020; }
+.sample-fashion-shape { position: relative; width: 105px; height: 120px; overflow: hidden; background: #b7a38e; border-radius: 55px 55px 4px 4px; }
+.sample-fashion-shape i { position: absolute; width: 48px; height: 70px; left: 28px; top: 25px; border-radius: 25px 25px 8px 8px; background: #4b5c50; transform: rotate(-8deg); }
+.sample-fashion-shape b { position: absolute; width: 24px; height: 24px; top: 9px; left: 40px; border-radius: 50%; background: #c58f72; }
+.sample-product-row i { height: 17px; background: linear-gradient(135deg,#e7d5c3,#b6a28e); }
+.sample-food { background: #f5f0e6; }
+.sample-food-nav b { color: #42563c; font-family: Georgia,serif; font-size: 14px; }
+.sample-food-hero { height: 137px; padding: 20px; color: #fff; background: linear-gradient(100deg,rgba(26,43,29,.9),rgba(41,58,37,.52)), radial-gradient(circle at 78% 55%,#c49b61,#3d5239 60%); }
+.sample-food-hero b { font-size: 28px; }
+.sample-food-hero > span { background: #d4af37; color: #202020; }
+.sample-food-menu i { height: 17px; background: #ded5c5; }
+.sample-learning { background: #f2f5fa; }
+.sample-learning-nav b { font-size: 13px; }
+.sample-learning-hero { height: 137px; display: flex; align-items: center; justify-content: space-between; padding: 15px 20px; background: #e3eaf7; }
+.sample-learning-hero b { color: #172d56; font-size: 23px; }
+.sample-learning-hero span { background: #345b9b; }
+.sample-learning-art { width: 105px; height: 105px; display: grid; align-content: center; justify-items: center; background: #b9c9e4; color: #244777; transform: rotate(4deg); }
+.sample-learning-art i { font-size: 20px; }
+.sample-learning-art b { margin: 0; font: 700 10px/1.2 Arial,sans-serif; text-align: center; }
+.sample-learning-bottom i { background: #d7e0ef; }
+.sample-property { background: #f4f2ed; }
+.sample-property-nav b { font-size: 9px; }
+.sample-property-hero { height: 137px; padding: 15px 20px; color: #fff; background: linear-gradient(90deg,rgba(26,39,49,.92),rgba(35,48,57,.35)), linear-gradient(130deg,#a9b5ae,#64776e 55%,#c0b6a1); }
+.sample-property-hero b { font-size: 25px; }
+.sample-property-search { display: flex; align-items: center; justify-content: space-between; width: 88%; margin-top: 10px; padding: 7px; background: #fff; color: #4d5554; font-size: 6px; }
+.sample-property-search strong { padding: 5px 7px; background: #bd9b4a; color: #fff; }
+.sample-property-list i { background: #d9ded8; }
+.sample-booking { background: #faf8f5; }
+.sample-booking-nav b { font-family: Georgia,serif; font-size: 14px; }
+.sample-booking-hero { height: 168px; display: flex; justify-content: space-between; gap: 8px; padding: 15px 18px; background: #f1e9e1; }
+.sample-booking-hero > div:first-child { padding-top: 10px; }
+.sample-booking-hero b { font-size: 23px; }
+.sample-booking-hero > div > span { background: #a66b4d; }
+.sample-calendar { width: 47%; padding: 10px; background: #fff; box-shadow: 0 5px 12px #0001; }
+.sample-calendar b, .sample-calendar small { display: block; margin: 0 0 8px; font-size: 6px; letter-spacing: .5px; }
+.sample-calendar div, .sample-calendar strong, .sample-calendar i { display: block; margin: 7px 0; color: #777; font-size: 6px; font-style: normal; }
+.sample-calendar strong { color: #9a684d; font-weight: 700; }
+.sample-calendar i { padding: 6px 3px; background: #f1e9e1; }
+.sample-dashboard { display: flex; background: #f4f6fa; }
+.sample-dashboard-side { width: 28%; display: flex; flex-direction: column; gap: 14px; padding: 14px 8px; background: #17243b; color: #dce4f2; font-size: 7px; }
+.sample-dashboard-side b { margin-bottom: 9px; color: #e5c55b; font-size: 7px; }
+.sample-dashboard-main { flex: 1; padding: 12px; }
+.sample-dashboard-top { display: flex; justify-content: space-between; font-size: 10px; font-weight: 700; }
+.sample-dashboard-top small { color: #8992a1; font-size: 6px; font-weight: 400; }
+.sample-dashboard-stats { display: flex; gap: 6px; margin-top: 12px; }
+.sample-dashboard-stats i { flex: 1; padding: 9px 5px; background: #fff; border: 1px solid #e5e8ef; font-style: normal; }
+.sample-dashboard-stats small, .sample-dashboard-stats b { display: block; }
+.sample-dashboard-stats small { color: #8992a1; font-size: 5px; }
+.sample-dashboard-stats b { margin-top: 5px; color: #253a5d; font-size: 9px; }
+.sample-dashboard-chart { margin-top: 10px; padding: 10px; background: #fff; border: 1px solid #e5e8ef; }
+.sample-dashboard-chart b { font-size: 7px; }
+.sample-dashboard-chart > div { height: 55px; display: flex; align-items: end; gap: 9px; margin-top: 8px; border-bottom: 1px solid #e5e8ef; }
+.sample-dashboard-chart i { flex: 1; height: 30%; background: #9eb4d3; }
+.sample-dashboard-chart i:nth-child(2n) { height: 65%; }
+.sample-dashboard-chart i:nth-child(3n) { height: 85%; background: #d4af37; }
+.sample-site-info { padding: 22px 23px 20px; }
+.sample-site-meta { display: flex; justify-content: space-between; align-items: center; color: var(--gold); font-size: 9px; letter-spacing: .7px; text-transform: uppercase; }
+.sample-site-meta small { color: #747b89; font-size: 10px; }
+.sample-site-info h2 { margin: 13px 0 9px; color: #f4f4f6; font-family: 'Space Grotesk',sans-serif; font-size: 21px; }
+.sample-site-info > p { min-height: 58px; margin: 0; color: #aeb4c0; font-size: 12px; line-height: 1.75; }
+.sample-site-info ul { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin: 18px 0; padding: 0; list-style: none; }
+.sample-site-info li { color: #c9ced7; font-size: 10px; }
+.sample-site-info li span { margin-right: 7px; color: var(--gold); }
+.sample-site-action { display: flex; align-items: center; justify-content: space-between; padding-top: 15px; border-top: 1px solid #2a303d; color: #f4f4f6; font-size: 11px; font-weight: 700; }
+.sample-site-action span { color: var(--gold); }
+.sample-sites-note { margin: 25px 0 0; padding: 15px 18px; border-left: 2px solid var(--gold); background: #151a25; color: #aeb4c0; font-size: 11px; line-height: 1.8; }
+@media (max-width: 900px) { .sample-sites-grid { grid-template-columns: 1fr; } .sample-site-card { max-width: 680px; width: 100%; margin: 0 auto; } }
+@media (max-width: 600px) { .sample-site-visual { height: 225px; padding: 13px; } .sample-browser { height: 195px; } .sample-business-hero, .sample-shop-hero, .sample-food-hero, .sample-learning-hero, .sample-property-hero { height: 117px; } .sample-booking-hero { height: 145px; } .sample-site-info { padding: 19px; } .sample-site-info > p { min-height: 0; } .sample-site-info ul { grid-template-columns: 1fr; } .sample-business-hero b, .sample-shop-hero b, .sample-food-hero b, .sample-learning-hero b, .sample-property-hero b, .sample-booking-hero b { font-size: 21px; } }
