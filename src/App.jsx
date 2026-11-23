@@ -37,6 +37,16 @@ function PublicReviewForm() {
   const [form, setForm] = useState({ customer: '', rating: '5', project: '', review: '' })
   const [submitting, setSubmitting] = useState(false)
   const [feedback, setFeedback] = useState('')
+  const [approvedReviews, setApprovedReviews] = useState([])
+
+  useEffect(() => {
+    let active = true
+    fetch(\`\${import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'}/api/public/reviews\`)
+      .then((response) => response.ok ? response.json() : [])
+      .then((data) => { if (active && Array.isArray(data)) setApprovedReviews(data) })
+      .catch(() => {})
+    return () => { active = false }
+  }, [])
 
   async function submitReview(event) {
     event.preventDefault()
@@ -68,6 +78,18 @@ function PublicReviewForm() {
         </div>
         <p>Your feedback helps others understand what it is like to work with Masters Tech.</p>
       </div>
+      {approvedReviews.length > 0 && (
+        <div className="approved-reviews-grid">
+          {approvedReviews.map((review) => (
+            <article className="approved-review-card" key={review.id}>
+              <div className="approved-review-stars" aria-label={review.rating + ' out of 5 stars'}>{'★'.repeat(Math.max(0, Math.min(5, Number(review.rating) || 0)))}</div>
+              <p>“{review.review}”</p>
+              <strong>{review.customer}</strong>
+              {review.project && <small>{review.project}</small>}
+            </article>
+          ))}
+        </div>
+      )}
       <form className="public-review-form" onSubmit={submitReview}>
         <div className="public-review-grid">
           <label>
