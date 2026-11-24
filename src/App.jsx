@@ -279,11 +279,11 @@ function App() {
 
   useEffect(() => {
     const pages = {
-      '/': ['Masters Tech | Website Development, Security & SEO', 'Masters Tech helps businesses build professional websites, improve website security and grow online visibility through SEO and Google Maps.'],
+      '/': ['Masters Tech | Website Development & SEO', 'Masters Tech helps businesses build professional websites and grow online visibility through SEO and Google Maps.'],
       '/about': ['About Hezron Okoth | Masters Tech Website Development & SEO', 'Meet Hezron Okoth, the person behind Masters Tech. Learn about professional website development, SEO and Google visibility services for businesses.'],
       '/services': ['Website Design, Development & SEO Services | Masters Tech', 'Explore Masters Tech website design and development, search engine optimisation, and Google visibility services for businesses.'],
       '/sample-sites': ['Website Design Samples & UI Ideas | Masters Tech', 'Explore sample website designs for business websites, online shops, restaurants, education, property listings and booking platforms. Choose a style for your next website.'],
-      '/contact': ['Contact Masters Tech | Request a Website or SEO Service', 'Contact Masters Tech to discuss a business website, website security, SEO, Google Maps visibility or a custom web project.'],
+      '/contact': ['Contact Masters Tech | Request a Website or SEO Service', 'Contact Masters Tech to discuss a business website, SEO, Google Maps visibility or a custom web project.'],
       '/reviews': ['Customer Reviews | Masters Tech', 'Read customer feedback and share your experience working with Masters Tech.'],
     }
     const [title, description] = pages[pathname] || pages['/']
@@ -404,7 +404,7 @@ function App() {
 <section className="trust-strip">
           <span>WHAT WE HELP YOU DO</span>
           <div><i>✳</i> Build a professional online presence</div>
-          <div><i>✳</i> Protect your digital assets</div>
+          <div><i>✳</i> Build trust with a professional website</div>
           <div><i>✳</i> Reach more potential customers</div>
         </section>
         <section className="home-discovery section-padding">
