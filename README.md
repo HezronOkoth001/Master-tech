@@ -66,7 +66,7 @@ DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@localhost:5432/masters_tech
 Start the API from the `backend` folder:
 
 ```bash
-uvicorn main:app --reload
+python -m uvicorn main:app --reload
 ```
 
 The API health check is available at `http://127.0.0.1:8000/health`, and the interactive API documentation is at `http://127.0.0.1:8000/docs`.
