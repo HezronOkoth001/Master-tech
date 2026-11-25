@@ -5517,3 +5517,40 @@ body { color: #f5f8fc; background: var(--mt-black); }
   .pricing-cta-section { align-items: flex-start; flex-direction: column; }
   .pricing-assessment-note { padding: 16px; }
 }
+
+
+/* Public package discount corner ribbons and sale prices */
+.pricing-package-card.has-package-discount { border-color: rgba(211, 54, 66, .48); }
+.pricing-discount-ribbon {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 82px;
+  padding: 10px 9px 13px;
+  border-radius: 0 0 7px 7px;
+  background: linear-gradient(160deg, #e54850 0%, #b91c36 58%, #1d4f91 100%);
+  box-shadow: 0 7px 16px rgba(125, 27, 48, .2);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .7px;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+.pricing-card-price-discounted { gap: 5px; }
+.pricing-card-price del {
+  color: #8a9290;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration-thickness: 1.5px;
+}
+.pricing-card-price-discounted strong { color: #b91c36; }
+.pricing-card-price-discounted strong span { color: #8b742e; }
+.pricing-package-card.has-package-discount .pricing-card-topline { padding-right: 44px; }
+@media (max-width: 620px) {
+  .pricing-discount-ribbon { right: 16px; min-height: 72px; font-size: 9px; }
+}
