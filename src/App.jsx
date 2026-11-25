@@ -42,11 +42,7 @@ function EastAfricaReachMap() {
   }).join(' ')
   const selected = ['Uganda', 'Kenya', 'Rwanda', 'Burundi', 'Tanzania']
   const labels = [
-    { name: 'UGANDA', x: 350, y: 205 },
     { name: 'KENYA', x: 590, y: 220 },
-    { name: 'RWANDA', x: 365, y: 345 },
-    { name: 'BURUNDI', x: 365, y: 425 },
-    { name: 'TANZANIA', x: 500, y: 535 },
   ]
 
   return (
@@ -54,7 +50,7 @@ function EastAfricaReachMap() {
       {mapError || !features.length ? (
         <div className="east-africa-map-fallback">The regional map could not load. Please check your internet connection and refresh the page.</div>
       ) : (
-        <svg viewBox="0 0 900 690" role="img" aria-label="Map showing Uganda, Kenya, Rwanda, Burundi and Tanzania">
+        <svg viewBox="0 0 900 690" role="img" aria-label="Map of East Africa with Kenya labelled">
           <defs>
             <linearGradient id="eastAfricaLand" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stopColor="#263a2b" />
@@ -986,7 +982,7 @@ function App() {
               </div>
               <EastAfricaReachMap />
               <div className="east-africa-country-list">
-                <span>Uganda</span><span>Kenya</span><span>Rwanda</span><span>Burundi</span><span>Tanzania</span>
+                <span>Kenya</span>
               </div>
             </article>
             <article className="about-nairobi-map">
