@@ -4571,118 +4571,55 @@ body { color: #f5f8fc; background: var(--mt-black); }
 }
 
 
-/* About page location: East Africa overview and approximate Nairobi base */
+
+/* About page: separate regional reach map and Nairobi location map */
 .about-location-section {
-  background: #f3f2e9;
+  background: linear-gradient(180deg, #f3f2e9 0%, #ebece2 100%);
   color: #1c2b21;
 }
-.about-location-heading {
-  width: min(1080px, 100%);
-  margin: 0 auto 28px;
-}
+.about-location-heading { width: min(1080px, 100%); margin: 0 auto 34px; }
 .about-location-heading .section-label { color: #8c6b19; }
 .about-location-heading h2 {
-  max-width: 760px;
-  margin: 12px 0;
-  color: #1d2b21;
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(30px, 4vw, 46px);
-  line-height: 1.12;
-  letter-spacing: -1.3px;
+  max-width: 760px; margin: 12px 0; color: #1d2b21;
+  font-family: 'Space Grotesk', sans-serif; font-size: clamp(30px, 4vw, 46px);
+  line-height: 1.12; letter-spacing: -1.3px;
 }
 .about-location-heading h2 span { color: #98751d; }
-.about-location-heading > p {
-  max-width: 650px;
-  margin: 0;
-  color: #667166;
-  font-size: 13px;
-  line-height: 1.8;
-}
-.about-location-grid {
-  width: min(1080px, 100%);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: .9fr 1.1fr;
-  gap: 18px;
-}
-.about-map-card {
-  min-width: 0;
-  overflow: hidden;
-  border: 1px solid #dfe3d8;
-  border-radius: 16px;
-  background: #fff;
-  box-shadow: 0 12px 32px rgba(30,47,34,.07);
-}
-.about-map-card-heading { padding: 20px 22px 15px; }
-.about-map-kicker {
-  color: #94721c;
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 1.7px;
-}
+.about-location-heading > p { max-width: 650px; margin: 0; color: #667166; font-size: 13px; line-height: 1.8; }
+.about-location-layout { width: min(1080px, 100%); margin: 0 auto; display: grid; gap: 46px; }
+.about-region-map, .about-nairobi-map { min-width: 0; }
+.about-map-card-heading { padding: 0 0 16px; }
+.about-map-kicker { color: #94721c; font-size: 9px; font-weight: 800; letter-spacing: 1.7px; }
 .about-map-card-heading h3 {
-  margin: 7px 0 3px;
-  color: #1d2b21;
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 22px;
+  margin: 7px 0 3px; color: #1d2b21; font-family: 'Space Grotesk', sans-serif; font-size: 25px;
 }
-.about-map-card-heading p {
-  margin: 0;
-  color: #778176;
-  font-size: 11px;
-  line-height: 1.5;
+.about-map-card-heading p { margin: 0; color: #778176; font-size: 11px; line-height: 1.5; }
+.east-africa-map-visual {
+  width: 100%; overflow: hidden; background: #e8eee8;
+  border-top: 1px solid rgba(38,59,43,.13); border-bottom: 1px solid rgba(38,59,43,.13);
 }
-.about-map-card iframe {
-  display: block;
-  width: 100%;
-  height: 290px;
-  border: 0;
-  background: #e8ece5;
+.east-africa-map-visual svg { display: block; width: 100%; height: auto; }
+.east-africa-map-visual text { font-family: 'Inter', sans-serif; }
+.east-africa-map-fallback { padding: 60px 20px; color: #526252; text-align: center; font-size: 13px; }
+.east-africa-country-list { display: flex; flex-wrap: wrap; gap: 9px; padding-top: 18px; }
+.east-africa-country-list span {
+  padding: 8px 13px; border: 1px solid rgba(152,117,29,.35); border-radius: 999px;
+  color: #354637; background: rgba(255,255,255,.55); font-size: 11px; font-weight: 700;
 }
-.about-region-map iframe { height: 290px; }
-.about-nairobi-map iframe { height: 290px; }
+.about-nairobi-map { padding-top: 8px; border-top: 1px solid rgba(38,59,43,.18); }
+.about-nairobi-map iframe {
+  display: block; width: 100%; height: 330px; border: 0; background: #e8ece5;
+}
 .about-map-directions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  padding: 13px 20px;
-  color: #765b17;
-  font-size: 11px;
-  font-weight: 750;
-  text-decoration: none;
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding: 13px 0; color: #765b17; font-size: 11px; font-weight: 750; text-decoration: none;
 }
 .about-map-directions:hover { color: #a07816; }
 @media (max-width: 760px) {
-  .about-location-grid { grid-template-columns: 1fr; }
-  .about-map-card iframe,
-  .about-region-map iframe,
-  .about-nairobi-map iframe { height: 250px; }
-}
-
-
-/* Geographic East Africa reference map */
-.east-africa-illustration {
-  padding: 12px 14px 14px;
-  background: #f2f0e5;
-}
-.east-africa-illustration img {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: 520px;
-  object-fit: contain;
-  border-radius: 8px;
-  background: #e8ece5;
-}
-.east-africa-map-credit {
-  margin: 10px 4px 0;
-  color: #667166;
-  font-size: 9px;
-  line-height: 1.5;
-  text-align: center;
+  .about-location-layout { gap: 32px; }
+  .about-nairobi-map iframe { height: 270px; }
 }
 @media (max-width: 480px) {
-  .east-africa-illustration { padding: 8px 8px 11px; }
-  .east-africa-map-credit { font-size: 8px; }
+  .east-africa-country-list { gap: 7px; }
+  .east-africa-country-list span { padding: 7px 10px; font-size: 10px; }
 }
