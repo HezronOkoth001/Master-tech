@@ -269,6 +269,136 @@ function SampleSitePreview({ type }) {
   )
 }
 
+const technologyItems = [
+  { mark: '◈', name: 'Docker', detail: 'Containers' },
+  { mark: 'aws', name: 'AWS', detail: 'Cloud platform' },
+  { mark: '▰', name: 'Azure', detail: 'Cloud platform' },
+  { mark: '●', name: 'Android', detail: 'Mobile platform' },
+  { mark: '◎', name: 'iOS', detail: 'Mobile platform' },
+  { mark: '⚛', name: 'React', detail: 'Web interface' },
+  { mark: 'JS', name: 'JavaScript', detail: 'Development' },
+  { mark: 'TS', name: 'TypeScript', detail: 'Development' },
+  { mark: 'Py', name: 'Python', detail: 'Development' },
+  { mark: '◉', name: 'PostgreSQL', detail: 'Database' },
+  { mark: 'API', name: 'FastAPI', detail: 'Backend' },
+  { mark: '⑂', name: 'Git', detail: 'Version control' },
+]
+
+function TechMarquee() {
+  return (
+    <section className="tech-marquee-section" aria-label="Tools and technology platforms">
+      <div className="tech-marquee-heading">
+        <span className="section-label">TOOLS & TECHNOLOGY</span>
+        <p>Modern tools behind thoughtful digital experiences.</p>
+      </div>
+      <div className="tech-marquee-window">
+        <div className="tech-marquee-track">
+          {[0, 1].map((copy) => (
+            <div className="tech-marquee-group" key={copy} aria-hidden={copy === 1}>
+              {technologyItems.map((item) => (
+                <div className="tech-marquee-item" key={item.name}>
+                  <span className="tech-marquee-mark">{item.mark}</span>
+                  <span className="tech-marquee-name">{item.name}</span>
+                  <span className="tech-marquee-detail">{item.detail}</span>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="tech-marquee-edge" aria-hidden="true"><span>BUILT WITH PURPOSE</span><i /></div>
+    </section>
+  )
+}
+
+function HomeServicesSection({ whatsappLink }) {
+  const highlights = [
+    {
+      number: '01',
+      tag: 'PLAN · DESIGN · BUILD',
+      title: 'Websites made to move your business forward.',
+      description: 'A professional online home that explains what you offer, looks great on every screen and makes it simple for customers to get in touch.',
+      points: ['Business websites and landing pages', 'Online stores and tailored layouts', 'Responsive design and clear user journeys'],
+      visual: 'home-service-visual-web',
+      visualLabel: 'YOUR BUSINESS, ONLINE',
+      visualTitle: 'A better first impression.',
+      visualNote: 'Designed around your brand',
+      action: 'Explore website designs',
+      href: '/sample-sites',
+    },
+    {
+      number: '02',
+      tag: 'BE FOUND · GET DISCOVERED',
+      title: 'Help the right people find you on Google.',
+      description: 'Make it easier for potential customers to discover your business with useful content and a search-friendly website structure.',
+      points: ['Search engine optimisation foundations', 'Google Business Profile guidance', 'Google Search and Maps visibility'],
+      visual: 'home-service-visual-search',
+      visualLabel: 'GOOGLE VISIBILITY',
+      visualTitle: 'Make your business easier to find.',
+      visualNote: 'Useful information. Clear structure.',
+      action: 'Explore SEO services',
+      href: '/services',
+    },
+    {
+      number: '03',
+      tag: 'DESIGNED FOR REAL PEOPLE',
+      title: 'A smooth experience on every screen.',
+      description: 'Thoughtful layouts, clear navigation and practical details help visitors move around your website with confidence.',
+      points: ['Mobile, tablet and desktop layouts', 'Simple navigation and readable content', 'Clear paths to contact your business'],
+      visual: 'home-service-visual-experience',
+      visualLabel: 'ONE WEBSITE · EVERY SCREEN',
+      visualTitle: 'Comfortable to use, wherever people visit.',
+      visualNote: 'Phone · Tablet · Desktop',
+      action: 'Talk about your project',
+      href: whatsappLink,
+    },
+  ]
+
+  return (
+    <section className="home-services-section section-padding" id="what-we-do">
+      <div className="home-services-heading">
+        <div>
+          <span className="section-label">WHAT WE DO</span>
+          <h2>Good design gets attention. <span>A useful website earns trust.</span></h2>
+        </div>
+        <p>From your first online presence to being easier to find on Google, we focus on the details that help your business connect with customers.</p>
+      </div>
+      <div className="home-services-grid">
+        {highlights.map((item) => (
+          <article className="home-service-card" key={item.number}>
+            <div className="home-service-card-top">
+              <span>{item.number} / {item.tag}</span>
+              <i aria-hidden="true">↗</i>
+            </div>
+            <div className={`home-service-visual ${item.visual}`}>
+              <div className="home-service-visual-orbit" />
+              <div className="home-service-visual-panel">
+                <small>{item.visualLabel}</small>
+                <strong>{item.visualTitle}</strong>
+                <span>{item.visualNote}</span>
+                <div className="home-service-visual-lines"><i /><i /><i /></div>
+              </div>
+              <b className="home-service-visual-spark" aria-hidden="true">✦</b>
+            </div>
+            <div className="home-service-card-content">
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+              <ul>{item.points.map((point) => <li key={point}><span>✓</span>{point}</li>)}</ul>
+              <a href={item.href} target={item.href.startsWith('https://') ? '_blank' : undefined} rel={item.href.startsWith('https://') ? 'noreferrer' : undefined}>
+                {item.action}<span>↗</span>
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+      <div className="home-services-bottomline">
+        <span>YOUR IDEA, YOUR BUSINESS, BUILT WITH CARE.</span>
+        <a href={whatsappLink} target="_blank" rel="noreferrer">Have something in mind? Let's talk <b>↗</b></a>
+      </div>
+    </section>
+  )
+}
+
 function App() {
   const [promotion, setPromotion] = useState(null)
   const [activeSampleTab, setActiveSampleTab] = useState('samples')
@@ -407,6 +537,8 @@ function App() {
           <div><i>✳</i> Build trust with a professional website</div>
           <div><i>✳</i> Reach more potential customers</div>
         </section>
+        <TechMarquee />
+        <HomeServicesSection whatsappLink={whatsappLink} />
         <section className="home-discovery section-padding">
           <span className="section-label">EXPLORE MASTERS TECH</span>
           <h2>Practical digital services to help your business <span>grow online.</span></h2>
