@@ -605,36 +605,60 @@ function App() {
             </div>
           </div>
 
-          <div className="hero-visual hero-ui-stage" aria-label="Animated showcase of website designs on laptop screens">
+          <div className="hero-visual hero-ui-stage" aria-label="MacBook-style laptop displaying a futuristic website, surrounded by floating interface cards">
             <div className="showcase-aura" />
-            <div className="ui-float ui-float-left">
-              <div className="ui-window-bar"><i /><i /><i /><span>shop-online.co.ke</span></div>
-              <div className="ui-shop-preview"><small>NEW COLLECTION</small><b>Find your<br />everyday style.</b><span>SHOP NOW ↗</span><div className="ui-product-shapes"><i /><i /><i /></div></div>
+            <div className="hero-orbit-ring" aria-hidden="true" />
+            <div className="orbit-ui-card orbit-ui-card-top">
+              <span className="orbit-ui-icon">⌘</span>
+              <span><b>DESIGN SYSTEM</b><small>Clean · Responsive</small></span>
             </div>
-            <div className="ui-float ui-float-right">
-              <div className="ui-window-bar"><i /><i /><i /><span>business dashboard</span></div>
-              <div className="ui-dashboard-preview"><b>Overview</b><div className="ui-stat-row"><i /><i /><i /></div><div className="ui-chart"><i /><i /><i /><i /><i /><i /><i /></div><small>Performance at a glance</small></div>
+            <div className="orbit-ui-card orbit-ui-card-right">
+              <span className="orbit-ui-icon">↗</span>
+              <span><b>LIVE ANALYTICS</b><small>Growth overview</small></span>
+              <i className="orbit-sparkline"><i /><i /><i /><i /><i /><i /></i>
+            </div>
+            <div className="orbit-ui-card orbit-ui-card-left">
+              <span className="orbit-ui-icon">◎</span>
+              <span><b>SEO INSIGHTS</b><small>Search visibility</small></span>
+            </div>
+            <div className="orbit-ui-card orbit-ui-card-bottom">
+              <span className="orbit-ui-icon">✦</span>
+              <span><b>BUILT FOR PEOPLE</b><small>Every screen, every time</small></span>
             </div>
             <div className="hero-laptop">
               <div className="laptop-screen">
-                <div className="laptop-browser-bar"><i /><i /><i /><span>yourbusiness.co.ke</span></div>
-                <div className="laptop-site-preview">
-                  <div className="laptop-site-nav"><b>YOUR BRAND<span>.</span></b><small>HOME　 ABOUT　 SERVICES　 CONTACT</small></div>
-                  <div className="laptop-site-hero">
-                    <div className="laptop-site-copy"><small>WELCOME TO YOUR NEXT CHAPTER</small><b>Make your<br />business shine.</b><span>DISCOVER MORE ↗</span></div>
-                    <div className="laptop-site-art" aria-hidden="true"><div className="laptop-art-orbit"><i /><i /><i /></div><div className="laptop-art-card"><small>GROW ONLINE</small><b>+48%</b><span>More visibility</span><div /></div></div>
+                <div className="macbook-camera" />
+                <div className="laptop-matrix-site">
+                  <div className="matrix-site-nav">
+                    <b><i>◈</i> NEXUS<span> / DIGITAL</span></b>
+                    <small>PLATFORM　 SOLUTIONS　 ABOUT</small>
+                    <em>LET'S TALK ↗</em>
                   </div>
-                  <div className="laptop-site-bottom">
-                    <div><i>✦</i><span><b>Stand out online</b><small>A polished first impression</small></span></div>
-                    <div><i>↗</i><span><b>Reach more people</b><small>Be easier to discover</small></span></div>
-                    <div><i>◎</i><span><b>Built for every screen</b><small>Mobile-friendly design</small></span></div>
+                  <div className="matrix-site-main">
+                    <div className="matrix-site-copy">
+                      <small><i /> THE NEXT DIGITAL FRONTIER</small>
+                      <h3>Build beyond<br /><span>the ordinary.</span></h3>
+                      <p>Intelligent digital experiences for a connected world.</p>
+                      <b>EXPLORE THE PLATFORM <i>↗</i></b>
+                    </div>
+                    <div className="matrix-site-visual" aria-hidden="true">
+                      <div className="matrix-visual-orbit matrix-visual-orbit-one" />
+                      <div className="matrix-visual-orbit matrix-visual-orbit-two" />
+                      <div className="matrix-visual-core">N<span>+</span></div>
+                      <i className="matrix-node matrix-node-one" />
+                      <i className="matrix-node matrix-node-two" />
+                      <i className="matrix-node matrix-node-three" />
+                    </div>
+                  </div>
+                  <div className="matrix-site-footer">
+                    <span><i>01</i> DIGITAL STRATEGY</span>
+                    <span><i>02</i> CREATIVE TECHNOLOGY</span>
+                    <span><i>03</i> CONNECTED EXPERIENCES</span>
                   </div>
                 </div>
               </div>
-              <div className="laptop-base"><span /></div>
+              <div className="laptop-base macbook-base"><span className="macbook-notch" /></div>
             </div>
-            <div className="showcase-chip showcase-chip-top"><span>✦</span> Beautiful, responsive design</div>
-            <div className="showcase-chip showcase-chip-bottom"><span>↗</span> Made to grow your business</div>
           </div>
         </section>
 <section className="trust-strip">
