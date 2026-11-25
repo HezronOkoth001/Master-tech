@@ -9,6 +9,7 @@ const PROMOTION_API_URL = `${API_BASE}/api/public/promotion`
 const EAST_AFRICA_GEOJSON_URL = 'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_0_countries.geojson'
 
 function EastAfricaReachMap() {
+  const normalizeCountry = (name) => name === 'United Republic of Tanzania' ? 'Tanzania' : name
   const [features, setFeatures] = useState([])
   const [mapError, setMapError] = useState(false)
   useEffect(() => {
@@ -20,7 +21,7 @@ function EastAfricaReachMap() {
       })
       .then((data) => {
         if (active) setFeatures(data.features.filter((feature) => {
-          const name = feature.properties?.ADMIN || feature.properties?.name
+          const name = normalizeCountry(feature.properties?.ADMIN || feature.properties?.name)
           return ['Ethiopia', 'Kenya', 'Rwanda', 'Tanzania', 'Uganda', 'Somalia', 'South Sudan', 'Sudan', 'Eritrea', 'Djibouti', 'Democratic Republic of the Congo', 'Burundi'].includes(name)
         }))
       })
@@ -62,7 +63,7 @@ function EastAfricaReachMap() {
           </defs>
           <rect width="900" height="690" fill="#e8eee8" />
           {features.map((feature, index) => {
-            const name = feature.properties?.ADMIN || feature.properties?.name
+            const name = normalizeCountry(feature.properties?.ADMIN || feature.properties?.name)
             const geometry = feature.geometry
             const polygons = geometry?.type === 'Polygon' ? [geometry.coordinates] : geometry?.type === 'MultiPolygon' ? geometry.coordinates : []
             return polygons.map((polygon, polygonIndex) => (
