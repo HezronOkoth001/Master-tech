@@ -4569,3 +4569,93 @@ body { color: #f5f8fc; background: var(--mt-black); }
   .about-roots-facts { grid-template-columns: 1fr; }
   .about-roots-facts > div { min-height: 0; }
 }
+
+
+/* About page location: East Africa overview and approximate Nairobi base */
+.about-location-section {
+  background: #f3f2e9;
+  color: #1c2b21;
+}
+.about-location-heading {
+  width: min(1080px, 100%);
+  margin: 0 auto 28px;
+}
+.about-location-heading .section-label { color: #8c6b19; }
+.about-location-heading h2 {
+  max-width: 760px;
+  margin: 12px 0;
+  color: #1d2b21;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(30px, 4vw, 46px);
+  line-height: 1.12;
+  letter-spacing: -1.3px;
+}
+.about-location-heading h2 span { color: #98751d; }
+.about-location-heading > p {
+  max-width: 650px;
+  margin: 0;
+  color: #667166;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.about-location-grid {
+  width: min(1080px, 100%);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: .9fr 1.1fr;
+  gap: 18px;
+}
+.about-map-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #dfe3d8;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 12px 32px rgba(30,47,34,.07);
+}
+.about-map-card-heading { padding: 20px 22px 15px; }
+.about-map-kicker {
+  color: #94721c;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.7px;
+}
+.about-map-card-heading h3 {
+  margin: 7px 0 3px;
+  color: #1d2b21;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+}
+.about-map-card-heading p {
+  margin: 0;
+  color: #778176;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.about-map-card iframe {
+  display: block;
+  width: 100%;
+  height: 290px;
+  border: 0;
+  background: #e8ece5;
+}
+.about-region-map iframe { height: 290px; }
+.about-nairobi-map iframe { height: 290px; }
+.about-map-directions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 20px;
+  color: #765b17;
+  font-size: 11px;
+  font-weight: 750;
+  text-decoration: none;
+}
+.about-map-directions:hover { color: #a07816; }
+@media (max-width: 760px) {
+  .about-location-grid { grid-template-columns: 1fr; }
+  .about-map-card iframe,
+  .about-region-map iframe,
+  .about-nairobi-map iframe { height: 250px; }
+}
