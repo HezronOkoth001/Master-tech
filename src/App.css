@@ -4659,3 +4659,45 @@ body { color: #f5f8fc; background: var(--mt-black); }
   .about-region-map iframe,
   .about-nairobi-map iframe { height: 250px; }
 }
+
+
+/* Original illustrated East Africa map inspired by the regional reach layout */
+.east-africa-illustration {
+  padding: 0 15px 16px;
+  background: #f2f0e5;
+}
+.east-africa-illustration svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 340px;
+}
+.east-africa-map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 9px 18px;
+  padding: 12px 5px 2px;
+  color: #586657;
+  font-size: 10px;
+  font-weight: 700;
+}
+.east-africa-map-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.east-africa-map-legend i {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+}
+.legend-uganda { background: #c96f4a; }
+.legend-kenya { background: #d6ad43; }
+.legend-tanzania { background: #788c68; }
+.legend-lake { background: #8db6b0; }
+@media (max-width: 480px) {
+  .east-africa-illustration { padding: 0 8px 12px; }
+  .east-africa-map-legend { gap: 8px 12px; font-size: 9px; }
+}
