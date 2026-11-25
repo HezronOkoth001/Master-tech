@@ -595,7 +595,7 @@ function AdminWorkspaceSections({ section, records = [], clients = [], pricing =
             <span className={promotionEnabled ? 'promotion-status is-active' : 'promotion-status'}>{promotionEnabled ? 'ACTIVE' : 'INACTIVE'}</span>
           </div>
           <div className="promotion-choice-row" role="group" aria-label="Choose public discount percentage">
-            {[20, 50].map((percent) => (
+            {[10, 20, 30, 50].map((percent) => (
               <button key={percent} type="button" className={promotionPercent === percent ? 'promotion-choice selected' : 'promotion-choice'} onClick={() => setPromotionPercent(percent)}>{percent}% OFF</button>
             ))}
           </div>
