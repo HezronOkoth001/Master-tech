@@ -5211,3 +5211,134 @@ body { color: #f5f8fc; background: var(--mt-black); }
     width: 180px;
   }
 }
+
+
+/* Homepage reviews: coordinated blue and African-inspired treatment */
+.home-reviews-area {
+  position: relative;
+  overflow: hidden;
+  padding: 28px 0 0;
+  background:
+    radial-gradient(ellipse at 8% 10%, rgba(56, 145, 207, .16), transparent 38%),
+    radial-gradient(ellipse at 92% 80%, rgba(19, 139, 126, .14), transparent 35%),
+    linear-gradient(135deg, #092b49 0%, #0b3c5d 52%, #0a4850 100%);
+}
+.home-reviews-area::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 40px;
+  right: -95px;
+  width: 300px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(128, 194, 228, .15);
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 8deg, rgba(128, 194, 228, .08) 0deg 2deg, transparent 2deg 16deg);
+  pointer-events: none;
+}
+.home-reviews-area > * {
+  position: relative;
+  z-index: 1;
+}
+.home-reviews-area .reviews-section {
+  background: transparent;
+}
+.home-reviews-area .reviews-section .section-heading h2,
+.home-reviews-area .home-review-section .section-heading h2 {
+  color: #f3f8fc;
+}
+.home-reviews-area .reviews-section .section-heading h2 span,
+.home-reviews-area .home-review-section .section-heading h2 span {
+  color: #83c8f3;
+}
+.home-reviews-area .reviews-section .section-heading > p,
+.home-reviews-area .home-review-section .section-heading > p {
+  color: #c0d4e3;
+}
+.home-reviews-area .reviews-section .section-label,
+.home-reviews-area .home-review-section .section-label {
+  color: #f0c66a;
+}
+.home-reviews-area .reviews-empty-state {
+  border-color: rgba(161, 203, 229, .32);
+  background: rgba(4, 27, 47, .48);
+}
+.home-reviews-area .reviews-empty-state strong {
+  color: #f2f7fb;
+}
+.home-reviews-area .reviews-empty-state p {
+  color: #c1d4e2;
+}
+.home-reviews-area .reviews-empty-state > span,
+.home-reviews-area .approved-review-stars {
+  color: #f0c66a;
+}
+.home-reviews-area .approved-review-card {
+  border-color: rgba(147, 194, 225, .25);
+  background: linear-gradient(145deg, rgba(12, 57, 91, .96), rgba(12, 79, 83, .9));
+  box-shadow: 0 12px 28px rgba(0, 15, 30, .18);
+}
+.home-reviews-area .approved-review-card p {
+  color: #e0edf6;
+}
+.home-reviews-area .approved-review-card strong {
+  color: #fff;
+}
+.home-reviews-area .approved-review-card small {
+  color: #b1cadd;
+}
+.home-reviews-area .reviews-showcase-action .text-link {
+  color: #9ed3f5;
+}
+.home-reviews-area .home-review-section {
+  padding-top: 38px;
+  padding-bottom: 58px;
+  background: transparent;
+}
+.home-reviews-area .home-review-section .home-public-review-form {
+  border-color: rgba(148, 194, 224, .28);
+  background: rgba(5, 30, 51, .72);
+  box-shadow: 0 18px 42px rgba(0, 13, 28, .2);
+  backdrop-filter: blur(8px);
+}
+.home-reviews-area .home-review-section .public-review-grid label {
+  color: #e4eef7;
+}
+.home-reviews-area .home-review-section .public-review-grid input,
+.home-reviews-area .home-review-section .public-review-grid select,
+.home-reviews-area .home-review-section .public-review-grid textarea {
+  border-color: #315a78;
+  background: #f7fbff;
+  color: #142b3e;
+}
+.home-reviews-area .home-review-section .public-review-grid input:focus,
+.home-reviews-area .home-review-section .public-review-grid select:focus,
+.home-reviews-area .home-review-section .public-review-grid textarea:focus {
+  border-color: #68b5ed;
+  box-shadow: 0 0 0 3px rgba(104, 181, 237, .18);
+}
+.home-reviews-area .home-review-section .public-review-actions > span {
+  color: #c0d2df;
+}
+.home-reviews-area .home-review-section .public-review-actions .button-primary {
+  background: linear-gradient(110deg, #1767a6, #16817e);
+  color: #fff;
+}
+.home-reviews-area .home-review-section .public-review-feedback {
+  background: rgba(28, 105, 75, .28);
+  color: #a9e3c0;
+}
+@media (max-width: 680px) {
+  .home-reviews-area {
+    padding-top: 12px;
+  }
+  .home-reviews-area .home-review-section {
+    padding-top: 28px;
+    padding-bottom: 42px;
+  }
+  .home-reviews-area::after {
+    top: 100px;
+    right: -150px;
+    width: 240px;
+  }
+}
