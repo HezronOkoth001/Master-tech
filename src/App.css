@@ -5068,3 +5068,146 @@ body { color: #f5f8fc; background: var(--mt-black); }
     margin-bottom: 18px;
   }
 }
+
+
+/* Blue and African-inspired identity for the dedicated reviews page */
+.nav-links .nav-review-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border-color: rgba(75, 151, 218, .62);
+  color: #b9dcff;
+  background: linear-gradient(115deg, rgba(18, 73, 126, .28), rgba(16, 105, 112, .18));
+}
+.nav-links .nav-review-link:hover {
+  background: linear-gradient(115deg, rgba(24, 91, 153, .42), rgba(20, 125, 119, .28));
+}
+.nav-review-star {
+  color: #f2c45b;
+  font-size: 15px;
+  line-height: 1;
+  text-shadow: 0 0 12px rgba(242, 196, 91, .32);
+}
+.reviews-page-intro {
+  position: relative;
+  isolation: isolate;
+  padding-bottom: 38px;
+}
+.reviews-page-intro::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 38px;
+  right: 2%;
+  width: min(260px, 28vw);
+  aspect-ratio: 1;
+  border: 1px solid rgba(87, 164, 222, .18);
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 12deg, rgba(70, 149, 202, .10) 0deg 2deg, transparent 2deg 15deg);
+  opacity: .65;
+  pointer-events: none;
+}
+.reviews-page-intro .section-label {
+  color: #83bce9;
+}
+.reviews-page-intro h1 span {
+  color: #75b9ef;
+}
+.reviews-page-intro > p {
+  color: #c0cedb;
+}
+.reviews-page-wrapper .reviews-section {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(102, 169, 215, .22);
+  background:
+    linear-gradient(135deg, rgba(11, 49, 82, .97), rgba(10, 70, 82, .96)),
+    #0b3557;
+  box-shadow: 0 24px 60px rgba(0, 12, 26, .2);
+}
+.reviews-page-wrapper .reviews-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #111827 0 18%, #fff 18% 20%, #c62835 20% 39%, #fff 39% 41%, #16834b 41% 62%, #e6b94f 62% 100%);
+}
+.reviews-page-wrapper .reviews-section .section-heading h2 {
+  color: #f5f8fc;
+}
+.reviews-page-wrapper .reviews-section .section-heading h2 span {
+  color: #83c4f5;
+}
+.reviews-page-wrapper .reviews-section .section-heading > p {
+  color: #c0d1df;
+}
+.reviews-page-wrapper .reviews-empty-state {
+  border-color: rgba(151, 195, 226, .24);
+  background: rgba(5, 30, 52, .48);
+  color: #eaf4fc;
+}
+.reviews-page-wrapper .reviews-empty-state strong,
+.reviews-page-wrapper .reviews-empty-state p {
+  color: #d1e0ec;
+}
+.reviews-page-wrapper .reviews-empty-state span,
+.reviews-page-wrapper .approved-review-stars {
+  color: #f2c45b;
+}
+.reviews-page-wrapper .approved-review-card {
+  border-color: rgba(151, 195, 226, .24);
+  background: linear-gradient(145deg, rgba(13, 54, 88, .96), rgba(12, 78, 86, .88));
+  box-shadow: 0 12px 28px rgba(0, 15, 30, .14);
+}
+.reviews-page-wrapper .approved-review-card p {
+  color: #e0ebf4;
+}
+.reviews-page-wrapper .approved-review-card strong {
+  color: #fff;
+}
+.reviews-page-wrapper .approved-review-card small {
+  color: #a9c4d9;
+}
+.reviews-page-wrapper .public-review-form {
+  border-color: rgba(151, 195, 226, .3);
+  background: rgba(5, 29, 51, .72);
+  box-shadow: 0 18px 42px rgba(0, 13, 28, .22);
+}
+.reviews-page-wrapper .public-review-grid label {
+  color: #e4eef7;
+}
+.reviews-page-wrapper .public-review-grid input,
+.reviews-page-wrapper .public-review-grid select,
+.reviews-page-wrapper .public-review-grid textarea {
+  border-color: #315a78;
+  background: #f7fbff;
+  color: #142b3e;
+}
+.reviews-page-wrapper .public-review-grid input:focus,
+.reviews-page-wrapper .public-review-grid select:focus,
+.reviews-page-wrapper .public-review-grid textarea:focus {
+  border-color: #68b5ed;
+  box-shadow: 0 0 0 3px rgba(104, 181, 237, .18);
+}
+.reviews-page-wrapper .public-review-actions > span {
+  color: #b8ccdc;
+}
+.reviews-page-wrapper .public-review-feedback {
+  color: #a9e3c0;
+}
+.reviews-page-wrapper .public-review-actions .button-primary {
+  background: linear-gradient(110deg, #1767a6, #16817e);
+  color: #fff;
+}
+.reviews-page-wrapper .public-review-actions .button-primary:hover {
+  filter: brightness(1.1);
+}
+@media (max-width: 600px) {
+  .reviews-page-intro::before {
+    top: 20px;
+    right: -8%;
+    width: 180px;
+  }
+}
