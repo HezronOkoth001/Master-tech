@@ -175,6 +175,19 @@ function AdminWorkspaceSections({ section, records = [], clients = [], pricing =
   const [promotionEndsAt, setPromotionEndsAt] = useState(() => savedPromotion?.endsAt || '')
   const [promotionAppliesTo, setPromotionAppliesTo] = useState(() => savedPromotion?.appliesTo || 'Website development services')
   const [promotionEnabled, setPromotionEnabled] = useState(() => savedPromotion?.status === 'Active')
+  const packagePromotionOptions = [
+    { key: 'personal-website', name: 'Personal Website' },
+    { key: 'blog-website', name: 'Blog Website' },
+    { key: 'business-website', name: 'Business Website' },
+    { key: 'ngo-website', name: 'NGO Website' },
+    { key: 'corporate-website', name: 'Corporate Website' },
+    { key: 'ecommerce-website', name: 'E-commerce Website' },
+  ]
+  const [selectedPackageKey, setSelectedPackageKey] = useState('ngo-website')
+  const selectedPackagePromotion = records.find((record) => record.recordType === 'package-promotion' && record.packageKey === selectedPackageKey)
+  const [packagePromotionPercent, setPackagePromotionPercent] = useState(20)
+  const [packagePromotionEndsAt, setPackagePromotionEndsAt] = useState('')
+  const [packagePromotionEnabled, setPackagePromotionEnabled] = useState(false)
 
   useEffect(() => {
     if (section !== 'Pricing') return
@@ -186,11 +199,18 @@ function AdminWorkspaceSections({ section, records = [], clients = [], pricing =
     setPromotionEnabled(currentPromotion?.status === 'Active')
   }, [section, records])
 
-  const catalogueRecords = records.filter((record) => record.recordType !== 'promotion')
+  useEffect(() => {
+    const current = records.find((record) => record.recordType === 'package-promotion' && record.packageKey === selectedPackageKey)
+    setPackagePromotionPercent([10, 20, 30, 50].includes(Number(current?.discountPercent)) ? Number(current.discountPercent) : 20)
+    setPackagePromotionEndsAt(current?.endsAt || '')
+    setPackagePromotionEnabled(current?.status === 'Active')
+  }, [records, selectedPackageKey])
+
+  const catalogueRecords = records.filter((record) => !['promotion', 'package-promotion'].includes(record.recordType))
   const visibleRecords = useMemo(() => {
     const term = search.trim().toLowerCase()
-    if (!term) return records.filter((record) => record.recordType !== 'promotion')
-    return records.filter((record) => record.recordType !== 'promotion' && Object.values(record).some((value) => String(value ?? '').toLowerCase().includes(term)))
+    if (!term) return records.filter((record) => !['promotion', 'package-promotion'].includes(record.recordType))
+    return records.filter((record) => !['promotion', 'package-promotion'].includes(record.recordType) && Object.values(record).some((value) => String(value ?? '').toLowerCase().includes(term)))
   }, [records, search])
 
   const subtotal = lineItems.reduce((sum, item) => sum + Math.max(0, Number(item.quantity) || 0) * Math.max(0, Number(item.unitPrice) || 0), 0)
@@ -220,6 +240,34 @@ function AdminWorkspaceSections({ section, records = [], clients = [], pricing =
       setMessage(promotionEnabled ? `${promotionPercent}% public promotion saved and activated.` : 'Public promotion saved as inactive.')
     } catch (error) {
       setMessage(error.message || 'Could not save the public promotion.')
+    }
+  }
+
+  
+  async function savePackagePromotion() {
+    const selectedPackage = packagePromotionOptions.find((item) => item.key === selectedPackageKey)
+    const promotionRecord = {
+      id: `package-promotion-${selectedPackageKey}`,
+      recordType: 'package-promotion',
+      name: `${selectedPackage?.name || 'Website'} offer`,
+      category: 'Package promotion',
+      packageKey: selectedPackageKey,
+      packageName: selectedPackage?.name || 'Website',
+      discountPercent: packagePromotionPercent,
+      endsAt: packagePromotionEndsAt,
+      status: packagePromotionEnabled ? 'Active' : 'Inactive',
+    }
+    const otherRecords = records.filter((record) =>
+      record.recordType !== 'promotion' &&
+      !(record.recordType === 'package-promotion' && record.packageKey === selectedPackageKey)
+    )
+    try {
+      await onChange([...otherRecords, ...(savedPromotion ? [savedPromotion] : []), promotionRecord])
+      setMessage(packagePromotionEnabled
+        ? `${packagePromotionPercent}% offer activated for ${selectedPackage?.name}.`
+        : `Offer for ${selectedPackage?.name} saved as inactive.`)
+    } catch (error) {
+      setMessage(error.message || 'Could not save this package offer.')
     }
   }
 
@@ -565,6 +613,34 @@ function AdminWorkspaceSections({ section, records = [], clients = [], pricing =
           <label className="promotion-toggle"><input type="checkbox" checked={promotionEnabled} onChange={(event) => setPromotionEnabled(event.target.checked)} /> Show this promotion on the public homepage</label>
           <p className="message-composer-help">The homepage will hide the offer after its end date. Apply the discount manually when preparing an eligible client's quotation.</p>
           <div className="project-form-actions"><button className="admin-view-site" type="button" onClick={savePublicPromotion}>Save promotion</button></div>
+        </section>
+      )}
+
+      {section === 'Pricing' && (
+        <section className="admin-panel public-promotion-editor package-promotion-editor">
+          <div className="public-promotion-heading">
+            <div><h3>Website package offers</h3><p>Run a separate discount for each website package. Choose a package, select 10%, 20%, 30% or 50% off, then activate or switch the offer off. Only the selected package card will display the discount.</p></div>
+            <span className={packagePromotionEnabled ? 'promotion-status is-active' : 'promotion-status'}>{packagePromotionEnabled ? 'PACKAGE OFFER ACTIVE' : 'PACKAGE OFFER INACTIVE'}</span>
+          </div>
+          <div className="workspace-form-grid">
+            <label className="workspace-field">Website package
+              <select value={selectedPackageKey} onChange={(event) => setSelectedPackageKey(event.target.value)}>
+                {packagePromotionOptions.map((item) => <option key={item.key} value={item.key}>{item.name}</option>)}
+              </select>
+            </label>
+            <label className="workspace-field">Offer end date (optional)
+              <input type="date" value={packagePromotionEndsAt} onChange={(event) => setPackagePromotionEndsAt(event.target.value)} />
+            </label>
+          </div>
+          <span className="promotion-control-label">Choose discount percentage</span>
+          <div className="promotion-choice-row" role="group" aria-label="Choose package discount percentage">
+            {[10, 20, 30, 50].map((percent) => (
+              <button key={percent} type="button" className={packagePromotionPercent === percent ? 'promotion-choice selected' : 'promotion-choice'} onClick={() => setPackagePromotionPercent(percent)}>{percent}% OFF</button>
+            ))}
+          </div>
+          <label className="promotion-toggle"><input type="checkbox" checked={packagePromotionEnabled} onChange={(event) => setPackagePromotionEnabled(event.target.checked)} /> Activate discount on this package's public pricing card</label>
+          <p className="message-composer-help">The website will show the original price crossed out, the reduced price and a discount ribbon on this package card. Expired offers are automatically hidden. Your normal package price remains unchanged.</p>
+          <div className="project-form-actions"><button className="admin-view-site" type="button" onClick={savePackagePromotion}>Save package offer</button></div>
         </section>
       )}
 
