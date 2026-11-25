@@ -41,7 +41,7 @@ const services = [
   },
 ]
 
-function PublicReviewForm() {
+function PublicReviewForm({ variant = 'page' }) {
   const [form, setForm] = useState({ customer: '', rating: '5', project: '', review: '' })
   const [submitting, setSubmitting] = useState(false)
   const [feedback, setFeedback] = useState('')
@@ -68,15 +68,15 @@ function PublicReviewForm() {
   }
 
   return (
-    <section className="reviews-section section-padding" id="customer-reviews">
+    <section className={`reviews-section section-padding review-form-section ${variant === 'home' ? 'home-review-section' : 'dedicated-review-section'}`} id="customer-reviews">
       <div className="section-heading">
         <div>
-          <span className="section-label">CLIENT FEEDBACK</span>
-          <h2>Worked with us? <span>Share your experience.</span></h2>
+          <span className="section-label">{variant === 'home' ? 'A NOTE FROM YOU' : 'CLIENT FEEDBACK'}</span>
+          <h2>{variant === 'home' ? <>Been working with us? <span>Leave a review.</span></> : <>Worked with us? <span>Share your experience.</span></>}</h2>
         </div>
-        <p>Your feedback helps others understand what it is like to work with Masters Tech.</p>
+        <p>{variant === 'home' ? 'A few words about your experience can help another business take its next step.' : 'Your feedback helps others understand what it is like to work with Masters Tech.'}</p>
       </div>
-      <form className="public-review-form" id="write-review" onSubmit={submitReview}>
+      <form className={`public-review-form ${variant === 'home' ? 'home-public-review-form' : 'page-public-review-form'}`} id="write-review" onSubmit={submitReview}>
         <div className="public-review-grid">
           <label>
             Your name *
@@ -844,6 +844,7 @@ function App() {
           </div>
         </section>
         <PublicReviewsShowcase />
+        <PublicReviewForm variant="home" />
       </>
     ),
     '/about': (
@@ -1123,11 +1124,14 @@ function App() {
           <h1>What customers <span>are saying.</span></h1>
           <p>Read experiences from people who have worked with Masters Tech, or share your own experience.</p>
           <div className="reviews-page-actions">
-            <a className="button-secondary" href="#customer-reviews">See customer reviews <span>↓</span></a>
+            <a className="button-secondary" href="#customer-feedback">See customer reviews <span>↓</span></a>
             <a className="button-primary" href="#write-review">Write a review <span>↗</span></a>
           </div>
         </section>
-        <PublicReviewForm />
+        <div className="reviews-page-wrapper">
+          <PublicReviewsShowcase />
+          <PublicReviewForm variant="page" />
+        </div>
       </>
     ),
   }
