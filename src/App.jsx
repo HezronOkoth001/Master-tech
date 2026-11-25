@@ -748,7 +748,7 @@ function App() {
               <span><i>✓</i> Built to help customers take action</span>
             </div>
             <div className="hero-actions">
-              <a className="button-primary" href={whatsappLink} target="_blank" rel="noreferrer">
+              <a className="button-primary" href="/quotation">
                 Get a quotation <span>↗</span>
               </a>
               <a className="button-secondary" href="/sample-sites">
