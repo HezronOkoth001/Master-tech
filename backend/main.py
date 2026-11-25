@@ -5,6 +5,7 @@ from pydantic import BaseModel, Field
 from datetime import datetime, timezone
 import os
 from sqlalchemy.orm import Session
+from sqlalchemy import text
 
 from database import Base, engine, SessionLocal
 import models
@@ -63,8 +64,16 @@ def home():
 
 
 @app.get("/health")
-def health_check():
-    return {"status": "healthy"}
+def health_check(db: Session = Depends(get_db)):
+    """Check both API availability and the PostgreSQL database connection."""
+    try:
+        db.execute(text("SELECT 1"))
+        return {"status": "healthy", "database": "connected"}
+    except Exception:
+        raise HTTPException(
+            status_code=503,
+            detail={"status": "unhealthy", "database": "unavailable"},
+        )
 
 
 def project_response(project):
