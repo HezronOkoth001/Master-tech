@@ -148,12 +148,12 @@ function SiteHeader({ whatsappLink }) {
         <span className="brand-mark">M</span><span><strong>MASTERS</strong><small>TECH</small></span>
       </a>
       <nav className="nav-links" aria-label="Main navigation">
-        <a href="/">Home</a>
-        <a href="/about">About</a>
-        <a href="/services">Services</a>
-        <a href="/sample-sites">Sample Sites</a>
-        <a className="nav-review-link" href="/reviews">Reviews</a>
-        <a href="/contact">Contact</a>
+        <a href="/"><span className="nav-link-icon" aria-hidden="true">🏠</span><span>Home</span></a>
+        <a href="/about"><span className="nav-link-icon" aria-hidden="true">👋</span><span>About</span></a>
+        <a href="/services"><span className="nav-link-icon" aria-hidden="true">🛠️</span><span>Services</span></a>
+        <a href="/sample-sites"><span className="nav-link-icon" aria-hidden="true">🖥️</span><span>Samples</span></a>
+        <a className="nav-review-link" href="/reviews"><span className="nav-link-icon" aria-hidden="true">⭐</span><span>Reviews</span></a>
+        <a href="/contact"><span className="nav-link-icon" aria-hidden="true">📩</span><span>Contact</span></a>
       </nav>
       <a className="nav-cta" href={whatsappLink} target="_blank" rel="noreferrer">Let's Talk <span>↗</span></a>
     </header>
@@ -341,6 +341,19 @@ function HomeServicesSection({ whatsappLink }) {
     },
     {
       number: '03',
+      tag: 'ASSESS · PROTECT · MAINTAIN',
+      title: 'Keep your website secure, healthy and up to date.',
+      description: 'A website needs attention after launch too. We can review its security, check for common weaknesses, update its software and help keep important parts working as expected.',
+      points: ['Website security and basic vulnerability checks', 'Software, plugin and content updates', 'Backups, performance and ongoing maintenance'],
+      visual: 'home-service-visual-security',
+      visualLabel: 'WEBSITE CARE',
+      visualTitle: 'Stay aware. Stay up to date.',
+      visualNote: 'Regular checks and maintenance',
+      action: 'Ask about website care',
+      href: whatsappLink,
+    },
+    {
+      number: '04',
       tag: 'DESIGNED FOR REAL PEOPLE',
       title: 'A smooth experience on every screen.',
       description: 'Thoughtful layouts, clear navigation and practical details help visitors move around your website with confidence.',
@@ -364,9 +377,9 @@ function HomeServicesSection({ whatsappLink }) {
         <div className="home-services-heading">
           <div>
             <span className="section-label">WHAT WE DO</span>
-            <h2>Good design gets attention. <span>A useful website earns trust.</span></h2>
+            <h2>Build it well. <span>Keep it working well.</span></h2>
           </div>
-          <p>From your first online presence to being easier to find on Google, we focus on the details that help your business connect with customers.</p>
+          <p>From building your website and helping customers find you, to checking its security and keeping it maintained, we support your online presence beyond launch.</p>
         </div>
         <div className="home-services-grid">
           {highlights.map((item) => (
@@ -397,7 +410,7 @@ function HomeServicesSection({ whatsappLink }) {
           ))}
         </div>
         <div className="home-services-bottomline">
-          <span>YOUR IDEA, YOUR BUSINESS, BUILT WITH CARE.</span>
+          <span>BUILD WITH CARE. REVIEW REGULARLY. KEEP IMPROVING.</span>
           <a href={whatsappLink} target="_blank" rel="noreferrer">Have something in mind? Let's talk <b>↗</b></a>
         </div>
         <div className="home-services-frame-corner" aria-hidden="true">MT<span>®</span></div>
