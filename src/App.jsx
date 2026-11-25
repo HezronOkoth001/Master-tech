@@ -57,23 +57,23 @@ function EastAfricaReachMap() {
         <svg viewBox="0 0 900 690" role="img" aria-label="Map of East Africa highlighting Ethiopia, Kenya, Rwanda, Tanzania and Uganda">
           <defs>
             <linearGradient id="eastAfricaLand" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#f7f0dc" />
-              <stop offset="100%" stopColor="#e9dfc4" />
+              <stop offset="0%" stopColor="#263a2b" />
+              <stop offset="100%" stopColor="#1a2b20" />
             </linearGradient>
           </defs>
-          <rect width="900" height="690" fill="#e8eee8" />
+          <rect width="900" height="690" fill="#111a14" />
           {features.map((feature, index) => {
             const name = normalizeCountry(feature.properties?.ADMIN || feature.properties?.name)
             const geometry = feature.geometry
             const polygons = geometry?.type === 'Polygon' ? [geometry.coordinates] : geometry?.type === 'MultiPolygon' ? geometry.coordinates : []
             return polygons.map((polygon, polygonIndex) => (
-              <path key={`${index}-${polygonIndex}`} d={polygonPath(polygon)} fill={selected.includes(name) ? 'url(#eastAfricaLand)' : '#d7e0d7'} stroke="#8d9a8b" strokeWidth="1.8" />
+              <path key={`${index}-${polygonIndex}`} d={polygonPath(polygon)} fill={selected.includes(name) ? 'url(#eastAfricaLand)' : '#d7e0d7'} stroke="#6e805f" strokeWidth="1.8" />
             ))
           })}
           {labels.map((label) => (
             <g key={label.name} transform={`translate(${label.x} ${label.y})`}>
-              <rect x="-58" y="-18" width="116" height="36" rx="18" fill="#18251c" stroke="#d4af37" strokeWidth="1.5" />
-              <text textAnchor="middle" dominantBaseline="central" fill="#f5e8b9" fontSize="15" fontWeight="700" letterSpacing="1.2">{label.name}</text>
+              <rect x="-58" y="-18" width="116" height="36" rx="18" fill="#111710" stroke="#d4af37" strokeWidth="1.5" />
+              <text textAnchor="middle" dominantBaseline="central" fill="#e5c65c" fontSize="15" fontWeight="700" letterSpacing="1.2">{label.name}</text>
             </g>
           ))}
         </svg>
