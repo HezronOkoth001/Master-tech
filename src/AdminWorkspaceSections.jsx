@@ -236,7 +236,7 @@ function AdminWorkspaceSections({ section, records = [], clients = [], pricing =
       status: promotionEnabled ? 'Active' : 'Inactive',
     }
     try {
-      await onChange([...catalogueRecords, promotionRecord])
+      await onChange([...catalogueRecords, ...records.filter((record) => record.recordType === 'package-promotion'), promotionRecord])
       setMessage(promotionEnabled ? `${promotionPercent}% public promotion saved and activated.` : 'Public promotion saved as inactive.')
     } catch (error) {
       setMessage(error.message || 'Could not save the public promotion.')
