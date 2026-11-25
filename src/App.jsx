@@ -340,6 +340,75 @@ function QuotationRequestPage() {
   )
 }
 
+
+function PricingPage() {
+  const websitePackages = [
+    { name: 'Personal Website', price: '18,000', description: 'A professional online home for your personal brand, portfolio, skills or services.', features: ['Personal introduction and profile', 'Portfolio or work showcase', 'Contact and social links', 'Mobile-friendly design', 'Basic search-friendly setup'] },
+    { name: 'Blog Website', price: '20,000', description: 'A place to publish articles, share knowledge and build an audience around your ideas.', features: ['Blog homepage and article pages', 'Categories and organised content', 'Easy-to-read article layout', 'Mobile-friendly design', 'Basic search-friendly setup'] },
+    { name: 'Business Website', price: '30,000', description: 'A clear, professional website that explains your services and helps customers contact you.', features: ['Home, About, Services and Contact pages', 'WhatsApp and enquiry options', 'Business information and location', 'Responsive design', 'Basic on-page SEO'] },
+    { name: 'NGO Website', price: '35,000', description: 'A website to explain your mission, share programmes and make it easier for people to connect with your organisation.', features: ['About and mission sections', 'Programmes and projects pages', 'News, updates or events section', 'Contact and enquiry options', 'Responsive design and basic SEO'] },
+    { name: 'Corporate Website', price: '40,000', description: 'A polished online presence for established organisations that need to present their work clearly.', features: ['Professional multi-page layout', 'Company profile and service sections', 'Team, projects or portfolio sections', 'Contact and enquiry options', 'Responsive design and basic SEO'] },
+    { name: 'E-commerce Website', price: '50,000', description: 'An online shop where customers can browse products and place orders. Payment and delivery requirements are scoped with you.', features: ['Product catalogue and categories', 'Shopping cart and order flow', 'Mobile-friendly shopping experience', 'Store management basics', 'Payment integration scoped to requirements'] },
+    { name: 'Government Website', price: 'Custom quotation', custom: true, description: 'Websites for public institutions are scoped around their content, accessibility, security, procurement and integration requirements.', features: ['Requirements and scope discussion', 'Institutional information architecture', 'Accessibility and content needs review', 'Security and integration requirements', 'Detailed project quotation'] },
+  ]
+  const additionalServices = [
+    { name: 'Google Business Profile Setup', price: 'KSh 5,000', detail: 'Set up or improve your business profile so customers can find key information on Google Search and Maps.' , cadence: 'One-time' },
+    { name: 'SEO Setup & Optimisation', price: 'KSh 8,000', detail: 'Improve important website pages, titles, descriptions, structure and search engine basics.', cadence: 'One-time' },
+    { name: 'Monthly SEO Services', price: 'KSh 10,000', detail: 'Ongoing improvements to website content, search visibility and performance. The monthly work is agreed in advance.', cadence: 'Per month' },
+    { name: 'Website Maintenance', price: 'KSh 4,000', detail: 'Routine updates, checks, small content changes and troubleshooting for an existing website.', cadence: 'Per month' },
+    { name: 'Website Redesign', price: 'KSh 18,000', detail: 'Refresh an existing website’s layout, appearance and user experience. Larger rebuilds are quoted according to scope.', cadence: 'Starting from' },
+    { name: 'Website Assessment', price: 'KSh 5,000', detail: 'A practical review to identify common website issues, including broken links, usability, mobile display, performance, SEO basics and visible security concerns.', cadence: 'One-time' },
+  ]
+  return (
+    <div className="pricing-page">
+      <PageIntro label="MASTERS TECH · WEBSITE PACKAGES" title={<>Clear starting prices. <span>Built around your needs.</span></>} description="Explore website packages and additional digital services. These prices give you a starting point; the final quotation depends on the pages, content and features your project requires." />
+      <section className="pricing-packages-section section-padding">
+        <div className="pricing-section-heading">
+          <span className="section-label">WEBSITE DESIGN & DEVELOPMENT</span>
+          <h2>Choose the website <span>that fits your idea.</span></h2>
+          <p>Whether you are building a personal brand, growing a business or setting up an online shop, we can plan a website around what you need it to do.</p>
+        </div>
+        <div className="pricing-package-grid">
+          {websitePackages.map((item, index) => (
+            <article className={`pricing-package-card ${item.custom ? 'pricing-package-custom' : ''} ${index === 2 ? 'pricing-package-featured' : ''}`} key={item.name}>
+              <div className="pricing-card-topline"><span>0{index + 1}</span><span>{item.custom ? 'SCOPED PROJECT' : 'WEBSITE PACKAGE'}</span></div>
+              <h3>{item.name}</h3>
+              <p className="pricing-card-description">{item.description}</p>
+              <div className="pricing-card-price">{item.custom ? <strong>{item.price}</strong> : <><small>Starting from</small><strong><span>KSh</span> {item.price}</strong></>}</div>
+              <span className="pricing-includes-label">PACKAGE STARTING SCOPE</span>
+              <ul>{item.features.map((feature) => <li key={feature}><span>✓</span>{feature}</li>)}</ul>
+              <a className="pricing-card-cta" href={`/quotation?service=${encodeURIComponent(item.name)}`}>Request a quotation <span>↗</span></a>
+            </article>
+          ))}
+        </div>
+        <p className="pricing-disclaimer">All prices are in Kenyan shillings (KES) and are starting prices, not fixed quotes for every project. Domain registration, hosting, paid tools, premium licences, content creation, photography, advanced integrations and other third-party costs are discussed separately where applicable. Government and complex institutional projects are quoted after reviewing requirements.</p>
+      </section>
+      <section className="pricing-services-section section-padding">
+        <div className="pricing-section-heading">
+          <span className="section-label">MORE WAYS WE CAN HELP</span>
+          <h2>Additional services & <span>ongoing support.</span></h2>
+          <p>You can request these services on their own or combine them with a new website project.</p>
+        </div>
+        <div className="pricing-services-list">
+          {additionalServices.map((item, index) => (
+            <article className="pricing-service-row" key={item.name}>
+              <span className="pricing-service-number">0{index + 1}</span>
+              <div className="pricing-service-copy"><h3>{item.name}</h3><p>{item.detail}</p></div>
+              <div className="pricing-service-cost"><strong>{item.price}</strong><small>{item.cadence}</small></div>
+              <a href={`/quotation?service=${encodeURIComponent(item.name)}`} aria-label={`Request a quotation for ${item.name}`}>↗</a>
+            </article>
+          ))}
+        </div>
+        <div className="pricing-assessment-note"><span>⌕</span><div><strong>What does a website assessment cover?</strong><p>It is a practical first review to help spot issues that may affect how a website works, looks, performs or appears in search. It is not a full penetration test or a guarantee that every security vulnerability will be found. Extensive security testing and remediation are scoped and priced separately.</p></div></div>
+      </section>
+      <section className="pricing-cta-section section-padding">
+        <div><span className="section-label">HAVE A DIFFERENT PROJECT IN MIND?</span><h2>Let's work out <span>what your project needs.</span></h2><p>Tell us about your idea and we will discuss the right scope before preparing a quotation.</p></div>
+        <a className="button-primary" href="/quotation">Get a quotation <span>↗</span></a>
+      </section>
+    </div>
+  )
+}
+
 function SiteHeader({ whatsappLink }) {
   return (
     <header className="navbar">
@@ -350,6 +419,7 @@ function SiteHeader({ whatsappLink }) {
         <a href="/"><span className="nav-link-icon" aria-hidden="true">🏠</span><span>Home</span></a>
         <a href="/about"><span className="nav-link-icon" aria-hidden="true">👋</span><span>About</span></a>
         <a href="/services"><span className="nav-link-icon" aria-hidden="true">🛠️</span><span>Services</span></a>
+        <a href="/pricing"><span className="nav-link-icon" aria-hidden="true">🏷️</span><span>Pricing</span></a>
         <a href="/sample-sites"><span className="nav-link-icon" aria-hidden="true">🖥️</span><span>Samples</span></a>
         <a className="nav-review-link" href="/reviews"><span className="nav-review-star" aria-hidden="true">★</span><span>Reviews</span></a>
         <a href="/contact"><span className="nav-link-icon" aria-hidden="true">📩</span><span>Contact</span></a>
@@ -727,6 +797,7 @@ function App() {
       '/': ['Masters Tech | Website Development & SEO', 'Masters Tech helps businesses build professional websites and grow online visibility through SEO and Google Maps.'],
       '/about': ['About Hezron Okoth | Masters Tech Website Development & SEO', 'Meet Hezron Okoth, the person behind Masters Tech. Learn about professional website development, SEO and Google visibility services for businesses.'],
       '/services': ['Website Design, Development & SEO Services | Masters Tech', 'Explore Masters Tech website design and development, search engine optimisation, and Google visibility services for businesses.'],
+      '/pricing': ['Website Packages & Pricing in Kenya | Masters Tech', 'Explore Masters Tech website design packages, SEO, Google Business Profile, website maintenance, redesign and assessment prices in Kenya.'],
       '/sample-sites': ['Website Design Samples & UI Ideas | Masters Tech', 'Explore sample website designs for business websites, online shops, restaurants, education, property listings and booking platforms. Choose a style for your next website.'],
       '/contact': ['Contact Masters Tech | Request a Website or SEO Service', 'Contact Masters Tech to discuss a business website, SEO, Google Maps visibility or a custom web project.'],
       '/quotation': ['Request a Quotation | Masters Tech', 'Tell Masters Tech about your website, SEO or digital project and request a quotation.'],
@@ -778,6 +849,7 @@ function App() {
   if (pathname === '/admin') return <AdminDashboard />
 
   const pageContent = {
+    '/pricing': <PricingPage />,
     '/quotation': <QuotationRequestPage />, 
     '/': (
       <>
