@@ -409,9 +409,13 @@ function HomeServicesSection({ whatsappLink }) {
             </article>
           ))}
         </div>
-        <div className="home-services-bottomline">
-          <span>BUILD WITH CARE. REVIEW REGULARLY. KEEP IMPROVING.</span>
-          <a href={whatsappLink} target="_blank" rel="noreferrer">Have something in mind? Let's talk <b>↗</b></a>
+        <div className="home-services-quotation">
+          <div className="home-services-quotation-copy">
+            <span>HAVE A PROJECT IN MIND?</span>
+            <h3>Get a quotation for your project.</h3>
+            <p>Tell us what you need, and let's discuss a solution that works for your business and budget.</p>
+          </div>
+          <a href={whatsappLink} target="_blank" rel="noreferrer">Get a quotation <b>↗</b></a>
         </div>
         <div className="home-services-frame-corner" aria-hidden="true">MT<span>®</span></div>
       </div>
