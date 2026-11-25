@@ -906,15 +906,62 @@ function App() {
               <div className="about-map-card-heading">
                 <span className="about-map-kicker">OUR REGION</span>
                 <h3>East Africa</h3>
-                <p>Kenya and the neighbouring region</p>
+                <p>Kenya, Uganda and Tanzania</p>
               </div>
-              <iframe
-                title="Map of East Africa"
-                src="https://maps.google.com/maps?q=East%20Africa&z=4&output=embed"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                allowFullScreen
-              />
+              <div className="east-africa-illustration">
+                <svg viewBox="0 0 640 390" role="img" aria-labelledby="east-africa-title east-africa-desc">
+                  <title id="east-africa-title">Illustrated map of East Africa</title>
+                  <desc id="east-africa-desc">A stylised map highlighting Uganda, Kenya and Tanzania around Lake Victoria.</desc>
+                  <defs>
+                    <pattern id="east-map-dots" width="18" height="18" patternUnits="userSpaceOnUse">
+                      <circle cx="2" cy="2" r="1" fill="#9a9c7d" opacity=".22" />
+                    </pattern>
+                    <filter id="east-map-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feDropShadow dx="0" dy="8" stdDeviation="7" floodColor="#263b2b" floodOpacity=".13" />
+                    </filter>
+                  </defs>
+                  <rect width="640" height="390" rx="12" fill="#f2f0e5" />
+                  <rect width="640" height="390" rx="12" fill="url(#east-map-dots)" />
+                  <g fill="#d8d8c8" stroke="#aeb4a2" strokeWidth="2" strokeLinejoin="round" opacity=".78">
+                    <path d="M105 95 165 58 220 72 239 115 222 161 184 187 132 174 102 139Z" />
+                    <path d="M482 58 548 82 568 134 542 184 500 190 478 145Z" />
+                    <path d="M105 255 157 222 211 239 224 292 196 340 142 350 100 310Z" />
+                    <path d="M486 245 535 218 570 250 557 307 512 338 477 301Z" />
+                  </g>
+                  <g filter="url(#east-map-shadow)" stroke="#fffaf0" strokeWidth="5" strokeLinejoin="round">
+                    <path d="M224 88 282 70 323 93 337 133 320 174 290 205 247 205 218 177 205 132Z" fill="#c96f4a" />
+                    <path d="M323 91 397 60 467 86 497 132 482 187 456 228 410 247 365 220 337 177 337 133Z" fill="#d6ad43" />
+                    <path d="M247 205 290 205 320 174 337 177 365 220 410 247 456 228 466 279 438 331 389 359 323 348 270 317 229 270Z" fill="#788c68" />
+                  </g>
+                  <path d="M290 182 C305 165 338 165 359 181 C378 195 377 219 356 231 C334 244 302 230 289 211 C283 201 284 191 290 182Z" fill="#8db6b0" stroke="#fffaf0" strokeWidth="4" />
+                  <path d="M300 188 C318 178 344 180 359 193" fill="none" stroke="#d8ece4" strokeWidth="2" opacity=".8" />
+                  <g fontFamily="Arial, sans-serif" fontWeight="800" textAnchor="middle" fill="#263629">
+                    <text x="270" y="137" fontSize="18" letterSpacing="1.5">UGANDA</text>
+                    <text x="418" y="145" fontSize="19" letterSpacing="1.5">KENYA</text>
+                    <text x="350" y="292" fontSize="19" letterSpacing="1.5">TANZANIA</text>
+                  </g>
+                  <text x="326" y="207" textAnchor="middle" fontFamily="Arial, sans-serif" fontSize="9" fontWeight="700" fill="#f8fff8" letterSpacing=".5">LAKE</text>
+                  <text x="326" y="218" textAnchor="middle" fontFamily="Arial, sans-serif" fontSize="9" fontWeight="700" fill="#f8fff8" letterSpacing=".5">VICTORIA</text>
+                  <g transform="translate(431 180)">
+                    <circle r="12" fill="#fffaf0" stroke="#263629" strokeWidth="2" />
+                    <circle r="5" fill="#263629" />
+                    <path d="M0 13 0 25" stroke="#263629" strokeWidth="2.5" strokeLinecap="round" />
+                    <rect x="15" y="-10" width="82" height="22" rx="7" fill="#263629" />
+                    <text x="56" y="5" textAnchor="middle" fontFamily="Arial, sans-serif" fontSize="10" fontWeight="700" fill="#fffaf0">NAIROBI</text>
+                  </g>
+                  <g fill="#64745c" fontFamily="Arial, sans-serif" fontSize="10" fontWeight="700" letterSpacing="1.5">
+                    <text x="34" y="34">EAST AFRICA</text>
+                    <text x="480" y="365" opacity=".7">MASTERS TECH</text>
+                  </g>
+                  <path d="M34 48H150" stroke="#c5a64b" strokeWidth="3" strokeLinecap="round" />
+                </svg>
+                <div className="east-africa-map-legend">
+                  <span><i className="legend-uganda" /> Uganda</span>
+                  <span><i className="legend-kenya" /> Kenya</span>
+                  <span><i className="legend-tanzania" /> Tanzania</span>
+                  <span><i className="legend-lake" /> Lake Victoria</span>
+                </div>
+              </div>
             </article>
             <article className="about-map-card about-nairobi-map">
               <div className="about-map-card-heading">
