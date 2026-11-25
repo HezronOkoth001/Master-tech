@@ -977,13 +977,15 @@ function App() {
             <article className="about-region-map">
               <div className="about-map-card-heading">
                 <span className="about-map-kicker">OUR REGION</span>
-                <h3>Across East Africa</h3>
-                <p>Local roots, regional possibilities</p>
+                <h3>East Africa</h3>
               </div>
               <EastAfricaReachMap />
-              <div className="east-africa-country-list">
-                <span>Kenya</span>
-              </div>
+            </article>
+            <article className="about-region-copy">
+              <span className="about-map-kicker">ROOTED IN KENYA</span>
+              <h3>Local knowledge. <span>Wider connections.</span></h3>
+              <p>Masters Tech is based in Kenya, serving businesses in our home market while staying open to opportunities across the region and beyond.</p>
+              <p>Kenya is our home base. From here, we create practical digital experiences that help businesses build a stronger presence online.</p>
             </article>
             <article className="about-nairobi-map">
               <div className="about-map-card-heading">
