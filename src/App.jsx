@@ -427,7 +427,7 @@ function PricingPage() {
   )
 }
 
-function SiteHeader({ whatsappLink }) {
+function SiteHeader() {
   return (
     <header className="navbar">
       <a className="brand" href="/" aria-label="Masters Tech home">
@@ -504,23 +504,23 @@ function SampleSitePreview({ type }) {
   if (type === 'preview-shop-ui') return (
     <div className="sample-browser sample-shop">
       <div className="sample-browser-bar"><i /><i /><i /><span>YOURSTORE.COM</span></div>
-      <div className="sample-shop-nav"><b>SHOP<span>NOW.</span></b><small>NEW IN　 WOMEN　 MEN　 HOME</small><strong>⌕　♙　▢</strong></div>
-      <div className="sample-shop-hero"><div><small>THE NEW COLLECTION</small><b>Find your<br />everyday style.</b><em>SHOP COLLECTION　↗</em></div><div className="sample-fashion-shape"><i /><b /></div></div>
+      <div className="sample-shop-nav"><b>SHOP<span>NOW.</span></b><small>NEW IN  WOMEN  MEN  HOME</small><strong>⌕ ♙ ▢</strong></div>
+      <div className="sample-shop-hero"><div><small>THE NEW COLLECTION</small><b>Find your<br />everyday style.</b><em>SHOP COLLECTION ↗</em></div><div className="sample-fashion-shape"><i /><b /></div></div>
       <div className="sample-product-row"><i /><i /><i /></div>
     </div>
   )
   if (type === 'preview-food-ui') return (
     <div className="sample-browser sample-food">
       <div className="sample-browser-bar"><i /><i /><i /><span>THEGARDEN.CAFE</span></div>
-      <div className="sample-food-nav"><b>the garden.</b><small>MENU　 OUR STORY　 FIND US</small></div>
-      <div className="sample-food-hero"><small>FRESH · LOCAL · MADE WITH LOVE</small><b>Good food.<br />Good mood.</b><span>EXPLORE OUR MENU　↗</span></div>
+      <div className="sample-food-nav"><b>the garden.</b><small>MENU  OUR STORY  FIND US</small></div>
+      <div className="sample-food-hero"><small>FRESH · LOCAL · MADE WITH LOVE</small><b>Good food.<br />Good mood.</b><span>EXPLORE OUR MENU ↗</span></div>
       <div className="sample-food-menu"><i /><i /><i /></div>
     </div>
   )
   if (type === 'preview-learning-ui') return (
     <div className="sample-browser sample-learning">
       <div className="sample-browser-bar"><i /><i /><i /><span>LEARNHUB.ACADEMY</span></div>
-      <div className="sample-learning-nav"><b>learn<span>hub.</span></b><small>COURSES　 ABOUT　 RESOURCES</small></div>
+      <div className="sample-learning-nav"><b>learn<span>hub.</span></b><small>COURSES  ABOUT  RESOURCES</small></div>
       <div className="sample-learning-hero"><div><small>LEARN SOMETHING NEW</small><b>Skills for your<br />next chapter.</b><span>EXPLORE COURSES</span></div><div className="sample-learning-art"><i>✦</i><b>LEARN<br />GROW<br />ACHIEVE</b></div></div>
       <div className="sample-learning-bottom"><i /><i /><i /></div>
     </div>
@@ -528,29 +528,29 @@ function SampleSitePreview({ type }) {
   if (type === 'preview-property-ui') return (
     <div className="sample-browser sample-property">
       <div className="sample-browser-bar"><i /><i /><i /><span>HOMESPACES.CO</span></div>
-      <div className="sample-property-nav"><b>H<span>O</span>ME / SPACE</b><small>BUY　 RENT　 SELL</small></div>
-      <div className="sample-property-hero"><small>FIND A PLACE TO CALL HOME</small><b>Spaces that<br />feel like yours.</b><div className="sample-property-search">Location　⌄　 Property type　⌄　 <strong>SEARCH</strong></div></div>
+      <div className="sample-property-nav"><b>H<span>O</span>ME / SPACE</b><small>BUY  RENT  SELL</small></div>
+      <div className="sample-property-hero"><small>FIND A PLACE TO CALL HOME</small><b>Spaces that<br />feel like yours.</b><div className="sample-property-search">Location ⌄  Property type ⌄  <strong>SEARCH</strong></div></div>
       <div className="sample-property-list"><i /><i /></div>
     </div>
   )
   if (type === 'preview-booking-ui') return (
     <div className="sample-browser sample-booking">
       <div className="sample-browser-bar"><i /><i /><i /><span>BOOKMYTIME.COM</span></div>
-      <div className="sample-booking-nav"><b>studio<span>+</span></b><small>SERVICES　 OUR TEAM　 CONTACT</small></div>
-      <div className="sample-booking-hero"><div><small>YOUR TIME, YOUR WAY</small><b>Make time<br />for yourself.</b><span>BOOK AN APPOINTMENT</span></div><div className="sample-calendar"><b>SELECT A DATE</b><div> M　 T　 W　 T　 F</div><strong> 12　13　14　15　16</strong><small>AVAILABLE TIMES</small><i>09:00　 11:30　 14:00</i></div></div>
+      <div className="sample-booking-nav"><b>studio<span>+</span></b><small>SERVICES  OUR TEAM  CONTACT</small></div>
+      <div className="sample-booking-hero"><div><small>YOUR TIME, YOUR WAY</small><b>Make time<br />for yourself.</b><span>BOOK AN APPOINTMENT</span></div><div className="sample-calendar"><b>SELECT A DATE</b><div> M  T  W  T  F</div><strong> 12 13 14 15 16</strong><small>AVAILABLE TIMES</small><i>09:00  11:30  14:00</i></div></div>
     </div>
   )
   if (type === 'preview-dashboard-ui') return (
     <div className="sample-browser sample-dashboard">
-      <div className="sample-dashboard-side"><b>◈　WORKSPACE</b><span>▦　 Overview</span><span>▤　 Projects</span><span>♙　 Customers</span><span>▧　 Reports</span></div>
+      <div className="sample-dashboard-side"><b>◈ WORKSPACE</b><span>▦  Overview</span><span>▤  Projects</span><span>♙  Customers</span><span>▧  Reports</span></div>
       <div className="sample-dashboard-main"><div className="sample-dashboard-top">Workspace overview <small>Your business at a glance</small></div><div className="sample-dashboard-stats"><i><small>REVENUE</small><b>KES 84,500</b></i><i><small>ORDERS</small><b>128</b></i><i><small>CUSTOMERS</small><b>64</b></i></div><div className="sample-dashboard-chart"><b>Performance overview</b><div><i /><i /><i /><i /><i /><i /><i /></div></div></div>
     </div>
   )
   return (
     <div className="sample-browser sample-business">
       <div className="sample-browser-bar"><i /><i /><i /><span>YOURBUSINESS.CO.KE</span></div>
-      <div className="sample-business-nav"><b>BRAND<span>.</span></b><small>HOME　 ABOUT　 SERVICES　 CONTACT</small></div>
-      <div className="sample-business-hero"><small>WELCOME TO YOUR BUSINESS</small><b>Ideas into<br />experiences.</b><p>A professional online home for your brand.</p><span>DISCOVER MORE　↗</span></div>
+      <div className="sample-business-nav"><b>BRAND<span>.</span></b><small>HOME  ABOUT  SERVICES  CONTACT</small></div>
+      <div className="sample-business-hero"><small>WELCOME TO YOUR BUSINESS</small><b>Ideas into<br />experiences.</b><p>A professional online home for your brand.</p><span>DISCOVER MORE ↗</span></div>
       <div className="sample-business-bottom"><i /><i /><i /></div>
     </div>
   )
@@ -956,7 +956,7 @@ function App() {
                 <div className="laptop-matrix-site">
                   <div className="matrix-site-nav">
                     <b><i>◈</i> NEXUS<span> / DIGITAL</span></b>
-                    <small>PLATFORM　 SOLUTIONS　 ABOUT</small>
+                    <small>PLATFORM  SOLUTIONS  ABOUT</small>
                     <em>LET'S TALK ↗</em>
                   </div>
                   <div className="matrix-site-main">

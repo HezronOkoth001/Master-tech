@@ -184,7 +184,6 @@ function AdminWorkspaceSections({ section, records = [], clients = [], pricing =
     { key: 'ecommerce-website', name: 'E-commerce Website' },
   ]
   const [selectedPackageKey, setSelectedPackageKey] = useState('ngo-website')
-  const selectedPackagePromotion = records.find((record) => record.recordType === 'package-promotion' && record.packageKey === selectedPackageKey)
   const [packagePromotionPercent, setPackagePromotionPercent] = useState(20)
   const [packagePromotionEndsAt, setPackagePromotionEndsAt] = useState('')
   const [packagePromotionEnabled, setPackagePromotionEnabled] = useState(false)
@@ -192,6 +191,8 @@ function AdminWorkspaceSections({ section, records = [], clients = [], pricing =
   useEffect(() => {
     if (section !== 'Pricing') return
     const currentPromotion = records.find((record) => record.recordType === 'promotion')
+    // Sync editable promotion fields when the workspace records change.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPromotionPercent(Number(currentPromotion?.discountPercent) || 20)
     setPromotionMessage(currentPromotion?.message || 'Get a special discount on your next website project.')
     setPromotionEndsAt(currentPromotion?.endsAt || '')
@@ -201,6 +202,7 @@ function AdminWorkspaceSections({ section, records = [], clients = [], pricing =
 
   useEffect(() => {
     const current = records.find((record) => record.recordType === 'package-promotion' && record.packageKey === selectedPackageKey)
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPackagePromotionPercent([10, 20, 30, 50].includes(Number(current?.discountPercent)) ? Number(current.discountPercent) : 20)
     setPackagePromotionEndsAt(current?.endsAt || '')
     setPackagePromotionEnabled(current?.status === 'Active')
@@ -296,7 +298,7 @@ function AdminWorkspaceSections({ section, records = [], clients = [], pricing =
     event.preventDefault()
     setSaving(true)
     setMessage('')
-    const record = { ...form, id: editingId ?? String(Date.now()) }
+    const record = { ...form, id: editingId ?? crypto.randomUUID() }
     if (section === 'Invoices') {
       record.lineItems = lineItems.filter((item) => item.description.trim()).map((item) => ({ ...item, quantity: Math.max(1, Number(item.quantity) || 1), unitPrice: Math.max(0, Number(item.unitPrice) || 0) }))
       record.amount = Number(subtotal.toFixed(2))
