@@ -915,8 +915,10 @@ function App() {
             <a href="/contact">Contact our team <span>↗</span></a>
           </div>
         </section>
-        <PublicReviewsShowcase />
-        <PublicReviewForm variant="home" />
+        <div className="home-reviews-area">
+          <PublicReviewsShowcase />
+          <PublicReviewForm variant="home" />
+        </div>
       </>
     ),
     '/about': (
