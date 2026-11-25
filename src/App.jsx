@@ -656,7 +656,8 @@ function App() {
       '/about': ['About Hezron Okoth | Masters Tech Website Development & SEO', 'Meet Hezron Okoth, the person behind Masters Tech. Learn about professional website development, SEO and Google visibility services for businesses.'],
       '/services': ['Website Design, Development & SEO Services | Masters Tech', 'Explore Masters Tech website design and development, search engine optimisation, and Google visibility services for businesses.'],
       '/sample-sites': ['Website Design Samples & UI Ideas | Masters Tech', 'Explore sample website designs for business websites, online shops, restaurants, education, property listings and booking platforms. Choose a style for your next website.'],
-      '/contact': ['Contact Masters Tech | Request a Website or SEO Service', 'Contact Masters Tech to discuss a business website, SEO, Google Maps visibility or a custom web project.'],\n      '/quotation': ['Request a Quotation | Masters Tech', 'Tell Masters Tech about your website, SEO or digital project and request a quotation.'],
+      '/contact': ['Contact Masters Tech | Request a Website or SEO Service', 'Contact Masters Tech to discuss a business website, SEO, Google Maps visibility or a custom web project.'],
+      '/quotation': ['Request a Quotation | Masters Tech', 'Tell Masters Tech about your website, SEO or digital project and request a quotation.'],
       '/reviews': ['Customer Reviews | Masters Tech', 'Read customer feedback and share your experience working with Masters Tech.'],
     }
     const [title, description] = pages[pathname] || pages['/']
