@@ -760,7 +760,7 @@ function App() {
     }, { threshold: 0.12, rootMargin: '0px 0px -35px 0px' })
     revealTargets.forEach((element, index) => {
       element.classList.add('mt-scroll-reveal')
-      element.style.setProperty('--mt-reveal-delay', `${Math.min(index % 4, 3) * 90}ms`)
+      element.style.setProperty('--mt-reveal-delay', `${Math.min(index % 3, 2) * 45}ms`)
       observer.observe(element)
     })
     return () => observer.disconnect()
