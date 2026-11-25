@@ -6,6 +6,81 @@ const API_BASE = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
 const REVIEWS_API_URL = `${API_BASE}/api/reviews`
 const PROMOTION_API_URL = `${API_BASE}/api/public/promotion`
 
+const EAST_AFRICA_GEOJSON_URL = 'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_0_countries.geojson'
+
+function EastAfricaReachMap() {
+  const [features, setFeatures] = useState([])
+  const [mapError, setMapError] = useState(false)
+  useEffect(() => {
+    let active = true
+    fetch(EAST_AFRICA_GEOJSON_URL)
+      .then((response) => {
+        if (!response.ok) throw new Error('Map data unavailable')
+        return response.json()
+      })
+      .then((data) => {
+        if (active) setFeatures(data.features.filter((feature) => {
+          const name = feature.properties?.ADMIN || feature.properties?.name
+          return ['Ethiopia', 'Kenya', 'Rwanda', 'Tanzania', 'Uganda', 'Somalia', 'South Sudan', 'Sudan', 'Eritrea', 'Djibouti', 'Democratic Republic of the Congo', 'Burundi'].includes(name)
+        }))
+      })
+      .catch(() => { if (active) setMapError(true) })
+    return () => { active = false }
+  }, [])
+
+  const bounds = { west: 28, east: 52, south: -12, north: 19 }
+  const width = 900
+  const height = 690
+  const project = ([lon, lat]) => [
+    ((lon - bounds.west) / (bounds.east - bounds.west)) * width,
+    ((bounds.north - lat) / (bounds.north - bounds.south)) * height
+  ]
+  const polygonPath = (polygon) => polygon.map((ring) => {
+    const points = ring.map(project)
+    return points.map(([x, y], index) => `${index ? 'L' : 'M'}${x.toFixed(1)},${y.toFixed(1)}`).join(' ') + ' Z'
+  }).join(' ')
+  const selected = ['Ethiopia', 'Kenya', 'Rwanda', 'Tanzania', 'Uganda']
+  const labels = [
+    { name: 'ETHIOPIA', x: 430, y: 205 },
+    { name: 'UGANDA', x: 335, y: 390 },
+    { name: 'KENYA', x: 535, y: 405 },
+    { name: 'RWANDA', x: 355, y: 505 },
+    { name: 'TANZANIA', x: 485, y: 570 },
+  ]
+
+  return (
+    <div className="east-africa-map-visual">
+      {mapError || !features.length ? (
+        <div className="east-africa-map-fallback">The regional map could not load. Please check your internet connection and refresh the page.</div>
+      ) : (
+        <svg viewBox="0 0 900 690" role="img" aria-label="Map of East Africa highlighting Ethiopia, Kenya, Rwanda, Tanzania and Uganda">
+          <defs>
+            <linearGradient id="eastAfricaLand" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#f7f0dc" />
+              <stop offset="100%" stopColor="#e9dfc4" />
+            </linearGradient>
+          </defs>
+          <rect width="900" height="690" fill="#e8eee8" />
+          {features.map((feature, index) => {
+            const name = feature.properties?.ADMIN || feature.properties?.name
+            const geometry = feature.geometry
+            const polygons = geometry?.type === 'Polygon' ? [geometry.coordinates] : geometry?.type === 'MultiPolygon' ? geometry.coordinates : []
+            return polygons.map((polygon, polygonIndex) => (
+              <path key={`${index}-${polygonIndex}`} d={polygonPath(polygon)} fill={selected.includes(name) ? 'url(#eastAfricaLand)' : '#d7e0d7'} stroke="#8d9a8b" strokeWidth="1.8" />
+            ))
+          })}
+          {labels.map((label) => (
+            <g key={label.name} transform={`translate(${label.x} ${label.y})`}>
+              <rect x="-58" y="-18" width="116" height="36" rx="18" fill="#18251c" stroke="#d4af37" strokeWidth="1.5" />
+              <text textAnchor="middle" dominantBaseline="central" fill="#f5e8b9" fontSize="15" fontWeight="700" letterSpacing="1.2">{label.name}</text>
+            </g>
+          ))}
+        </svg>
+      )}
+    </div>
+  )
+}
+
 const services = [
   {
     number: '01',
@@ -901,26 +976,19 @@ function App() {
             <h2>Based in East Africa. <span>Connected to the world.</span></h2>
             <p>Masters Tech is based in Kenya, with Nairobi as our general operating area. We work with businesses locally and can support projects beyond Kenya too.</p>
           </div>
-          <div className="about-location-grid">
-            <article className="about-map-card about-region-map">
+          <div className="about-location-layout">
+            <article className="about-region-map">
               <div className="about-map-card-heading">
                 <span className="about-map-kicker">OUR REGION</span>
-                <h3>East Africa</h3>
-                <p>Kenya, Uganda and Tanzania</p>
+                <h3>Across East Africa</h3>
+                <p>Local roots, regional possibilities</p>
               </div>
-              <div className="east-africa-illustration">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/3/3f/East_Africa_regions_map.png"
-                  alt="Geographical map of East Africa showing national borders, Uganda, Kenya, Tanzania, neighbouring countries, capitals and the Indian Ocean"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <p className="east-africa-map-credit">
-                  Geographic map by Peter Fitzgerald, via Wikimedia Commons · CC BY-SA 3.0
-                </p>
+              <EastAfricaReachMap />
+              <div className="east-africa-country-list">
+                <span>Uganda</span><span>Kenya</span><span>Ethiopia</span><span>Rwanda</span><span>Tanzania</span>
               </div>
             </article>
-            <article className="about-map-card about-nairobi-map">
+            <article className="about-nairobi-map">
               <div className="about-map-card-heading">
                 <span className="about-map-kicker">OUR GENERAL LOCATION</span>
                 <h3>Nairobi, Kenya</h3>
