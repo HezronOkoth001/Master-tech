@@ -705,7 +705,8 @@ function App() {
 
   if (pathname === '/admin') return <AdminDashboard />
 
-  const pageContent = {\n    '/quotation': <QuotationRequestPage />, 
+  const pageContent = {
+    '/quotation': <QuotationRequestPage />, 
     '/': (
       <>
         {promotion && (
