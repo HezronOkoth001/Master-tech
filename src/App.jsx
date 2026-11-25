@@ -849,7 +849,7 @@ function App() {
     ),
     '/about': (
       <>
-        <PageIntro label="THE PERSON BEHIND MASTERS TECH" title={<>Thoughtful websites. <span>Real business purpose.</span></>} description="I'm Hezron, the person behind Masters Tech. I help businesses turn their ideas into professional websites and make it easier for customers to find them online." />
+        <PageIntro label="A DIGITAL BUSINESS ROOTED IN AFRICA" title={<>Local understanding. <span>Wider possibilities.</span></>} description="Masters Tech is a Kenya-based digital business focused on building useful websites and helping businesses become easier to find online." />
         <section className="about-section about-founder-section section-padding" id="about">
           <div className="about-founder-visual">
             <div className="about-founder-orbit about-founder-orbit-one" />
@@ -879,6 +879,19 @@ function App() {
               process from beginning to end.
             </p>
             <a className="text-link" href={whatsappLink} target="_blank" rel="noreferrer">Let's talk about your idea <span>↗</span></a>
+          </div>
+        </section>
+
+        <section className="about-roots-section section-padding" aria-label="Masters Tech roots and location">
+          <div className="about-roots-pattern" aria-hidden="true"><span>✳</span><span>◇</span><span>✳</span></div>
+          <div className="about-roots-copy">
+            <span className="section-label">OUR ROOTS · OUR REACH</span>
+            <h2>Rooted in Kenya. <span>Built to reach further.</span></h2>
+            <p>Masters Tech brings a local understanding of business together with a modern approach to the web. We work to help businesses build a strong digital presence, connect with customers and grow beyond their immediate location.</p>
+          </div>
+          <div className="about-roots-facts">
+            <div><span className="about-roots-icon">⌖</span><small>OUR HOME BASE</small><strong>Kenya</strong><p>Working with businesses locally and beyond</p></div>
+            <div><span className="about-roots-icon">✦</span><small>WHAT WE DO</small><strong>Digital solutions</strong><p>Website development, SEO and Google visibility</p></div>
           </div>
         </section>
 
