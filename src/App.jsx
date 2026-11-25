@@ -157,6 +157,117 @@ function PublicReviewsShowcase() {
   )
 }
 
+function QuotationRequestPage() {
+  const [form, setForm] = useState({
+    name: '',
+    business: '',
+    service: 'Website design & development',
+    website: 'I do not have a website yet',
+    budget: 'Not sure yet — I would like guidance',
+    timeline: 'As soon as possible',
+    details: '',
+  })
+
+  function updateField(event) {
+    const { name, value } = event.target
+    setForm((current) => ({ ...current, [name]: value }))
+  }
+
+  function sendRequest(event) {
+    event.preventDefault()
+    const message = [
+      'Hello Masters Tech! I would like to request a quotation.',
+      '',
+      'MY DETAILS',
+      'Name: ' + form.name,
+      'Business: ' + (form.business.trim() || 'Not provided'),
+      '',
+      'PROJECT DETAILS',
+      'Service needed: ' + form.service,
+      'Current website: ' + form.website,
+      'Estimated budget: ' + form.budget,
+      'Preferred timeline: ' + form.timeline,
+      'What I have in mind: ' + form.details,
+      '',
+      'Please let me know the next steps. Thank you.',
+    ].join('\n')
+    window.open('https://wa.me/254700806728?text=' + encodeURIComponent(message), '_blank', 'noopener,noreferrer')
+  }
+
+  return (
+    <section className="quotation-page section-padding">
+      <div className="quotation-page-heading">
+        <span className="section-label">LET'S TALK ABOUT YOUR PROJECT</span>
+        <h1>Tell us what <span>you have in mind.</span></h1>
+        <p>Answer a few short questions so we can understand what you need before we talk about a quotation. Your answers will be prepared in a WhatsApp message for you to review and send.</p>
+      </div>
+      <form className="quotation-form" onSubmit={sendRequest}>
+        <div className="quotation-form-progress"><span>PROJECT ENQUIRY</span><span>ABOUT 2 MINUTES</span></div>
+        <div className="quotation-form-grid">
+          <label>
+            Your name <span>*</span>
+            <input name="name" value={form.name} onChange={updateField} required minLength={2} maxLength={100} placeholder="e.g. Jane Wanjiku" />
+          </label>
+          <label>
+            Business or organisation name
+            <input name="business" value={form.business} onChange={updateField} maxLength={120} placeholder="Your business name (if any)" />
+          </label>
+          <label>
+            What service are you interested in? <span>*</span>
+            <select name="service" value={form.service} onChange={updateField} required>
+              <option>Website design & development</option>
+              <option>Online store / e-commerce website</option>
+              <option>SEO & Google visibility</option>
+              <option>Website maintenance & support</option>
+              <option>Website security assessment</option>
+              <option>Custom web application / business system</option>
+              <option>Not sure — I need advice</option>
+            </select>
+          </label>
+          <label>
+            Do you currently have a website?
+            <select name="website" value={form.website} onChange={updateField}>
+              <option>I do not have a website yet</option>
+              <option>Yes, I have a website and want to improve it</option>
+              <option>Yes, but it needs fixing or maintenance</option>
+              <option>I have a website idea but have not started</option>
+            </select>
+          </label>
+          <label>
+            Do you have an estimated budget?
+            <select name="budget" value={form.budget} onChange={updateField}>
+              <option>Not sure yet — I would like guidance</option>
+              <option>Below KES 10,000</option>
+              <option>KES 10,000 – 25,000</option>
+              <option>KES 25,000 – 50,000</option>
+              <option>KES 50,000 – 100,000</option>
+              <option>Above KES 100,000</option>
+            </select>
+          </label>
+          <label>
+            When would you like to get started?
+            <select name="timeline" value={form.timeline} onChange={updateField}>
+              <option>As soon as possible</option>
+              <option>Within 2–4 weeks</option>
+              <option>Within 1–3 months</option>
+              <option>Just planning / exploring options</option>
+            </select>
+          </label>
+          <label className="quotation-form-wide">
+            Tell us a little about what you want <span>*</span>
+            <textarea name="details" value={form.details} onChange={updateField} required minLength={10} maxLength={2000} rows={6} placeholder="What does your business do? What should the website or service help you achieve? You can mention features you have in mind, examples you like, or any questions..." />
+            <small>A few sentences are enough. You can share more details later on WhatsApp.</small>
+          </label>
+        </div>
+        <div className="quotation-form-footer">
+          <p>Your answers are not submitted to a database. They will be placed in a WhatsApp message that you can review and send.</p>
+          <button className="button-primary quotation-submit" type="submit">Continue to WhatsApp <span>↗</span></button>
+        </div>
+      </form>
+    </section>
+  )
+}
+
 function SiteHeader({ whatsappLink }) {
   return (
     <header className="navbar">
@@ -171,7 +282,7 @@ function SiteHeader({ whatsappLink }) {
         <a className="nav-review-link" href="/reviews"><span className="nav-link-icon" aria-hidden="true">⭐</span><span>Reviews</span></a>
         <a href="/contact"><span className="nav-link-icon" aria-hidden="true">📩</span><span>Contact</span></a>
       </nav>
-      <a className="nav-cta" href={whatsappLink} target="_blank" rel="noreferrer">Get a quotation <span>↗</span></a>
+      <a className="nav-cta" href="/quotation">Get a quotation <span>↗</span></a>
     </header>
   )
 }
@@ -441,7 +552,7 @@ function HomeServicesSection({ whatsappLink }) {
             <h3>Get a quotation for your project.</h3>
             <p>Tell us what you need, and let's discuss a solution that works for your business and budget.</p>
           </div>
-          <a href={whatsappLink} target="_blank" rel="noreferrer">Get a quotation <b>↗</b></a>
+          <a href="/quotation">Get a quotation <b>↗</b></a>
         </div>
         <div className="home-services-frame-corner" aria-hidden="true">MT<span>®</span></div>
       </div>
@@ -545,7 +656,7 @@ function App() {
       '/about': ['About Hezron Okoth | Masters Tech Website Development & SEO', 'Meet Hezron Okoth, the person behind Masters Tech. Learn about professional website development, SEO and Google visibility services for businesses.'],
       '/services': ['Website Design, Development & SEO Services | Masters Tech', 'Explore Masters Tech website design and development, search engine optimisation, and Google visibility services for businesses.'],
       '/sample-sites': ['Website Design Samples & UI Ideas | Masters Tech', 'Explore sample website designs for business websites, online shops, restaurants, education, property listings and booking platforms. Choose a style for your next website.'],
-      '/contact': ['Contact Masters Tech | Request a Website or SEO Service', 'Contact Masters Tech to discuss a business website, SEO, Google Maps visibility or a custom web project.'],
+      '/contact': ['Contact Masters Tech | Request a Website or SEO Service', 'Contact Masters Tech to discuss a business website, SEO, Google Maps visibility or a custom web project.'],\n      '/quotation': ['Request a Quotation | Masters Tech', 'Tell Masters Tech about your website, SEO or digital project and request a quotation.'],
       '/reviews': ['Customer Reviews | Masters Tech', 'Read customer feedback and share your experience working with Masters Tech.'],
     }
     const [title, description] = pages[pathname] || pages['/']
@@ -593,7 +704,7 @@ function App() {
 
   if (pathname === '/admin') return <AdminDashboard />
 
-  const pageContent = {
+  const pageContent = {\n    '/quotation': <QuotationRequestPage />, 
     '/': (
       <>
         {promotion && (
