@@ -4109,3 +4109,255 @@ body { color: #f5f8fc; background: var(--mt-black); }
   .quotation-submit { width: 100%; }
   .quotation-form-progress { font-size: 8px; }
 }
+
+
+/* Refined customer reviews: a quieter, warmer treatment that fits Masters Tech */
+.reviews-page-wrapper {
+  width: min(1120px, calc(100% - 64px));
+  margin: 0 auto 76px;
+  display: grid;
+  gap: 26px;
+}
+.reviews-page-wrapper .reviews-section {
+  width: 100%;
+  margin: 0;
+  padding: clamp(26px, 4vw, 42px);
+  border: 1px solid rgba(37, 55, 43, .09);
+  border-radius: 20px;
+  background: #f4f5ef;
+  box-shadow: 0 14px 38px rgba(19, 35, 25, .055);
+}
+.reviews-page-wrapper .reviews-section .section-heading {
+  align-items: end;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.reviews-page-wrapper .reviews-section .section-heading h2 {
+  margin: 10px 0 0;
+  color: #1c2b21;
+  font-size: clamp(25px, 3.4vw, 38px);
+  letter-spacing: -.8px;
+}
+.reviews-page-wrapper .reviews-section .section-heading h2 span {
+  color: #96731a;
+}
+.reviews-page-wrapper .reviews-section .section-heading > p {
+  max-width: 340px;
+  margin: 0;
+  color: #657066;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.reviews-page-wrapper .section-label {
+  color: #8c6b19;
+  letter-spacing: 1.8px;
+}
+.reviews-page-wrapper .approved-reviews-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 235px), 1fr));
+  gap: 14px;
+  margin: 0;
+}
+.reviews-page-wrapper .approved-review-card {
+  min-height: 190px;
+  padding: 22px;
+  border: 1px solid #e3e7dd;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 5px 16px rgba(30, 47, 34, .035);
+}
+.reviews-page-wrapper .approved-review-stars {
+  color: #b58b24;
+  letter-spacing: 2px;
+  font-size: 13px;
+}
+.reviews-page-wrapper .approved-review-card p {
+  margin: 14px 0 18px;
+  color: #47554a;
+  font-size: 14px;
+  line-height: 1.75;
+}
+.reviews-page-wrapper .approved-review-card strong {
+  display: block;
+  color: #1d2b21;
+  font-size: 13px;
+}
+.reviews-page-wrapper .approved-review-card small {
+  display: block;
+  margin-top: 4px;
+  color: #7b867c;
+  font-size: 11px;
+}
+.reviews-page-wrapper .reviews-empty-state {
+  margin: 0;
+  padding: 28px 20px;
+  border: 1px dashed #cbd4c7;
+  border-radius: 14px;
+  background: rgba(255,255,255,.62);
+}
+.reviews-page-wrapper .reviews-showcase-action {
+  margin-top: 20px;
+}
+.reviews-page-wrapper .reviews-showcase-action .text-link {
+  color: #765b17;
+}
+.reviews-page-wrapper .dedicated-review-section {
+  background: #fbfcf8;
+}
+.reviews-page-wrapper .page-public-review-form {
+  max-width: 100%;
+  margin: 0;
+  padding: 25px;
+  border: 1px solid #e4e8df;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: none;
+}
+.reviews-page-wrapper .public-review-grid {
+  gap: 15px;
+}
+.reviews-page-wrapper .public-review-grid label {
+  color: #35443a;
+  font-size: 12px;
+  font-weight: 650;
+}
+.reviews-page-wrapper .public-review-grid input,
+.reviews-page-wrapper .public-review-grid select,
+.reviews-page-wrapper .public-review-grid textarea {
+  padding: 12px 13px;
+  border: 1px solid #dfe5dc;
+  border-radius: 9px;
+  background: #fbfcf9;
+  color: #26352b;
+}
+.reviews-page-wrapper .public-review-grid input:focus,
+.reviews-page-wrapper .public-review-grid select:focus,
+.reviews-page-wrapper .public-review-grid textarea:focus {
+  border-color: #b99a43;
+  box-shadow: 0 0 0 3px rgba(185,154,67,.12);
+}
+.reviews-page-wrapper .public-review-actions {
+  align-items: center;
+  margin-top: 18px;
+}
+.reviews-page-wrapper .public-review-actions > span {
+  color: #788278;
+}
+.reviews-page-wrapper .public-review-actions .button-primary {
+  border-radius: 9px;
+  background: #d4af37;
+  color: #172119;
+}
+.reviews-page-wrapper .public-review-feedback {
+  padding: 11px 13px;
+  border-radius: 9px;
+  background: #eff6ed;
+  color: #315b38;
+}
+
+/* The homepage review invitation is deliberately smaller and softer */
+.home-review-section {
+  padding-top: 48px;
+  padding-bottom: 64px;
+  background: #f2f3ec;
+}
+.home-review-section .section-heading {
+  max-width: 1050px;
+  margin: 0 auto 22px;
+  align-items: end;
+  gap: 20px;
+}
+.home-review-section .section-heading h2 {
+  color: #1d2b21;
+  font-size: clamp(25px, 3vw, 34px);
+  letter-spacing: -.7px;
+}
+.home-review-section .section-heading h2 span {
+  color: #96731a;
+}
+.home-review-section .section-heading > p {
+  max-width: 330px;
+  color: #667166;
+  font-size: 13px;
+  line-height: 1.65;
+}
+.home-review-section .section-label {
+  color: #8c6b19;
+}
+.home-review-section .home-public-review-form {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 22px 24px;
+  border: 1px solid #e2e6dc;
+  border-radius: 15px;
+  background: rgba(255,255,255,.88);
+  box-shadow: 0 8px 24px rgba(26, 42, 29, .045);
+}
+.home-review-section .public-review-grid {
+  gap: 13px 16px;
+}
+.home-review-section .public-review-grid label {
+  color: #3b493e;
+  font-size: 12px;
+}
+.home-review-section .public-review-grid input,
+.home-review-section .public-review-grid select,
+.home-review-section .public-review-grid textarea {
+  padding: 10px 12px;
+  border: 1px solid #e0e5dc;
+  border-radius: 8px;
+  background: #fcfdfb;
+  font-size: 13px;
+}
+.home-review-section .public-review-grid textarea {
+  min-height: 92px;
+}
+.home-review-section .public-review-actions {
+  margin-top: 15px;
+}
+.home-review-section .public-review-actions > span {
+  color: #788278;
+}
+.home-review-section .public-review-actions .button-primary {
+  border-radius: 9px;
+  background: #d4af37;
+  color: #172119;
+}
+.home-review-section .public-review-feedback {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #eff6ed;
+  color: #315b38;
+}
+@media (max-width: 680px) {
+  .reviews-page-wrapper {
+    width: calc(100% - 36px);
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .reviews-page-wrapper .reviews-section {
+    padding: 25px 18px;
+    border-radius: 15px;
+  }
+  .reviews-page-wrapper .reviews-section .section-heading,
+  .home-review-section .section-heading {
+    display: block;
+  }
+  .reviews-page-wrapper .reviews-section .section-heading > p,
+  .home-review-section .section-heading > p {
+    margin-top: 10px;
+  }
+  .reviews-page-wrapper .page-public-review-form,
+  .home-review-section .home-public-review-form {
+    padding: 17px;
+  }
+  .home-review-section {
+    padding: 38px 18px 46px;
+  }
+  .home-review-section .public-review-grid {
+    grid-template-columns: 1fr;
+  }
+  .home-review-section .public-review-wide {
+    grid-column: auto;
+  }
+}
