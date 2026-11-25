@@ -22,14 +22,14 @@ function EastAfricaReachMap() {
       .then((data) => {
         if (active) setFeatures(data.features.filter((feature) => {
           const name = normalizeCountry(feature.properties?.ADMIN || feature.properties?.name)
-          return ['Ethiopia', 'Kenya', 'Rwanda', 'Tanzania', 'Uganda', 'Somalia', 'South Sudan', 'Sudan', 'Eritrea', 'Djibouti', 'Democratic Republic of the Congo', 'Burundi'].includes(name)
+          return ['Uganda', 'Kenya', 'Rwanda', 'Burundi', 'Tanzania'].includes(name)
         }))
       })
       .catch(() => { if (active) setMapError(true) })
     return () => { active = false }
   }, [])
 
-  const bounds = { west: 28, east: 52, south: -12, north: 19 }
+  const bounds = { west: 28, east: 42, south: -12, north: 6 }
   const width = 900
   const height = 690
   const project = ([lon, lat]) => [
@@ -40,13 +40,13 @@ function EastAfricaReachMap() {
     const points = ring.map(project)
     return points.map(([x, y], index) => `${index ? 'L' : 'M'}${x.toFixed(1)},${y.toFixed(1)}`).join(' ') + ' Z'
   }).join(' ')
-  const selected = ['Ethiopia', 'Kenya', 'Rwanda', 'Tanzania', 'Uganda']
+  const selected = ['Uganda', 'Kenya', 'Rwanda', 'Burundi', 'Tanzania']
   const labels = [
-    { name: 'ETHIOPIA', x: 430, y: 205 },
-    { name: 'UGANDA', x: 335, y: 390 },
-    { name: 'KENYA', x: 535, y: 405 },
-    { name: 'RWANDA', x: 355, y: 505 },
-    { name: 'TANZANIA', x: 485, y: 570 },
+    { name: 'UGANDA', x: 350, y: 205 },
+    { name: 'KENYA', x: 590, y: 220 },
+    { name: 'RWANDA', x: 365, y: 345 },
+    { name: 'BURUNDI', x: 365, y: 425 },
+    { name: 'TANZANIA', x: 500, y: 535 },
   ]
 
   return (
@@ -54,7 +54,7 @@ function EastAfricaReachMap() {
       {mapError || !features.length ? (
         <div className="east-africa-map-fallback">The regional map could not load. Please check your internet connection and refresh the page.</div>
       ) : (
-        <svg viewBox="0 0 900 690" role="img" aria-label="Map of East Africa highlighting Ethiopia, Kenya, Rwanda, Tanzania and Uganda">
+        <svg viewBox="0 0 900 690" role="img" aria-label="Map showing Uganda, Kenya, Rwanda, Burundi and Tanzania">
           <defs>
             <linearGradient id="eastAfricaLand" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stopColor="#263a2b" />
