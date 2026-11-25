@@ -3823,3 +3823,88 @@ body { color: #f5f8fc; background: var(--mt-black); }
 @media (prefers-reduced-motion: reduce) {
   .hero-ui-stage *, .hero-ui-stage *::before, .hero-ui-stage *::after { animation:none !important; }
 }
+
+
+/* Service photography, warm SEO accents and scroll-based entrance motion */
+.home-service-visual {
+  isolation: isolate;
+  background-color: #151b25;
+}
+.home-service-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .78;
+  transform: scale(1.015);
+  transition: transform .7s ease, opacity .4s ease;
+}
+.home-service-photo-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(110deg, rgba(8,12,19,.82), rgba(8,12,19,.26) 72%), linear-gradient(0deg, rgba(8,12,19,.48), transparent 68%);
+  pointer-events: none;
+}
+.home-service-card:hover .home-service-photo {
+  opacity: .92;
+  transform: scale(1.07);
+}
+.home-service-visual-panel {
+  z-index: 2;
+  border-color: rgba(255,230,157,.35);
+  background: rgba(12,16,23,.82);
+  backdrop-filter: blur(5px);
+}
+.home-service-visual-orbit { z-index: 2; }
+.home-service-visual-spark { z-index: 3; }
+
+/* Replace the cool blue SEO treatment with a soft, warm yellow. */
+.home-service-visual-search .home-service-visual-panel small,
+.home-service-visual-search .home-service-visual-spark {
+  color: #f6df91;
+}
+.home-service-visual-search .home-service-visual-lines i:first-child {
+  background: #f2d77e;
+}
+.home-service-card:nth-child(2) .home-service-card-top > i {
+  color: #f2d77e;
+}
+.home-service-card:nth-child(2):hover {
+  border-color: rgba(242,215,126,.65);
+}
+
+/* Reveal page content as visitors scroll down, with a gentle stagger. */
+.mt-scroll-reveal {
+  opacity: 0;
+  transform: translateY(25px);
+  transition: opacity .72s ease, transform .72s cubic-bezier(.2,.7,.2,1);
+  transition-delay: var(--mt-reveal-delay, 0ms);
+}
+.mt-scroll-reveal.mt-is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.home-service-card.mt-scroll-reveal {
+  animation: none;
+}
+@media (hover: hover) {
+  .home-service-card:hover .home-service-photo {
+    filter: saturate(1.08);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mt-scroll-reveal,
+  .mt-scroll-reveal.mt-is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .home-service-photo,
+  .home-service-card:hover .home-service-photo {
+    transition: none;
+    transform: none;
+  }
+}
