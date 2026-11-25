@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 const API_BASE = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
 const REVIEWS_API_URL = `${API_BASE}/api/reviews`
 const PROMOTION_API_URL = `${API_BASE}/api/public/promotion`
+const PACKAGE_PROMOTIONS_API_URL = `${API_BASE}/api/public/package-promotions`
 
 const EAST_AFRICA_GEOJSON_URL = 'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_0_countries.geojson'
 
@@ -342,13 +343,22 @@ function QuotationRequestPage() {
 
 
 function PricingPage() {
+  const [packagePromotions, setPackagePromotions] = useState({})
+  useEffect(() => {
+    let active = true
+    fetch(PACKAGE_PROMOTIONS_API_URL)
+      .then((response) => response.ok ? response.json() : {})
+      .then((data) => { if (active && data && typeof data === 'object') setPackagePromotions(data) })
+      .catch(() => {})
+    return () => { active = false }
+  }, [])
   const websitePackages = [
-    { name: 'Personal Website', price: '18,000', description: 'A professional online home for your personal brand, portfolio, skills or services.', features: ['Personal introduction and profile', 'Portfolio or work showcase', 'Contact and social links', 'Mobile-friendly design', 'Basic search-friendly setup'] },
-    { name: 'Blog Website', price: '20,000', description: 'A place to publish articles, share knowledge and build an audience around your ideas.', features: ['Blog homepage and article pages', 'Categories and organised content', 'Easy-to-read article layout', 'Mobile-friendly design', 'Basic search-friendly setup'] },
-    { name: 'Business Website', price: '30,000', description: 'A clear, professional website that explains your services and helps customers contact you.', features: ['Home, About, Services and Contact pages', 'WhatsApp and enquiry options', 'Business information and location', 'Responsive design', 'Basic on-page SEO'] },
-    { name: 'NGO Website', price: '35,000', description: 'A website to explain your mission, share programmes and make it easier for people to connect with your organisation.', features: ['About and mission sections', 'Programmes and projects pages', 'News, updates or events section', 'Contact and enquiry options', 'Responsive design and basic SEO'] },
-    { name: 'Corporate Website', price: '40,000', description: 'A polished online presence for established organisations that need to present their work clearly.', features: ['Professional multi-page layout', 'Company profile and service sections', 'Team, projects or portfolio sections', 'Contact and enquiry options', 'Responsive design and basic SEO'] },
-    { name: 'E-commerce Website', price: '50,000', description: 'An online shop where customers can browse products and place orders. Payment and delivery requirements are scoped with you.', features: ['Product catalogue and categories', 'Shopping cart and order flow', 'Mobile-friendly shopping experience', 'Store management basics', 'Payment integration scoped to requirements'] },
+    { key: 'personal-website', name: 'Personal Website', price: '18,000', description: 'A professional online home for your personal brand, portfolio, skills or services.', features: ['Personal introduction and profile', 'Portfolio or work showcase', 'Contact and social links', 'Mobile-friendly design', 'Basic search-friendly setup'] },
+    { key: 'blog-website', name: 'Blog Website', price: '20,000', description: 'A place to publish articles, share knowledge and build an audience around your ideas.', features: ['Blog homepage and article pages', 'Categories and organised content', 'Easy-to-read article layout', 'Mobile-friendly design', 'Basic search-friendly setup'] },
+    { key: 'business-website', name: 'Business Website', price: '30,000', description: 'A clear, professional website that explains your services and helps customers contact you.', features: ['Home, About, Services and Contact pages', 'WhatsApp and enquiry options', 'Business information and location', 'Responsive design', 'Basic on-page SEO'] },
+    { key: 'ngo-website', name: 'NGO Website', price: '35,000', description: 'A website to explain your mission, share programmes and make it easier for people to connect with your organisation.', features: ['About and mission sections', 'Programmes and projects pages', 'News, updates or events section', 'Contact and enquiry options', 'Responsive design and basic SEO'] },
+    { key: 'corporate-website', name: 'Corporate Website', price: '40,000', description: 'A polished online presence for established organisations that need to present their work clearly.', features: ['Professional multi-page layout', 'Company profile and service sections', 'Team, projects or portfolio sections', 'Contact and enquiry options', 'Responsive design and basic SEO'] },
+    { key: 'ecommerce-website', name: 'E-commerce Website', price: '50,000', description: 'An online shop where customers can browse products and place orders. Payment and delivery requirements are scoped with you.', features: ['Product catalogue and categories', 'Shopping cart and order flow', 'Mobile-friendly shopping experience', 'Store management basics', 'Payment integration scoped to requirements'] },
     { name: 'Government Website', price: 'Custom quotation', custom: true, description: 'Websites for public institutions are scoped around their content, accessibility, security, procurement and integration requirements.', features: ['Requirements and scope discussion', 'Institutional information architecture', 'Accessibility and content needs review', 'Security and integration requirements', 'Detailed project quotation'] },
   ]
   const additionalServices = [
@@ -369,17 +379,25 @@ function PricingPage() {
           <p>Whether you are building a personal brand, growing a business or setting up an online shop, we can plan a website around what you need it to do.</p>
         </div>
         <div className="pricing-package-grid">
-          {websitePackages.map((item, index) => (
-            <article className={`pricing-package-card ${item.custom ? 'pricing-package-custom' : ''} ${index === 2 ? 'pricing-package-featured' : ''}`} key={item.name}>
+          {websitePackages.map((item, index) => {
+            const offer = !item.custom ? packagePromotions[item.key] : null
+            const discountPercent = Number(offer?.discountPercent) || 0
+            const originalPrice = Number(String(item.price).replace(/,/g, '')) || 0
+            const discountedPrice = Math.round(originalPrice * (100 - discountPercent) / 100)
+            const formatPrice = (amount) => amount.toLocaleString('en-KE')
+            return (
+            <article className={`pricing-package-card ${item.custom ? 'pricing-package-custom' : ''} ${index === 2 ? 'pricing-package-featured' : ''} ${discountPercent ? 'has-package-discount' : ''}`} key={item.name}>
+              {discountPercent > 0 && <span className="pricing-discount-ribbon">{discountPercent}% OFF</span>}
               <div className="pricing-card-topline"><span>0{index + 1}</span><span>{item.custom ? 'SCOPED PROJECT' : 'WEBSITE PACKAGE'}</span></div>
               <h3>{item.name}</h3>
               <p className="pricing-card-description">{item.description}</p>
-              <div className="pricing-card-price">{item.custom ? <strong>{item.price}</strong> : <><small>Starting from</small><strong><span>KSh</span> {item.price}</strong></>}</div>
+              <div className={`pricing-card-price ${discountPercent ? 'pricing-card-price-discounted' : ''}`}>{item.custom ? <strong>{item.price}</strong> : <><small>{discountPercent ? 'Special offer · Starting from' : 'Starting from'}</small>{discountPercent > 0 && <del>KSh {formatPrice(originalPrice)}</del>}<strong><span>KSh</span> {discountPercent > 0 ? formatPrice(discountedPrice) : item.price}</strong></>}</div>
               <span className="pricing-includes-label">PACKAGE STARTING SCOPE</span>
               <ul>{item.features.map((feature) => <li key={feature}><span>✓</span>{feature}</li>)}</ul>
               <a className="pricing-card-cta" href="/quotation">Request a quotation <span>↗</span></a>
             </article>
-          ))}
+            )
+          })}
         </div>
         <p className="pricing-disclaimer">All prices are in Kenyan shillings (KES) and are starting prices, not fixed quotes for every project. Domain registration, hosting, paid tools, premium licences, content creation, photography, advanced integrations and other third-party costs are discussed separately where applicable. Government and complex institutional projects are quoted after reviewing requirements.</p>
       </section>
