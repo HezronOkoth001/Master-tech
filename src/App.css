@@ -3474,3 +3474,92 @@ body { color: #f5f8fc; background: var(--mt-black); }
 @media (prefers-reduced-motion: reduce) {
   .home-services-frame .home-service-card { animation: none; }
 }
+
+
+/* Clear framed navigation with quick-scan icons on small screens */
+.nav-links {
+  gap: 5px;
+  padding: 6px;
+  border: 1px solid rgba(212,175,55,.24);
+  border-radius: 999px;
+  background: rgba(19,26,39,.82);
+  box-shadow: inset 0 1px rgba(255,255,255,.035),0 8px 24px rgba(0,0,0,.16);
+}
+.nav-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: #c3cad5;
+  font-size: 12px;
+  white-space: nowrap;
+  transition: color .2s ease,border-color .2s ease,background .2s ease,transform .2s ease;
+}
+.nav-links a:hover {
+  color: var(--gold);
+  border-color: rgba(212,175,55,.28);
+  background: rgba(212,175,55,.08);
+  transform: translateY(-1px);
+}
+.nav-link-icon { display: none; }
+.home-services-frame .home-services-grid {
+  grid-template-columns: repeat(2,minmax(0,1fr));
+}
+.home-services-frame .home-service-card-content > p { min-height: 0; }
+.home-service-visual-security .home-service-visual-panel {
+  border-color: rgba(95,190,155,.38);
+}
+.home-service-visual-security .home-service-visual-panel small,
+.home-service-visual-security .home-service-visual-spark { color: #83d7b5; }
+.home-service-visual-security .home-service-visual-lines i:first-child { background: #83d7b5; }
+
+@media (max-width: 900px) {
+  .navbar { gap: 12px; }
+  .nav-links { gap: 2px; }
+  .nav-links a { padding-left: 9px; padding-right: 9px; }
+}
+@media (max-width: 600px) {
+  .navbar {
+    height: auto;
+    min-height: 75px;
+    padding-top: 12px;
+  }
+  .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: space-between;
+    gap: 3px;
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 15px;
+    background: linear-gradient(135deg,rgba(26,35,50,.98),rgba(12,18,29,.98));
+    box-shadow: 0 8px 22px rgba(0,0,0,.2);
+  }
+  .nav-links a {
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+    min-height: 49px;
+    padding: 5px 2px;
+    border-radius: 10px;
+    font-size: 9px;
+    line-height: 1.15;
+  }
+  .nav-link-icon {
+    display: block;
+    font-size: 16px;
+    line-height: 1;
+  }
+  .nav-links a:hover {
+    background: rgba(212,175,55,.12);
+    transform: none;
+  }
+  .home-services-frame .home-services-grid {
+    grid-template-columns: 1fr;
+  }
+}
