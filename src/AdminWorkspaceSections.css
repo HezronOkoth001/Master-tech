@@ -100,3 +100,11 @@
 .workspace-row-actions .review-hide-button:hover {
   background: rgba(71,85,105,.38);
 }
+
+
+/* Per-package public discount controls */
+.package-promotion-editor { margin-top: 18px; border-color: rgba(212,175,55,.28); }
+.package-promotion-editor .public-promotion-heading h3 { color: #f2d879; }
+.promotion-control-label { color: #d8d9df; font-size: 11px; font-weight: 700; letter-spacing: .5px; }
+.package-promotion-editor .promotion-choice { min-width: 94px; }
+.package-promotion-editor .workspace-form-grid { margin: 4px 0 8px; }
