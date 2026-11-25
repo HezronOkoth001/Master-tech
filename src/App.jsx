@@ -155,7 +155,7 @@ function SiteHeader({ whatsappLink }) {
         <a className="nav-review-link" href="/reviews"><span className="nav-link-icon" aria-hidden="true">⭐</span><span>Reviews</span></a>
         <a href="/contact"><span className="nav-link-icon" aria-hidden="true">📩</span><span>Contact</span></a>
       </nav>
-      <a className="nav-cta" href={whatsappLink} target="_blank" rel="noreferrer">Let's Talk <span>↗</span></a>
+      <a className="nav-cta" href={whatsappLink} target="_blank" rel="noreferrer">Get a quotation <span>↗</span></a>
     </header>
   )
 }
@@ -588,7 +588,7 @@ function App() {
             </div>
             <div className="hero-actions">
               <a className="button-primary" href={whatsappLink} target="_blank" rel="noreferrer">
-                Let's build your website <span>↗</span>
+                Get a quotation <span>↗</span>
               </a>
               <a className="button-secondary" href="/sample-sites">
                 Explore our designs <span>↓</span>
