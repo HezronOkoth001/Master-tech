@@ -4722,3 +4722,141 @@ body { color: #f5f8fc; background: var(--mt-black); }
     height: 270px;
   }
 }
+
+
+/* Kenyan character and additional editorial copy on the About page */
+.about-location-heading {
+  position: relative;
+  padding-left: 19px;
+  border-left: 3px solid transparent;
+  border-image: linear-gradient(to bottom, #111 0 29%, #b8322b 29% 61%, #f4f0e5 61% 76%, #176b3a 76% 100%) 1;
+}
+.about-location-heading .section-label,
+.about-map-kicker {
+  text-shadow: 0 0 18px rgba(212,175,55,.12);
+}
+.about-location-section::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: min(38%, 420px);
+  height: 4px;
+  background: linear-gradient(90deg, #111 0 24%, #b8322b 24% 48%, #f4f0e5 48% 60%, #176b3a 60% 100%);
+  opacity: .72;
+}
+.about-kenya-story {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-top: clamp(70px, 8vw, 105px);
+  padding-bottom: clamp(70px, 8vw, 105px);
+  background:
+    radial-gradient(ellipse at 8% 18%, rgba(23,107,58,.17), transparent 38%),
+    radial-gradient(ellipse at 94% 85%, rgba(184,50,43,.09), transparent 34%),
+    linear-gradient(135deg, #101810, #151d16 54%, #101710);
+}
+.about-kenya-story::before {
+  content: "✳  ◇  ✳  ◇  ✳";
+  position: absolute;
+  z-index: -1;
+  top: 22px;
+  right: 2%;
+  color: rgba(212,175,55,.075);
+  font-size: clamp(42px, 8vw, 92px);
+  letter-spacing: 12px;
+  pointer-events: none;
+}
+.about-kenya-story-inner {
+  width: min(1080px, 100%);
+  margin: 0 auto;
+}
+.about-kenya-story-heading {
+  max-width: 760px;
+  margin-bottom: 42px;
+}
+.about-kenya-story-heading .section-label {
+  color: #d4af37;
+}
+.about-kenya-story-heading h2 {
+  margin: 14px 0 18px;
+  color: #f4f0e5;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(32px, 4.4vw, 51px);
+  line-height: 1.1;
+  letter-spacing: -1.7px;
+}
+.about-kenya-story-heading h2 span {
+  color: #d4af37;
+}
+.about-kenya-story-heading p {
+  max-width: 700px;
+  margin: 0 0 13px;
+  color: #b8c0b3;
+  font-size: 14px;
+  line-height: 1.9;
+}
+.about-kenya-principles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  border-top: 1px solid rgba(212,175,55,.27);
+  border-bottom: 1px solid rgba(212,175,55,.27);
+}
+.about-kenya-principles article {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 15px;
+  min-width: 0;
+  padding: 27px 22px 29px 0;
+}
+.about-kenya-principles article + article {
+  padding-left: 22px;
+  border-left: 1px solid rgba(212,175,55,.2);
+}
+.about-kenya-index {
+  color: #d4af37;
+  font: 600 12px 'Space Grotesk', sans-serif;
+}
+.about-kenya-principles h3 {
+  margin: 0 0 10px;
+  color: #f2eee3;
+  font: 600 17px/1.35 'Space Grotesk', sans-serif;
+}
+.about-kenya-principles p {
+  margin: 0;
+  color: #aeb8aa;
+  font-size: 12px;
+  line-height: 1.8;
+}
+.about-kenya-signoff {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 13px;
+  margin-top: 30px;
+  color: #d6c78f;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+}
+.about-kenya-signoff i {
+  width: 22px;
+  height: 2px;
+  background: linear-gradient(90deg, #111 0 25%, #b8322b 25% 52%, #f4f0e5 52% 68%, #176b3a 68% 100%);
+}
+@media (max-width: 760px) {
+  .about-location-heading { padding-left: 14px; }
+  .about-kenya-principles { grid-template-columns: 1fr; }
+  .about-kenya-principles article,
+  .about-kenya-principles article + article {
+    padding: 22px 0;
+    border-left: 0;
+  }
+  .about-kenya-principles article + article {
+    border-top: 1px solid rgba(212,175,55,.18);
+  }
+  .about-kenya-story-heading { margin-bottom: 28px; }
+  .about-kenya-signoff { justify-content: flex-start; gap: 9px; font-size: 8px; }
+}
