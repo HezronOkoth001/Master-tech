@@ -986,7 +986,7 @@ function App() {
               </div>
               <EastAfricaReachMap />
               <div className="east-africa-country-list">
-                <span>Uganda</span><span>Kenya</span><span>Ethiopia</span><span>Rwanda</span><span>Tanzania</span>
+                <span>Uganda</span><span>Kenya</span><span>Rwanda</span><span>Burundi</span><span>Tanzania</span>
               </div>
             </article>
             <article className="about-nairobi-map">
