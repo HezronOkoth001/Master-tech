@@ -351,7 +351,7 @@ function SiteHeader({ whatsappLink }) {
         <a href="/about"><span className="nav-link-icon" aria-hidden="true">👋</span><span>About</span></a>
         <a href="/services"><span className="nav-link-icon" aria-hidden="true">🛠️</span><span>Services</span></a>
         <a href="/sample-sites"><span className="nav-link-icon" aria-hidden="true">🖥️</span><span>Samples</span></a>
-        <a className="nav-review-link" href="/reviews"><span className="nav-link-icon" aria-hidden="true">⭐</span><span>Reviews</span></a>
+        <a className="nav-review-link" href="/reviews"><span className="nav-review-star" aria-hidden="true">★</span><span>Reviews</span></a>
         <a href="/contact"><span className="nav-link-icon" aria-hidden="true">📩</span><span>Contact</span></a>
       </nav>
       <a className="nav-cta" href="/quotation">Get a quotation <span>↗</span></a>
@@ -1270,7 +1270,7 @@ function App() {
     '/reviews': (
       <>
         <section className="reviews-page-intro">
-          <span className="section-label">MASTERS TECH · CUSTOMER FEEDBACK</span>
+          <span className="section-label">KENYA · EAST AFRICA · CUSTOMER FEEDBACK</span>
           <h1>What customers <span>are saying.</span></h1>
           <p>Read experiences from people who have worked with Masters Tech, or share your own experience.</p>
           <div className="reviews-page-actions">
