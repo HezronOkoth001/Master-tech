@@ -23,6 +23,22 @@ const services = [
     features: ['Search engine optimisation (SEO)', 'Google Business Profile guidance', 'Google Search and Maps visibility', 'Website content and page improvements'],
     icon: '↗',
   },
+  {
+    number: '03',
+    title: 'Website Maintenance & Support',
+    description: 'A website needs care even after it goes live. I can help keep your website running smoothly, fix issues when something stops working and make updates as your business changes.',
+    outcome: 'From small corrections to regular check-ups, maintenance helps keep your website useful, up to date and working as expected.',
+    features: ['Fixing broken pages, links and contact forms', 'Updating website content, images and details', 'Checking website performance and functionality', 'Software updates and backup checks'],
+    icon: '⚙',
+  },
+  {
+    number: '04',
+    title: 'Website Security Assessment',
+    description: 'I review your website for common security weaknesses that could put your site or its information at risk. The aim is to identify issues early and help strengthen the areas that need attention.',
+    outcome: 'You get a clearer picture of your website’s security and practical steps that can help reduce the risk of unauthorised access and common attacks.',
+    features: ['Checking for common website vulnerabilities', 'Reviewing login access and account protection', 'Identifying outdated software and components', 'Checking basic website security settings and HTTPS'],
+    icon: '⌑',
+  },
 ]
 
 function PublicReviewForm() {
