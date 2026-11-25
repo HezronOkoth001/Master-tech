@@ -4639,16 +4639,16 @@ body { color: #f5f8fc; background: var(--mt-black); }
 }
 
 
-/* Compact East Africa map with its explanatory caption alongside */
+/* Balanced East Africa map and caption, without a surrounding map panel */
 .about-location-layout {
-  grid-template-columns: minmax(280px, .82fr) minmax(0, 1.18fr);
+  grid-template-columns: minmax(320px, .95fr) minmax(0, 1.05fr);
   align-items: center;
-  column-gap: clamp(28px, 5vw, 64px);
+  column-gap: clamp(28px, 4.5vw, 58px);
   row-gap: 38px;
 }
 .about-region-map {
   width: 100%;
-  max-width: 440px;
+  max-width: 500px;
   justify-self: center;
 }
 .about-region-map .about-map-card-heading {
@@ -4658,10 +4658,14 @@ body { color: #f5f8fc; background: var(--mt-black); }
   font-size: 21px;
 }
 .about-region-map .east-africa-map-visual {
-  border: 1px solid rgba(212,175,55,.24);
-  border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 16px 36px rgba(0,0,0,.2);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.about-region-map .east-africa-map-visual svg {
+  width: 100%;
 }
 .about-region-copy {
   max-width: 500px;
@@ -4703,7 +4707,7 @@ body { color: #f5f8fc; background: var(--mt-black); }
     gap: 28px;
   }
   .about-region-map {
-    max-width: 390px;
+    max-width: 420px;
   }
   .about-region-copy {
     max-width: 620px;
