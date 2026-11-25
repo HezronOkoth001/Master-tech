@@ -10,31 +10,18 @@ const API_URL = `${API_BASE_URL}/api/projects`
 const WORKSPACE_API_URL = `${API_BASE_URL}/api/workspace`
 
 const starterPricing = [
-  { id: 'price-landing', name: 'Landing page development', category: 'Website packages', price: 10000, billing: 'One-time', description: 'Home, about, services and contact sections', status: 'Active' },
-  { id: 'price-basic-business', name: 'Basic business website', category: 'Website packages', price: 18000, billing: 'One-time', description: 'A small multi-page business website', status: 'Active' },
-  { id: 'price-standard-business', name: 'Standard business website', category: 'Website packages', price: 25000, billing: 'One-time', description: 'A more complete business website', status: 'Active' },
-  { id: 'price-advanced-business', name: 'Advanced business website', category: 'Website packages', price: 35000, billing: 'One-time', description: 'A larger website with additional functionality', status: 'Active' },
-  { id: 'price-starter-shop', name: 'Starter e-commerce website', category: 'Website packages', price: 45000, billing: 'One-time', description: 'Online catalogue, cart and checkout foundation', status: 'Active' },
-  { id: 'price-standard-shop', name: 'Standard e-commerce website', category: 'Website packages', price: 65000, billing: 'One-time', description: 'Online store with expanded shop management', status: 'Active' },
-  { id: 'price-custom-app', name: 'Custom web application', category: 'Website packages', price: 100000, billing: 'From', description: 'Price depends on scope and requirements', status: 'Active' },
-  { id: 'price-co-ke', name: '.co.ke domain registration', category: 'Domain', price: 1000, billing: 'Annual', description: 'Estimated first-year registration; confirm provider price', status: 'Active' },
-  { id: 'price-com', name: '.com domain registration', category: 'Domain', price: 2000, billing: 'Annual', description: 'Estimated first-year registration; confirm provider price', status: 'Active' },
-  { id: 'price-host-basic', name: 'Basic website hosting', category: 'Hosting', price: 3000, billing: 'Annual', description: 'Basic hosting budget; confirm provider plan', status: 'Active' },
-  { id: 'price-host-standard', name: 'Standard website hosting', category: 'Hosting', price: 6000, billing: 'Annual', description: 'Higher hosting budget; confirm provider plan', status: 'Active' },
-  { id: 'price-extra-page', name: 'Additional website page', category: 'Website features', price: 1500, billing: 'One-time', description: 'Each additional page', status: 'Active' },
-  { id: 'price-contact-form', name: 'Contact form', category: 'Website features', price: 1000, billing: 'One-time', description: 'Website enquiry form', status: 'Active' },
-  { id: 'price-whatsapp', name: 'WhatsApp integration', category: 'Website features', price: 500, billing: 'One-time', description: 'Click-to-chat WhatsApp button', status: 'Active' },
-  { id: 'price-gallery', name: 'Image gallery', category: 'Website features', price: 1500, billing: 'One-time', description: 'Organised image gallery', status: 'Active' },
-  { id: 'price-blog', name: 'Blog section', category: 'Website features', price: 2500, billing: 'One-time', description: 'Blog listing and article layout', status: 'Active' },
-  { id: 'price-admin', name: 'Admin dashboard', category: 'Website features', price: 5000, billing: 'One-time', description: 'Content or records management area', status: 'Active' },
-  { id: 'price-booking', name: 'Booking functionality', category: 'Website features', price: 5000, billing: 'From', description: 'Price depends on booking workflow', status: 'Active' },
-  { id: 'price-maps', name: 'Google Maps integration', category: 'SEO & Google visibility', price: 1000, billing: 'One-time', description: 'Map embed and location details', status: 'Active' },
-  { id: 'price-seo', name: 'Basic SEO setup', category: 'SEO & Google visibility', price: 2000, billing: 'One-time', description: 'Titles, descriptions and indexing basics', status: 'Active' },
-  { id: 'price-gbp', name: 'Google Business Profile setup', category: 'SEO & Google visibility', price: 2000, billing: 'One-time', description: 'Profile setup or optimisation; client access required', status: 'Active' },
-  { id: 'price-mpesa', name: 'M-Pesa payment integration', category: 'Website features', price: 8000, billing: 'From', description: 'Depends on provider, API and checkout requirements', status: 'Active' },
-  { id: 'price-care-basic', name: 'Basic care plan', category: 'Maintenance plans', price: 1500, billing: 'Monthly', description: 'Basic updates and website checks', status: 'Active' },
-  { id: 'price-care-standard', name: 'Standard care plan', category: 'Maintenance plans', price: 3000, billing: 'Monthly', description: 'Updates, backups and small content changes', status: 'Active' },
-  { id: 'price-care-premium', name: 'Premium care plan', category: 'Maintenance plans', price: 5000, billing: 'Monthly', description: 'Priority support and more frequent maintenance', status: 'Active' },
+  { id: 'public-personal-website', name: 'Personal website', category: 'Website packages', price: 18000, billing: 'One-time', description: 'Personal profile, portfolio and contact website', status: 'Active' },
+  { id: 'public-blog-website', name: 'Blog website', category: 'Website packages', price: 20000, billing: 'One-time', description: 'Blog homepage, article pages and categories', status: 'Active' },
+  { id: 'public-business-website', name: 'Business website', category: 'Website packages', price: 30000, billing: 'One-time', description: 'Professional multi-page business website', status: 'Active' },
+  { id: 'public-ngo-website', name: 'NGO website', category: 'Website packages', price: 35000, billing: 'One-time', description: 'Organisation profile, programmes and updates', status: 'Active' },
+  { id: 'public-corporate-website', name: 'Corporate website', category: 'Website packages', price: 40000, billing: 'One-time', description: 'Professional company website and information pages', status: 'Active' },
+  { id: 'public-ecommerce-website', name: 'E-commerce website', category: 'Website packages', price: 50000, billing: 'One-time', description: 'Online shop with catalogue, cart and order flow', status: 'Active' },
+  { id: 'public-google-profile', name: 'Google Business Profile setup', category: 'SEO & Google visibility', price: 5000, billing: 'One-time', description: 'Business profile setup or optimisation', status: 'Active' },
+  { id: 'public-seo-setup', name: 'SEO setup and optimisation', category: 'SEO & Google visibility', price: 8000, billing: 'One-time', description: 'Search-friendly page structure and on-page SEO foundations', status: 'Active' },
+  { id: 'public-monthly-seo', name: 'Monthly SEO services', category: 'SEO & Google visibility', price: 10000, billing: 'Monthly', description: 'Ongoing search visibility and website optimisation', status: 'Active' },
+  { id: 'public-maintenance', name: 'Website maintenance', category: 'Maintenance plans', price: 4000, billing: 'Monthly', description: 'Routine website updates, checks and small content changes', status: 'Active' },
+  { id: 'public-redesign', name: 'Website redesign', category: 'Website services', price: 18000, billing: 'From', description: 'Refresh an existing website layout and user experience', status: 'Active' },
+  { id: 'public-assessment', name: 'Website assessment', category: 'Website services', price: 5000, billing: 'One-time', description: 'Review common usability, performance, SEO and visible security issues', status: 'Active' },
 ]
 
 const emptyWorkspaceData = {
@@ -135,6 +122,37 @@ function AdminDashboard() {
           const response = await fetch(`${WORKSPACE_API_URL}/${section.toLowerCase()}`)
           if (!response.ok) throw new Error(`Could not load ${section.toLowerCase()} records.`)
           let records = await response.json()
+
+          // Replace the previous default catalogue once with the current public package and service prices.
+          if (section === 'Pricing') {
+            const legacyPricingIds = new Set([
+              'price-landing', 'price-basic-business', 'price-standard-business',
+              'price-advanced-business', 'price-starter-shop', 'price-standard-shop',
+              'price-custom-app', 'price-co-ke', 'price-com', 'price-host-basic',
+              'price-host-standard', 'price-extra-page', 'price-contact-form',
+              'price-whatsapp', 'price-gallery', 'price-blog', 'price-admin',
+              'price-booking', 'price-maps', 'price-seo', 'price-gbp', 'price-mpesa',
+              'price-care-basic', 'price-care-standard', 'price-care-premium',
+            ])
+            if (records.some((record) => legacyPricingIds.has(String(record.id)))) {
+              const retainedRecords = records.filter((record) =>
+                !legacyPricingIds.has(String(record.id)) &&
+                record.recordType !== 'promotion' &&
+                record.recordType !== 'package-promotion'
+              )
+              const promotions = records.filter((record) =>
+                record.recordType === 'promotion' || record.recordType === 'package-promotion'
+              )
+              const updatedCatalogue = [...starterPricing, ...retainedRecords, ...promotions]
+              const migrationResponse = await fetch(`${WORKSPACE_API_URL}/pricing`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedCatalogue),
+              })
+              if (!migrationResponse.ok) throw new Error('Could not update the pricing catalogue.')
+              records = await migrationResponse.json()
+            }
+          }
 
           // Import records from the previous browser-only version once, when the database section is empty.
           if (records.length === 0 && Array.isArray(legacyData[section]) && legacyData[section].length > 0) {
