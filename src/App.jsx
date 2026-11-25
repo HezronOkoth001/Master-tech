@@ -336,6 +336,8 @@ function HomeServicesSection({ whatsappLink }) {
       description: 'A professional online home that explains what you offer, looks great on every screen and makes it simple for customers to get in touch.',
       points: ['Business websites and landing pages', 'Online stores and tailored layouts', 'Responsive design and clear user journeys'],
       visual: 'home-service-visual-web',
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=85',
+      imageAlt: 'Website analytics and business website displayed on a laptop',
       visualLabel: 'YOUR BUSINESS, ONLINE',
       visualTitle: 'A better first impression.',
       visualNote: 'Designed around your brand',
@@ -349,6 +351,8 @@ function HomeServicesSection({ whatsappLink }) {
       description: 'Make it easier for potential customers to discover your business with useful content and a search-friendly website structure.',
       points: ['Search engine optimisation foundations', 'Google Business Profile guidance', 'Google Search and Maps visibility'],
       visual: 'home-service-visual-search',
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=85',
+      imageAlt: 'Search and website performance analytics on a computer screen',
       visualLabel: 'GOOGLE VISIBILITY',
       visualTitle: 'Make your business easier to find.',
       visualNote: 'Useful information. Clear structure.',
@@ -362,6 +366,8 @@ function HomeServicesSection({ whatsappLink }) {
       description: 'A website needs attention after launch too. We can review its security, check for common weaknesses, update its software and help keep important parts working as expected.',
       points: ['Website security and basic vulnerability checks', 'Software, plugin and content updates', 'Backups, performance and ongoing maintenance'],
       visual: 'home-service-visual-security',
+      image: 'https://images.unsplash.com/photo-1580894732444-8ecded7900cd?auto=format&fit=crop&w=1200&q=85',
+      imageAlt: 'Technician working on a laptop during website maintenance',
       visualLabel: 'WEBSITE CARE',
       visualTitle: 'Stay aware. Stay up to date.',
       visualNote: 'Regular checks and maintenance',
@@ -375,6 +381,8 @@ function HomeServicesSection({ whatsappLink }) {
       description: 'Thoughtful layouts, clear navigation and practical details help visitors move around your website with confidence.',
       points: ['Mobile, tablet and desktop layouts', 'Simple navigation and readable content', 'Clear paths to contact your business'],
       visual: 'home-service-visual-experience',
+      image: 'https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&w=1200&q=85',
+      imageAlt: 'Responsive website design displayed across digital devices',
       visualLabel: 'ONE WEBSITE · EVERY SCREEN',
       visualTitle: 'Comfortable to use, wherever people visit.',
       visualNote: 'Phone · Tablet · Desktop',
@@ -405,6 +413,8 @@ function HomeServicesSection({ whatsappLink }) {
                 <i aria-hidden="true">↗</i>
               </div>
               <div className={`home-service-visual ${item.visual}`}>
+                <img className="home-service-photo" src={item.image} alt={item.imageAlt} loading="lazy" />
+                <div className="home-service-photo-shade" />
                 <div className="home-service-visual-orbit" />
                 <div className="home-service-visual-panel">
                   <small>{item.visualLabel}</small>
@@ -546,6 +556,30 @@ function App() {
     let canonical = document.querySelector('link[rel="canonical"]')
     if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical) }
     canonical.href = window.location.origin + (pathname === '/' ? '/' : pathname)
+  }, [pathname])
+
+  useEffect(() => {
+    const revealTargets = document.querySelectorAll(
+      '.hero-content, .hero-ui-stage, .home-services-heading, .home-service-card, .home-services-quotation, .home-editorial-section, .home-discovery, .tech-marquee'
+    )
+    if (!('IntersectionObserver' in window)) {
+      revealTargets.forEach((element) => element.classList.add('mt-is-visible'))
+      return
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('mt-is-visible')
+          observer.unobserve(entry.target)
+        }
+      })
+    }, { threshold: 0.12, rootMargin: '0px 0px -35px 0px' })
+    revealTargets.forEach((element, index) => {
+      element.classList.add('mt-scroll-reveal')
+      element.style.setProperty('--mt-reveal-delay', `${Math.min(index % 4, 3) * 90}ms`)
+      observer.observe(element)
+    })
+    return () => observer.disconnect()
   }, [pathname])
 
   useEffect(() => {
