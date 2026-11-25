@@ -399,6 +399,88 @@ function HomeServicesSection({ whatsappLink }) {
   )
 }
 
+const homepageArticles = [
+  {
+    number: '01',
+    category: 'THE DIGITAL FIRST IMPRESSION',
+    title: 'Your website is often your first handshake.',
+    paragraphs: [
+      'Before a customer calls, visits your shop or asks for a quotation, they may search for your business online. What they find in those first few seconds can shape how they see your brand. A clear, professional website gives people a place to understand who you are, what you offer and how to take the next step.',
+      'That is why good website design is about more than decoration. The words, layout, images, navigation and contact details should work together. Whether you run a growing company, a local service or a new business with a big idea, your online presence should make it easier for the right people to choose you.'
+    ],
+    takeaway: 'Make the first impression count.',
+    link: '/sample-sites',
+    linkText: 'See website design ideas',
+  },
+  {
+    number: '02',
+    category: 'BEYOND JUST BEING ONLINE',
+    title: 'A good business deserves to be found.',
+    paragraphs: [
+      'Having a website is an important start, but customers also need a way to discover it. Search engines help people find answers, compare options and locate businesses that can solve a problem. Search-friendly website structure, useful page content and accurate business information all help make that journey clearer.',
+      'For businesses serving customers in Kenya and across Africa, local visibility can matter just as much as a polished homepage. When your website and Google Business Profile communicate the right information, potential customers have a better chance of finding your services, understanding where you operate and getting in touch.'
+    ],
+    takeaway: 'Build your presence. Help people discover it.',
+    link: '/services',
+    linkText: 'Explore SEO and Google visibility',
+  },
+  {
+    number: '03',
+    category: 'DESIGNED FOR EVERYDAY CONNECTIONS',
+    title: 'Your customers are already browsing on their phones.',
+    paragraphs: [
+      'People look up businesses while travelling, taking a break, comparing prices or asking friends for recommendations. Often, the phone in their hand is the first place they visit your website. If the text is difficult to read, pages feel crowded or the contact button is hard to find, a potential customer may simply move on.',
+      'A thoughtful mobile experience keeps things straightforward. Pages should load sensibly, information should be easy to scan, and important actions should be clear on smaller screens. At Masters Tech, responsive design is part of building a website that works for real people, not just a large computer display.'
+    ],
+    takeaway: 'A better experience on every screen.',
+    link: '/contact',
+    linkText: 'Talk about your website',
+  },
+]
+
+function HomeEditorialSection() {
+  return (
+    <section className="home-editorial-section section-padding">
+      <div className="home-editorial-intro">
+        <span className="section-label">A FEW THINGS WORTH KNOWING</span>
+        <h2>Digital growth starts with <span>being understood.</span></h2>
+        <p>
+          The online world can feel crowded. We believe a business does not need
+          louder marketing or complicated language to stand out. It needs a clear
+          message, a useful website and a simple way for customers to connect.
+        </p>
+        <div className="home-editorial-manifesto">
+          <span>OUR POINT OF VIEW</span>
+          <strong>Built for African ambition. Designed to reach further.</strong>
+          <p>
+            From a new idea taking shape in Nairobi to an established business
+            serving customers across the continent, every brand deserves an online
+            presence that reflects the care behind its work.
+          </p>
+        </div>
+      </div>
+      <div className="home-editorial-articles">
+        {homepageArticles.map((article) => (
+          <article className="home-editorial-article" key={article.number}>
+            <div className="home-editorial-article-meta">
+              <span>{article.category}</span>
+              <b>{article.number}</b>
+            </div>
+            <h3>{article.title}</h3>
+            {article.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            <div className="home-editorial-takeaway"><i>✦</i><strong>{article.takeaway}</strong></div>
+            <a href={article.link}>{article.linkText}<span>↗</span></a>
+          </article>
+        ))}
+      </div>
+      <div className="home-editorial-closing">
+        <span>GOOD WORK DESERVES A GOOD ONLINE HOME.</span>
+        <p>Let's build something that gives people a reason to remember your business.</p>
+      </div>
+    </section>
+  )
+}
+
 function App() {
   const [promotion, setPromotion] = useState(null)
   const [activeSampleTab, setActiveSampleTab] = useState('samples')
@@ -539,6 +621,7 @@ function App() {
         </section>
         <TechMarquee />
         <HomeServicesSection whatsappLink={whatsappLink} />
+        <HomeEditorialSection />
         <section className="home-discovery section-padding">
           <span className="section-label">EXPLORE MASTERS TECH</span>
           <h2>Practical digital services to help your business <span>grow online.</span></h2>
