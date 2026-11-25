@@ -895,6 +895,45 @@ function App() {
           </div>
         </section>
 
+        <section className="about-location-section section-padding" aria-label="Masters Tech location in East Africa">
+          <div className="about-location-heading">
+            <span className="section-label">WHERE TO FIND US</span>
+            <h2>Based in East Africa. <span>Connected to the world.</span></h2>
+            <p>Masters Tech is based in Kenya, with Nairobi as our general operating area. We work with businesses locally and can support projects beyond Kenya too.</p>
+          </div>
+          <div className="about-location-grid">
+            <article className="about-map-card about-region-map">
+              <div className="about-map-card-heading">
+                <span className="about-map-kicker">OUR REGION</span>
+                <h3>East Africa</h3>
+                <p>Kenya and the neighbouring region</p>
+              </div>
+              <iframe
+                title="Map of East Africa"
+                src="https://maps.google.com/maps?q=East%20Africa&z=4&output=embed"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+            </article>
+            <article className="about-map-card about-nairobi-map">
+              <div className="about-map-card-heading">
+                <span className="about-map-kicker">OUR GENERAL LOCATION</span>
+                <h3>Nairobi, Kenya</h3>
+                <p>Approximate operating area · Not a street address</p>
+              </div>
+              <iframe
+                title="Google Map showing Nairobi, Kenya"
+                src="https://maps.google.com/maps?q=Nairobi%2C%20Kenya&z=11&output=embed"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+              <a className="about-map-directions" href="https://www.google.com/maps/search/?api=1&query=Nairobi%2C%20Kenya" target="_blank" rel="noreferrer">Open Nairobi in Google Maps <span>↗</span></a>
+            </article>
+          </div>
+        </section>
+
         <section className="about-services-section section-padding">
           <div className="about-section-heading">
             <span className="section-label">WHAT MASTERS TECH DOES</span>
