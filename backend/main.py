@@ -201,6 +201,49 @@ def get_active_public_promotion(db: Session = Depends(get_db)):
     return None
 
 
+@app.get("/api/public/package-promotions")
+def get_active_package_promotions(db: Session = Depends(get_db)):
+    """Return active, non-expired discounts for individual public website packages."""
+    records = (
+        db.query(models.WorkspaceRecord)
+        .filter(models.WorkspaceRecord.section == "pricing")
+        .all()
+    )
+    today = datetime.now(timezone.utc).date()
+    promotions = {}
+    allowed_percentages = {10, 20, 30, 50}
+
+    for record in records:
+        data = record.data
+        if data.get("recordType") != "package-promotion" or data.get("status") != "Active":
+            continue
+
+        package_key = data.get("packageKey")
+        try:
+            discount_percent = int(data.get("discountPercent", 0))
+        except (TypeError, ValueError):
+            continue
+
+        if not package_key or discount_percent not in allowed_percentages:
+            continue
+
+        ends_at = data.get("endsAt") or ""
+        if ends_at:
+            try:
+                if datetime.strptime(ends_at, "%Y-%m-%d").date() < today:
+                    continue
+            except ValueError:
+                continue
+
+        promotions[package_key] = {
+            "discountPercent": discount_percent,
+            "endsAt": ends_at,
+            "packageName": data.get("packageName", ""),
+        }
+
+    return promotions
+
+
 @app.post("/api/reviews", status_code=201)
 def submit_public_review(
     review_data: PublicReviewCreate,
