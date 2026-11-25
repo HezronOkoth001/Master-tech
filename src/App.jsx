@@ -377,7 +377,7 @@ function PricingPage() {
               <div className="pricing-card-price">{item.custom ? <strong>{item.price}</strong> : <><small>Starting from</small><strong><span>KSh</span> {item.price}</strong></>}</div>
               <span className="pricing-includes-label">PACKAGE STARTING SCOPE</span>
               <ul>{item.features.map((feature) => <li key={feature}><span>✓</span>{feature}</li>)}</ul>
-              <a className="pricing-card-cta" href={`/quotation?service=${encodeURIComponent(item.name)}`}>Request a quotation <span>↗</span></a>
+              <a className="pricing-card-cta" href="/quotation">Request a quotation <span>↗</span></a>
             </article>
           ))}
         </div>
@@ -395,7 +395,7 @@ function PricingPage() {
               <span className="pricing-service-number">0{index + 1}</span>
               <div className="pricing-service-copy"><h3>{item.name}</h3><p>{item.detail}</p></div>
               <div className="pricing-service-cost"><strong>{item.price}</strong><small>{item.cadence}</small></div>
-              <a href={`/quotation?service=${encodeURIComponent(item.name)}`} aria-label={`Request a quotation for ${item.name}`}>↗</a>
+              <a href="/quotation" aria-label={`Request a quotation for ${item.name}`}>↗</a>
             </article>
           ))}
         </div>
