@@ -984,8 +984,9 @@ function App() {
             <article className="about-region-copy">
               <span className="about-map-kicker">ROOTED IN KENYA</span>
               <h3>Local knowledge. <span>Wider connections.</span></h3>
-              <p>Masters Tech is based in Kenya, serving businesses in our home market while staying open to opportunities across the region and beyond.</p>
-              <p>Kenya is our home base. From here, we create practical digital experiences that help businesses build a stronger presence online.</p>
+              <p>Masters Tech is based in Kenya, serving businesses in our home market while staying open to opportunities across the region and beyond. Whether a business is just getting started or ready to reach more customers, a clear online presence can make the next step easier.</p>
+              <p>Kenya is our home base. It is a place of creativity, enterprise and people finding new ways to move their ideas forward. That spirit informs how I approach every project: understand the business, respect its audience and build something useful.</p>
+              <p>From Nairobi to the wider region, the aim is simple: make it easier for people to discover what you offer, understand its value and get in touch.</p>
             </article>
             <article className="about-nairobi-map">
               <div className="about-map-card-heading">
@@ -1002,6 +1003,32 @@ function App() {
               />
               <a className="about-map-directions" href="https://www.google.com/maps/search/?api=1&query=Nairobi%2C%20Kenya" target="_blank" rel="noreferrer">Open Nairobi in Google Maps <span>↗</span></a>
             </article>
+          </div>
+        </section>
+
+        <section className="about-kenya-story section-padding" aria-label="Our Kenyan perspective">
+          <div className="about-kenya-story-inner">
+            <div className="about-kenya-story-heading">
+              <span className="section-label">A KENYAN PERSPECTIVE</span>
+              <h2>Big ideas can start <span>right here.</span></h2>
+              <p>Across Kenya, businesses are built through skill, persistence and a willingness to try something new. A strong digital presence helps those businesses carry their work beyond the people who already know them.</p>
+              <p>That is the thinking behind Masters Tech: practical websites and thoughtful online visibility, made with real business needs in mind.</p>
+            </div>
+            <div className="about-kenya-principles">
+              <article>
+                <span className="about-kenya-index">01</span>
+                <div><h3>Understand the local customer</h3><p>Speak clearly about what you offer, make important information easy to find and give visitors a simple way to reach you.</p></div>
+              </article>
+              <article>
+                <span className="about-kenya-index">02</span>
+                <div><h3>Design for everyday devices</h3><p>Many customers first meet a business on a phone. Your website should feel clear, quick to use and comfortable on a smaller screen.</p></div>
+              </article>
+              <article>
+                <span className="about-kenya-index">03</span>
+                <div><h3>Build for the next opportunity</h3><p>Your online presence should give your business room to grow, whether customers find you nearby or from further afield.</p></div>
+              </article>
+            </div>
+            <div className="about-kenya-signoff"><span>KENYA</span><i></i><span>EAST AFRICA</span><i></i><span>OPEN TO THE WORLD</span></div>
           </div>
         </section>
 
