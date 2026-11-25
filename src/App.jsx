@@ -356,44 +356,51 @@ function HomeServicesSection({ whatsappLink }) {
 
   return (
     <section className="home-services-section section-padding" id="what-we-do">
-      <div className="home-services-heading">
-        <div>
-          <span className="section-label">WHAT WE DO</span>
-          <h2>Good design gets attention. <span>A useful website earns trust.</span></h2>
+      <div className="home-services-frame">
+        <div className="home-services-frame-top">
+          <span><i /> THE MASTERS TECH APPROACH</span>
+          <b>DESIGN <i /> DISCOVER <i /> CONNECT</b>
         </div>
-        <p>From your first online presence to being easier to find on Google, we focus on the details that help your business connect with customers.</p>
-      </div>
-      <div className="home-services-grid">
-        {highlights.map((item) => (
-          <article className="home-service-card" key={item.number}>
-            <div className="home-service-card-top">
-              <span>{item.number} / {item.tag}</span>
-              <i aria-hidden="true">↗</i>
-            </div>
-            <div className={`home-service-visual ${item.visual}`}>
-              <div className="home-service-visual-orbit" />
-              <div className="home-service-visual-panel">
-                <small>{item.visualLabel}</small>
-                <strong>{item.visualTitle}</strong>
-                <span>{item.visualNote}</span>
-                <div className="home-service-visual-lines"><i /><i /><i /></div>
+        <div className="home-services-heading">
+          <div>
+            <span className="section-label">WHAT WE DO</span>
+            <h2>Good design gets attention. <span>A useful website earns trust.</span></h2>
+          </div>
+          <p>From your first online presence to being easier to find on Google, we focus on the details that help your business connect with customers.</p>
+        </div>
+        <div className="home-services-grid">
+          {highlights.map((item) => (
+            <article className="home-service-card" key={item.number}>
+              <div className="home-service-card-top">
+                <span>{item.number} / {item.tag}</span>
+                <i aria-hidden="true">↗</i>
               </div>
-              <b className="home-service-visual-spark" aria-hidden="true">✦</b>
-            </div>
-            <div className="home-service-card-content">
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-              <ul>{item.points.map((point) => <li key={point}><span>✓</span>{point}</li>)}</ul>
-              <a href={item.href} target={item.href.startsWith('https://') ? '_blank' : undefined} rel={item.href.startsWith('https://') ? 'noreferrer' : undefined}>
-                {item.action}<span>↗</span>
-              </a>
-            </div>
-          </article>
-        ))}
-      </div>
-      <div className="home-services-bottomline">
-        <span>YOUR IDEA, YOUR BUSINESS, BUILT WITH CARE.</span>
-        <a href={whatsappLink} target="_blank" rel="noreferrer">Have something in mind? Let's talk <b>↗</b></a>
+              <div className={`home-service-visual ${item.visual}`}>
+                <div className="home-service-visual-orbit" />
+                <div className="home-service-visual-panel">
+                  <small>{item.visualLabel}</small>
+                  <strong>{item.visualTitle}</strong>
+                  <span>{item.visualNote}</span>
+                  <div className="home-service-visual-lines"><i /><i /><i /></div>
+                </div>
+                <b className="home-service-visual-spark" aria-hidden="true">✦</b>
+              </div>
+              <div className="home-service-card-content">
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+                <ul>{item.points.map((point) => <li key={point}><span>✓</span>{point}</li>)}</ul>
+                <a href={item.href} target={item.href.startsWith('https://') ? '_blank' : undefined} rel={item.href.startsWith('https://') ? 'noreferrer' : undefined}>
+                  {item.action}<span>↗</span>
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+        <div className="home-services-bottomline">
+          <span>YOUR IDEA, YOUR BUSINESS, BUILT WITH CARE.</span>
+          <a href={whatsappLink} target="_blank" rel="noreferrer">Have something in mind? Let's talk <b>↗</b></a>
+        </div>
+        <div className="home-services-frame-corner" aria-hidden="true">MT<span>®</span></div>
       </div>
     </section>
   )
